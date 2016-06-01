@@ -3,6 +3,7 @@ package com.geo.power.ui;
 import android.app.Application;
 import android.content.ComponentCallbacks;
 
+import com.geo.com.geo.power.CrashHandler;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -29,9 +30,20 @@ public class PowerApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        initCrashHandler();
         initImageLoader();
-    }
 
+    }
+    /**
+     * 程序异常捕获初始化
+     */
+    private void initCrashHandler() {
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        // 注册crashHandler
+        crashHandler.init(this.getApplicationContext());
+        // 发送以前没发送的报告(可选)
+        crashHandler.sendPreviousReportsToServer();
+    }
     private void initImageLoader() {
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true)

@@ -36,12 +36,14 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PLog(P_TAG, "子类类onCreate()");
         setContentView(R.layout.activity_main, false);
 
     }
 
     @Override
     protected void initCompontent() {
+        PLog(P_TAG,"子类initCompontent()");
         super.initCompontent();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawerlayout);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);

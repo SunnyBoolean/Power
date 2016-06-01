@@ -38,6 +38,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public Executor mExecutor;
     private SystemBarTintManager mTintManager;
     private View mContent;
+    public final static String P_TAG = "Power";
     /**
      * 是否显示Toolbar
      */
@@ -46,6 +47,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PLog(P_TAG,"父类onCreate()");
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
         mContext = this;
         if (mToolBar != null) {
