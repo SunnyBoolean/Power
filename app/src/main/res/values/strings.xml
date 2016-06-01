@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Power</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="home_home_name">发现</string>
+    <string name="home_discover_name">计划</string>
+    <string name="home_personalcenter_name">我</string>
+    <string name="home_slidemenu_life">生活</string>
+    <string name="home_slidemenu_learn">学习</string>
+    <string name="home_slidemenu_halerthy">健康</string>
+    <string name="home_slidemenu_work">工作</string>
+<array name="home_main_tite_category">
+    <item>生活</item>
+    <item>健康</item>
+    <item>学习</item>
+    <item>工作</item>
+</array>
+</resources>

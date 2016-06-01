@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.geo.widget.CustomScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    android:layout_margin="10dp"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@color/material_accentPink_a200"
+            android:padding="3dp"
+            android:text="生活"
+            android:textColor="@color/material_white"
+            android:textSize="@dimen/textSize_small" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="      今天很受打击啊，面个试还被嫌弃长得肥，我长得胖出的多又没吃你家饭！我决定要努力运动减肥！不瘦到150斤就一直减！" />
+        <!-- 计划图片-->
+        <com.geo.widget.MyExpandGridView
+            android:id="@+id/home_myplan_detail_img_gridview"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:horizontalSpacing="5dp"
+            android:numColumns="3"
+            android:verticalSpacing="5dp" />
+
+        <include layout="@layout/divier"></include>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.gc.materialdesign.views.Slider
+
+                android:id="@+id/plan_progress_slide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/shape_plan_detail_progress_bg"
+                android:gravity="center"
+                android:text="30%"
+                android:textColor="@color/material_white"
+                android:textSize="@dimen/textSize_large"></TextView>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/myplan_createtime"
+            android:drawablePadding="5dp"
+            android:text="创建时间：2016-05-31" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/myplan_endtime"
+            android:drawablePadding="5dp"
+            android:text="截止时间：2016-10-31" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/myplan_process"
+            android:drawablePadding="5dp"
+            android:text="完成进度：90%" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/myplan_detail_tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/material_white"
+            app:tabIndicatorColor="@color/material_teal_800"
+            app:tabIndicatorHeight="2dp"
+            app:tabSelectedTextColor="@color/material_teal_800"
+            app:tabTextColor="@color/material_blueGrey_800" />
+
+        <include layout="@layout/divier"></include>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/myplan_detail_viewpager"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</com.geo.widget.CustomScrollView>

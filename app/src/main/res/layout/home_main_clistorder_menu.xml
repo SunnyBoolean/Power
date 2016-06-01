@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/main_home_category_item_life"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="最新"
+        android:textColor="@color/material_teal_800" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/material_grey_400" />
+
+    <TextView
+        android:id="@+id/main_home_category_item_sport"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="参与最多"
+        android:textColor="@color/material_teal_800" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/material_grey_400" />
+
+    <TextView
+        android:id="@+id/main_home_category_item_knowledge"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="进度最大"
+        android:textColor="@color/material_teal_800" />
+
+</LinearLayout>

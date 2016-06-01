@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/ic_launcher" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:text="V 1.0.160523"
+        android:layout_height="wrap_content" />
+    <!-- 版本号-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_height="45dp"
+        android:clickable="true"
+        android:id="@+id/about_version"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:text="版本"
+            android:textSize="@dimen/textSize_large" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="18dp"
+            android:text="已是最新"
+            android:textSize="@dimen/textSize_large" />
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:background="@color/material_grey_400"
+        android:layout_height="0.5dp" />
+
+    <!-- 使用帮助-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:clickable="true"
+        android:id="@+id/about_useage_help"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:text="使用帮助"
+            android:textSize="@dimen/textSize_large" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="18dp"
+            android:text=""
+            android:textSize="@dimen/textSize_large" />
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:background="@color/material_grey_400"
+        android:layout_height="0.5dp" />
+    <!-- 联系我们-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:clickable="true"
+        android:id="@+id/about_contactus"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:text="联系我们"
+            android:textSize="@dimen/textSize_large" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="18dp"
+            android:text=""
+            android:textSize="@dimen/textSize_large" />
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:background="@color/material_grey_400"
+        android:layout_height="0.5dp" />
+    <!-- 反馈意见-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:clickable="true"
+        android:id="@+id/about_suggestion"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:text="意见反馈"
+            android:textSize="@dimen/textSize_large" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="18dp"
+            android:text=""
+            android:textSize="@dimen/textSize_large" />
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:background="@color/material_grey_400"
+        android:layout_height="0.5dp" />
+</LinearLayout>

@@ -1,0 +1,12 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- 此样式是修改TextInputLayout的颜色-->
+        <item name="colorAccent">@color/main_theme_color</item>
+        <item name="colorPrimary">@color/material_teal_800</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+    <style name="Widget.CardContent" parent="AppTheme"></style>
+</resources>

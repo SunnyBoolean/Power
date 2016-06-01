@@ -1,0 +1,27 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <dimen name="textSize_small">12sp</dimen>
+    <dimen name="textSize_normal">14sp</dimen>
+    <dimen name="textSize_large">18sp</dimen>
+    <dimen name="textSize_bigest">22sp</dimen>
+    <!-- 导航栏高度 -->
+    <dimen name="navigation_height">96dp</dimen>
+    <!-- 组件之间的空隙 -->
+    <dimen name="widget_space">8dp</dimen>
+    <!-- 分隔线(divider )的厚度， -->
+    <dimen name="divider">1dp</dimen>
+    <!-- 部件的drawable和它之间的间隔-->
+    <dimen name="drawable_padding">8dp</dimen>
+    <!--内容与屏幕左右的padding值-->
+    <dimen name="content_padding_screen">16sp</dimen>
+    <!-- /////////////// Setting的Item相关 -->
+    <dimen name="setting_list_item_left_padding">72dp</dimen>
+    <!-- 注意，这个是List的padding，不是item的padding了 -->
+    <dimen name="setting_list_right_padding">16dp</dimen>
+    <!-- 这个是List的向右margain值 -->
+    <dimen name="setting_list_right_margain">56dp</dimen>
+    <!-- 这个是item上的图标左padding值 -->
+    <dimen name="setting_list_item_icon_left_padding">72dp</dimen>
+    <dimen name="setting_list_item_height">48dp</dimen>
+</resources>
