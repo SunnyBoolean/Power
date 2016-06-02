@@ -3,8 +3,7 @@ package com.geo.power.ui.activity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.gc.materialdesign.views.Button;
-import com.gc.materialdesign.widgets.Dialog;
+
 
 import ui.geo.com.power.R;
 
@@ -13,7 +12,6 @@ import ui.geo.com.power.R;
  * Created by Administrator on 2016/5/17.
  */
 public class MaterialDesignGit extends BaseActivity {
-    Button mButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +23,6 @@ public class MaterialDesignGit extends BaseActivity {
     @Override
     protected void initListener() {
         super.initListener();
-        mButton.setOnClickListener(this);
     }
 
     /**
@@ -52,21 +49,12 @@ public class MaterialDesignGit extends BaseActivity {
     }
 
     private void showDIalogM() {
-        final Dialog dialog = new Dialog(mContext, "提示", "系统将会退出");
-        //取消
-        dialog.addCancelButton("取消", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
 //        dialog.show();
     }
 
 
     @Override
     protected void initCompontent() {
-        mButton = (Button) findViewById(R.id.materoa_design_alert);
         super.initCompontent();
     }
 }

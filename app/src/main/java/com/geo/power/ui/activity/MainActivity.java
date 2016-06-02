@@ -38,6 +38,7 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
         super.onCreate(savedInstanceState);
         PLog(P_TAG, "子类类onCreate()");
         setContentView(R.layout.activity_main, false);
+//        setContentView(R.layout.activity_main);
 
     }
 

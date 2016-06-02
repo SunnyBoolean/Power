@@ -49,14 +49,6 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <com.gc.materialdesign.views.Slider
-
-                android:id="@+id/plan_progress_slide"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

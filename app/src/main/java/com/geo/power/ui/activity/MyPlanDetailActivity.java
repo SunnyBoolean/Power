@@ -12,9 +12,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 
-import com.gc.materialdesign.views.Slider;
 import com.geo.power.ui.fragment.MyPlanCommonOnFragment;
 import com.geo.power.ui.fragment.MyPlanDoingFragment;
 import com.geo.power.ui.fragment.MyPlanVisitorFragment;
@@ -34,7 +32,6 @@ public class MyPlanDetailActivity extends BaseActivity{
     private GridView mPicGridView;
     private final String[] mTabTitle = {"历史状态", "为我加油", "参与者"};
     private TabLayout mTabLayout;
-    private Slider mPlanProgress;
     private ViewPager mViewPager;
     public static final String[] mPictureUrls = {
             "http://ac-6ptjoad9.clouddn.com/3MekCrFaIezGOmrmbmvkILWjyF2dGIItve4AYXQC",
@@ -58,7 +55,6 @@ public class MyPlanDetailActivity extends BaseActivity{
         mPicGridView = (GridView) findViewById(R.id.home_myplan_detail_img_gridview);
         mTabLayout = (TabLayout) findViewById(R.id.myplan_detail_tablayout);
         mViewPager = (ViewPager) findViewById(R.id.myplan_detail_viewpager);
-        mPlanProgress = (Slider) findViewById(R.id.plan_progress_slide);
         //计划图片适配器
         mPicGridView.setAdapter(new GridAdapter());
 //        initTabViewpager();
