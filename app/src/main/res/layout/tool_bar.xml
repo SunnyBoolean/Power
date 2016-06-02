@@ -13,5 +13,6 @@
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_scrollFlags="scroll|enterAlways"
-        app:titleMargins="-2dp"></android.support.v7.widget.Toolbar>
+        app:titleMargins="-2dp">
+    </android.support.v7.widget.Toolbar>
 </LinearLayout>

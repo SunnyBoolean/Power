@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +33,6 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
     private TextView mSettingBtn, mAboutBtn;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +44,7 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
 
     @Override
     protected void initCompontent() {
-        PLog(P_TAG,"子类initCompontent()");
+        PLog(P_TAG, "子类initCompontent()");
         super.initCompontent();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawerlayout);
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
@@ -82,7 +82,7 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
             }
 
         });
-        mToolBar.setTitle("Power");//设置标题
+//        mToolBar.setTitle("Power");//设置标题
         int color = Color.parseColor("#FFFFFF");
         mToolBar.setTitleTextColor(color);  //设置标题字体颜色
         //----------设置菜单，这里就设置一个Search菜单

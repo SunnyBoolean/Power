@@ -21,7 +21,7 @@ import ui.geo.com.power.R;
  */
 public class DiscoverFragment extends BaseFragment {
     private static DiscoverFragment mInstance;
-    private final String[] mTabTitle = {"我的计划", "我参与的", "已完成"};
+    private final String[] mTabTitle = {"我的计划(12)", "我参与的(8)", "已完成(6)"};
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private FMCallback mFragmentManagerCallback;

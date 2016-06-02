@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="none"
     android:layout_margin="10dp"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -96,10 +96,141 @@
             app:tabTextColor="@color/material_blueGrey_800" />
 
         <include layout="@layout/divier"></include>
+        <!--历史记录-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/material_white">
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/myplan_detail_viewpager"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/flag_myplan_detai"
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/main_theme_color" />
+
+            <TextView
+                android:id="@+id/myplan_detail_history_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_toRightOf="@id/flag_myplan_detai"
+                android:text="历史记录" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/myplan_detail_history_item"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/flag_myplan_detai"
+                android:text="坚持就是胜利！"
+                android:textSize="@dimen/textSize_small" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:background="@null"
+                android:drawablePadding="8dp"
+                android:drawableRight="@drawable/item_arrow_right"
+                android:gravity="center"
+                android:text="65" />
+        </RelativeLayout>
+
+        <include layout="@layout/divier"></include>
+        <!--留言板-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/material_white">
+
+            <TextView
+                android:id="@+id/flag_a_myplan_detai"
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/main_theme_color" />
+
+            <TextView
+                android:id="@+id/myplan_detail_mycurrage_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_toRightOf="@id/flag_a_myplan_detai"
+                android:text="留言板" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/myplan_detail_mycurrage_item"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/flag_a_myplan_detai"
+                android:text="在这有很多人给你留言鼓励"
+                android:textSize="@dimen/textSize_small" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:background="@null"
+                android:drawablePadding="8dp"
+                android:drawableRight="@drawable/item_arrow_right"
+                android:gravity="center"
+                android:text="86" />
+        </RelativeLayout>
+        <!--参与者-->
+        <include layout="@layout/divier"></include>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/material_white">
+
+            <TextView
+                android:id="@+id/flag_b_myplan_detai"
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/main_theme_color" />
+
+            <TextView
+                android:id="@+id/myplan_detail_myjoin_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_toRightOf="@id/flag_b_myplan_detai"
+                android:text="参与者" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/myplan_detail_myjoin_item"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/flag_b_myplan_detai"
+                android:text="还有很多人跟你一起完成这个计划呢！"
+                android:textSize="@dimen/textSize_small" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:background="@null"
+                android:drawablePadding="8dp"
+                android:drawableRight="@drawable/item_arrow_right"
+                android:gravity="center"
+                android:text="16" />
+        </RelativeLayout>
     </LinearLayout>
 </com.geo.widget.CustomScrollView>

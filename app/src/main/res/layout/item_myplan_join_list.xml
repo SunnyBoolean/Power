@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+    <!--
+     （1）、计划列表需要显示创建的时间
+           （2）、列表显示计划已完成的进度
+           （3）、计划详情（可以只显示部分先）
+           （4）、显示被鼓励的次数，参与的人数
+    -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/home_myplan_item_tag_p"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/list_homeplan_userimg" />
+
+        <TextView
+            android:id="@+id/home_myplan_item_sigin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/material_lightBlue_900"
+            android:layout_toRightOf="@id/home_myplan_item_tag_p"
+            android:text="泼墨" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/home_myplan_item_tag_p"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/home_myplan_item_tag_p"
+            android:text="2016-05-13" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@color/material_accentPink_a200"
+            android:padding="3dp"
+            android:text="生活"
+            android:textColor="@color/material_white"
+            android:textSize="@dimen/textSize_small" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:text="      今天很受打击啊，面个试还被嫌弃长得肥，我长得胖出的多又没吃你家饭！我决定要努力运动减肥！不瘦到150斤就一直减！" />
+
+        <com.geo.widget.MyExpandGridView
+            android:id="@+id/home_myplan_item_img_gridview"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content"
+            android:horizontalSpacing="5dp"
+            android:verticalSpacing="5dp"
+            android:numColumns="3" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="已执行（32）" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="参与者（32）" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="鼓励（123）" />
+
+    </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

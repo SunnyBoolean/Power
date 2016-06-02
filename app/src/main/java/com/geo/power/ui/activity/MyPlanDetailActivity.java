@@ -32,7 +32,6 @@ public class MyPlanDetailActivity extends BaseActivity{
     private GridView mPicGridView;
     private final String[] mTabTitle = {"历史状态", "为我加油", "参与者"};
     private TabLayout mTabLayout;
-    private ViewPager mViewPager;
     public static final String[] mPictureUrls = {
             "http://ac-6ptjoad9.clouddn.com/3MekCrFaIezGOmrmbmvkILWjyF2dGIItve4AYXQC",
             "http://ac-6ptjoad9.clouddn.com/aEealv8tKqUxuSn3DHhHKPUQUtkUoVdZcwqN8i9y",
@@ -54,7 +53,6 @@ public class MyPlanDetailActivity extends BaseActivity{
         super.initCompontent();
         mPicGridView = (GridView) findViewById(R.id.home_myplan_detail_img_gridview);
         mTabLayout = (TabLayout) findViewById(R.id.myplan_detail_tablayout);
-        mViewPager = (ViewPager) findViewById(R.id.myplan_detail_viewpager);
         //计划图片适配器
         mPicGridView.setAdapter(new GridAdapter());
 //        initTabViewpager();
@@ -72,8 +70,6 @@ public class MyPlanDetailActivity extends BaseActivity{
         list.add(MyPlanVisitorFragment.getInstance());
         FragmentManager fm = getSupportFragmentManager();
         PlanFragmentAdapter adapter = new PlanFragmentAdapter(fm, list, mTabTitle);
-        mViewPager.setAdapter(adapter);
-        mTabLayout.setupWithViewPager(mViewPager);
     }
     @Override
     protected void initListener() {
