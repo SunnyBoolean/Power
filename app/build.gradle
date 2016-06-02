@@ -29,8 +29,5 @@ dependencies {
         transitive = false;
     }
     compile files('libs/hellocharts-library-1.5.8.jar')
-//    compile project(':multi-image-selector')
-    compile(project(':multi-image-selector')) {
-        transitive = false;
-    }
+    //    compile project(':multi-image-selector')
 }

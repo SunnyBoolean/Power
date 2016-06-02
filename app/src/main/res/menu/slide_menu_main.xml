@@ -6,28 +6,16 @@
         android:checkableBehavior="all"
         android:menuCategory="container">
         <item
-            android:id="@+id/menu_item_home_slidemenu_life"
+            android:id="@+id/menu_item_home_slidemenu_xinyuan"
             android:orderInCategory="100"
-            android:icon="@drawable/selector_slidemenu_life"
-            android:title="@string/home_slidemenu_life"
-            app:showAsAction="never" />
-        <item
-            android:id="@+id/menu_item_home_slidemenu_halerthy"
-            android:orderInCategory="100"
-            android:icon="@drawable/selector_slidemenu_halercy"
-            android:title="@string/home_slidemenu_halerthy"
-            app:showAsAction="never" />
-        <item
-            android:id="@+id/menu_item_home_slidemenu_learn"
-            android:orderInCategory="100"
-            android:title="@string/home_slidemenu_learn"
-            android:icon="@drawable/selector_slidemenu_learn"
-            app:showAsAction="never" />
-        <item
-            android:id="@+id/menu_item_home_slidemenu_work"
-            android:orderInCategory="100"
-            android:title="@string/home_slidemenu_work"
+            android:title="心愿寄语"
             android:icon="@drawable/selector_slidemenu_work"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/menu_item_home_slidemenu_xiguan"
+            android:orderInCategory="100"
+            android:title="习惯壁纸"
+            android:icon="@drawable/selector_slidemenu_learn"
             app:showAsAction="never" />
     </group>
 </menu>

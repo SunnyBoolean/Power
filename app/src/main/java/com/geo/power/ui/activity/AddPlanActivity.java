@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import me.nereo.multi_image_selector.MultiImageSelector;
-import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 import ui.geo.com.power.R;
 
 /**
@@ -18,12 +16,9 @@ public class AddPlanActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addplan);
         TextView tyv = (TextView) findViewById(R.id.add_pic);
-
         tyv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MultiImageSelector.create(mContext)
-                        .start(AddPlanActivity.this, 1);
             }
         });
     }

@@ -43,10 +43,6 @@
             android:label="我的计划详情"/>
         <activity android:name="com.geo.power.ui.activity.AddPlanActivity"
             android:label="添加计划"></activity>
-        <activity
-            android:configChanges="orientation|screenSize"
-            android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
-            android:permission="ANDROID.PERMISSION.READ_EXTERNAL_STORAGE"/>
     </application>
 
 </manifest>

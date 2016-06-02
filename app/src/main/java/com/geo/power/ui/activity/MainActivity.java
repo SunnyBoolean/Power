@@ -71,7 +71,7 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
         lay.width = (screen[0] * 5) / 7;
         mNavigationView.setLayoutParams(lay);
         //默认选中生活选项
-        mNavigationView.setCheckedItem(R.id.menu_item_home_slidemenu_life);
+        mNavigationView.setCheckedItem(R.id.menu_item_home_slidemenu_xiguan);
     }
 
     @Override
@@ -139,16 +139,10 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
                 //首先关闭菜单
                 mDrawerLayout.closeDrawers();
                 switch (id) {
-                    case R.id.menu_item_home_slidemenu_life: //生活
+                    case R.id.menu_item_home_slidemenu_xiguan: //习惯壁纸
                         changedRadioButtonByClick(mHomeBtn);
                         break;
-                    case R.id.menu_item_home_slidemenu_halerthy: //健康
-                        changedRadioButtonByClick(mHomeBtn);
-                        break;
-                    case R.id.menu_item_home_slidemenu_learn: //学习
-                        changedRadioButtonByClick(mHomeBtn);
-                        break;
-                    case R.id.menu_item_home_slidemenu_work:  //工作
+                    case R.id.menu_item_home_slidemenu_xinyuan: //心愿寄语
                         changedRadioButtonByClick(mHomeBtn);
                         break;
                 }
