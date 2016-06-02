@@ -6,6 +6,7 @@
     <uses-permission android:name="ANDROID.PERMISSION.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="ANDROID.PERMISSION.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="ANDROID.PERMISSION.CAMERA"/>
+
     <!-- 联网 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <application
@@ -40,6 +41,12 @@
             android:label="搜索"/>
         <activity android:name="com.geo.power.ui.activity.MyPlanDetailActivity"
             android:label="我的计划详情"/>
+        <activity android:name="com.geo.power.ui.activity.AddPlanActivity"
+            android:label="添加计划"></activity>
+        <activity
+            android:configChanges="orientation|screenSize"
+            android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
+            android:permission="ANDROID.PERMISSION.READ_EXTERNAL_STORAGE"/>
     </application>
 
 </manifest>

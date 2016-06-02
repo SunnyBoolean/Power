@@ -20,6 +20,7 @@
     </FrameLayout>
         <!--第三部分：漂浮按钮-->
         <android.support.design.widget.FloatingActionButton
+            android:id="@+id/home_addplan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"

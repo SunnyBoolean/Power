@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +22,8 @@ import com.geo.com.geo.power.util.ScreenUtil;
 import com.geo.power.ui.fragment.DiscoverFragment;
 import com.geo.power.ui.fragment.HomeFragment;
 import com.geo.power.ui.fragment.PersonalCenterFragment;
+
+import android.support.design.widget.FloatingActionButton;
 
 import java.util.List;
 
@@ -32,7 +33,9 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
     private RadioButton mHomeBtn, mDiscoverBtn, mPersonerCenterBtn;
     private TextView mSettingBtn, mAboutBtn;
     private DrawerLayout mDrawerLayout;
+    private FloatingActionButton mAddPlanFAB;
     private NavigationView mNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +57,7 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
         mPersonerCenterBtn = (RadioButton) findViewById(R.id.main_home_personal);
         mSettingBtn = (TextView) findViewById(R.id.home_main_setting_btn);
         mAboutBtn = (TextView) findViewById(R.id.home_main_about_btn);
+        mAddPlanFAB = (FloatingActionButton) findViewById(R.id.home_addplan);
         changedRadioButtonByClick(mHomeBtn);
         setSlideMenuWidth();
     }
@@ -101,8 +105,11 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case 1:
-                        Toast.makeText(MainActivity.this, "你想搜索什么", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, "你想搜索什么", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(mContext, SearchActivity.class);
+                        startActivity(intent);
                         break;
+
                     case 2:      //更多
                         showToast("选择更多");
                         break;
@@ -122,6 +129,7 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
         mHomeBtn.setOnClickListener(this);
         mDiscoverBtn.setOnClickListener(this);
         mPersonerCenterBtn.setOnClickListener(this);
+        mAddPlanFAB.setOnClickListener(this);
 //        mSettingBtn.setOnClickListener(this);
 //        mAboutBtn.setOnClickListener(this);
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -174,6 +182,10 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
                 break;
             case R.id.home_main_setting_btn:  //设置:
                 intent.setClass(mContext, SettingActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.home_addplan:  //添加计划:
+                intent.setClass(mContext, AddPlanActivity.class);
                 startActivity(intent);
                 break;
         }
