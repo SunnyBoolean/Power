@@ -39,6 +39,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     private SystemBarTintManager mTintManager;
     private View mContent;
     public final static String P_TAG = "Power";
+    public int mCommonColor = Color.parseColor("#004d40");
     /**
      * 是否显示Toolbar
      */

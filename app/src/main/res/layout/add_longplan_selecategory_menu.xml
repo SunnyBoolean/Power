@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:alpha="0.6"
+    android:background="@color/material_teal_900"
+    android:orientation="vertical">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@null"
+        android:gravity="center"
+        android:text="生活"
+        android:textColor="@color/material_white"
+        android:textSize="@dimen/textSize_normal" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/material_grey_500" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@null"
+        android:gravity="center"
+        android:text="运动"
+        android:textColor="@color/material_white"
+        android:textSize="@dimen/textSize_normal" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/material_grey_500" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@null"
+        android:gravity="center"
+        android:text="学习"
+        android:textColor="@color/material_white"
+        android:textSize="@dimen/textSize_normal" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/material_grey_500" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@null"
+        android:gravity="center"
+        android:text="工作"
+        android:textColor="@color/material_white"
+        android:textSize="@dimen/textSize_normal" />
+</LinearLayout>

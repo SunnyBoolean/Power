@@ -10,10 +10,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +25,7 @@ import com.geo.com.geo.power.util.ScreenUtil;
 import com.geo.power.ui.fragment.DiscoverFragment;
 import com.geo.power.ui.fragment.HomeFragment;
 import com.geo.power.ui.fragment.PersonalCenterFragment;
+import com.rey.material.app.BottomSheetDialog;
 
 import android.support.design.widget.FloatingActionButton;
 
@@ -35,6 +39,7 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
     private DrawerLayout mDrawerLayout;
     private FloatingActionButton mAddPlanFAB;
     private NavigationView mNavigationView;
+    private BottomSheetDialog mBottomSheetDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,8 +184,7 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
                 startActivity(intent);
                 break;
             case R.id.home_addplan:  //添加计划:
-                intent.setClass(mContext, AddPlanActivity.class);
-                startActivity(intent);
+                showBottomSheet();
                 break;
         }
     }
@@ -251,6 +255,67 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
         mPersonerCenterBtn.setSelected(false);
         btn.setSelected(true);
 
+    }
+
+    private void showBottomSheet() {
+        mBottomSheetDialog = new BottomSheetDialog(mContext, R.style.Material_App_BottomSheetDialog);
+        View content = LayoutInflater.from(mContext).inflate(R.layout.home_add_view_bottomsheet, null);
+        ImageButton close = (ImageButton) content.findViewById(R.id.home_addplan_close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetDialog.dismiss();
+            }
+        });
+        //长期计划
+        Button cqjh = (Button) content.findViewById(R.id.home_addplan_cqjh);
+        cqjh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetDialog.dismiss();
+                Intent intent = new Intent(mContext, AddLongPlanActivity.class);
+                startActivity(intent);
+            }
+        });
+        //习惯壁纸
+        Button xgbz = (Button) content.findViewById(R.id.home_addplan_xgbz);
+        xgbz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetDialog.dismiss();
+                Intent intent = new Intent(mContext, AddWallpaperActivity.class);
+                startActivity(intent);
+            }
+        });
+        //心愿寄语
+        Button xyjy = (Button) content.findViewById(R.id.home_addplan_xyjy);
+        xyjy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetDialog.dismiss();
+                Intent intent = new Intent(mContext, AddDreamPlanActivity.class);
+                startActivity(intent);
+            }
+        });
+        //随想笔记
+        Button sxbj = (Button) content.findViewById(R.id.home_addplan_sxbj);
+        sxbj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetDialog.dismiss();
+                Intent intent = new Intent(mContext, AddNoteActivity.class);
+                startActivity(intent);
+            }
+        });
+
+//        ViewUtil.setBackground(v, new ThemeDrawable(R.array.bg_window));
+//                mBottomSheetDialog.heightParam(ViewGroup.LayoutParams.MATCH_PARENT);
+//        Button bt_wrap = (Button)v.findViewById(R.id.sheet_bt_wrap);
+//                mBottomSheetDialog.heightParam(ViewGroup.LayoutParams.WRAP_CONTENT);
+//        });
+
+        mBottomSheetDialog.contentView(content)
+                .show();
     }
 
     @Override

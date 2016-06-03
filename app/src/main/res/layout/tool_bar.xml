@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@color/material_teal_800"
         android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:theme="@style/ToolBarStyle"
         app:layout_scrollFlags="scroll|enterAlways"
         app:titleMargins="-2dp">
     </android.support.v7.widget.Toolbar>

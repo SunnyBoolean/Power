@@ -110,7 +110,6 @@
         <item name="cv_nameTextAppearance">@style/TextAppearance.AppCompat.Subhead</item>
         <item name="cv_addressTextAppearance">@style/TextAppearance.AppCompat.Body1</item>
     </style>
-
     <style name="ContactEditText" parent="Material.Widget.EditText.Light">
         <item name="cet_spanHeight">32dp</item>
         <item name="cet_spanMaxWidth">150dp</item>
@@ -122,5 +121,7 @@
         <item name="cet_spanSpacing">4dp</item>
     </style>
 
-
+    <style name="ToolBarStyle" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="actionMenuTextColor">@color/material_white</item>
+    </style>
 </resources>

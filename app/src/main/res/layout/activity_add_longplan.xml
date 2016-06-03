@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/material_grey_200"
+    android:scrollbars="none"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addplan_kjkdsa"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/material_white"
+            android:orientation="vertical">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_margin="10dp"
+                android:background="@null"
+                android:gravity="top|start"
+                android:hint="说说你的计划..."
+                android:padding="10dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/add_camera_pic" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="12dp"
+                android:clickable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/add_longplan_location"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
+                    android:text="所在位置"
+                    android:textSize="@dimen/textSize_normal" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="35dp"></View>
+        <!-- 计划分类-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@color/material_white"
+            android:id="@+id/add_longplan_selcategory_click"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:paddingLeft="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/long_plan_category_tag"
+                android:id="@+id/add_longplan_selcategory_content"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:text="选择分类"
+                android:textSize="@dimen/textSize_normal" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/add_longplan_selcategory_imvtag"
+                android:visibility="gone"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:src="@drawable/add_longplan_seitem_lected"/>
+
+        </RelativeLayout>
+        <!--计划截止时间-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="0.5dp"
+            android:background="@color/material_white"
+            android:paddingLeft="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/mylongplan_deadline"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:text="计划截止时间"
+                android:textSize="@dimen/textSize_normal" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:src="@drawable/add_longplan_seitem_lected"/>
+        </RelativeLayout>
+        <!--定时提醒-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="0.5dp"
+            android:background="@color/material_white"
+            android:paddingLeft="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/mylongplan_notifi"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                android:text="定时提醒"
+                android:textSize="@dimen/textSize_normal" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:src="@drawable/add_longplan_seitem_lected"/>
+        </RelativeLayout>
+
+        <!--计划分期-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="0.5dp"
+            android:background="@color/material_white"
+            android:layout_marginBottom="30dp"
+            android:paddingLeft="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/mylongplan_jieduan"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:text="计划分期进行"
+                android:textSize="@dimen/textSize_normal" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:src="@drawable/add_longplan_seitem_lected"/>
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

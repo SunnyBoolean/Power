@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="ui.geo.com.power" >
-
     <uses-permission android:name="ANDROID.PERMISSION.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="ANDROID.PERMISSION.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="ANDROID.PERMISSION.CAMERA"/>
@@ -41,8 +40,16 @@
             android:label="搜索"/>
         <activity android:name="com.geo.power.ui.activity.MyPlanDetailActivity"
             android:label="我的计划详情"/>
-        <activity android:name="com.geo.power.ui.activity.AddPlanActivity"
-            android:label="添加计划"></activity>
+        <activity android:name="com.geo.power.ui.activity.AddDreamPlanActivity"
+            android:label="心愿寄语"></activity>
+        <activity android:name="com.geo.power.ui.activity.AddLongPlanActivity"
+            android:label="长期计划"></activity>
+        <activity android:name="com.geo.power.ui.activity.AddNoteActivity"
+            android:label="随想笔记"></activity>
+        <activity android:name="com.geo.power.ui.activity.AddWallpaperActivity"
+            android:label="习惯壁纸"></activity>
+
+
     </application>
 
 </manifest>
