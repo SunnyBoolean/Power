@@ -162,7 +162,7 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
      * @param v
      */
     @Override
-    protected void handlOnClickListener(View v) {
+    public void handlOnClickListener(View v) {
         super.handlOnClickListener(v);
         Intent intent = new Intent();
         switch (v.getId()) {
@@ -257,6 +257,9 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
 
     }
 
+    /**
+     * 显示菜单
+     */
     private void showBottomSheet() {
         mBottomSheetDialog = new BottomSheetDialog(mContext, R.style.Material_App_BottomSheetDialog);
         View content = LayoutInflater.from(mContext).inflate(R.layout.home_add_view_bottomsheet, null);
@@ -268,7 +271,7 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
             }
         });
         //长期计划
-        Button cqjh = (Button) content.findViewById(R.id.home_addplan_cqjh);
+        View cqjh = content.findViewById(R.id.home_addplan_cqjh);
         cqjh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -278,7 +281,7 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
             }
         });
         //习惯壁纸
-        Button xgbz = (Button) content.findViewById(R.id.home_addplan_xgbz);
+        View xgbz =  content.findViewById(R.id.home_addplan_xgbz);
         xgbz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -288,7 +291,7 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
             }
         });
         //心愿寄语
-        Button xyjy = (Button) content.findViewById(R.id.home_addplan_xyjy);
+        View xyjy = content.findViewById(R.id.home_addplan_xyjy);
         xyjy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -298,7 +301,7 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
             }
         });
         //随想笔记
-        Button sxbj = (Button) content.findViewById(R.id.home_addplan_sxbj);
+        View sxbj =  content.findViewById(R.id.home_addplan_sxbj);
         sxbj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

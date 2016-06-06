@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/material_grey_200"
-    android:scrollbars="none"
-    android:layout_height="wrap_content">
+    android:scrollbars="none">
 
     <LinearLayout
+        android:id="@+id/addplan_kjkdsa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/addplan_kjkdsa"
         android:orientation="vertical">
 
         <LinearLayout
@@ -36,9 +36,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:layout_marginLeft="20dp"
                 android:layout_marginTop="12dp"
-                android:clickable="true">
+                android:background="@color/add_longplan_item_selec"
+                android:clickable="true"
+                android:orientation="vertical"
+                android:paddingLeft="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -48,41 +50,52 @@
                     android:gravity="center_vertical"
                     android:text="所在位置"
                     android:textSize="@dimen/textSize_normal" />
+
+
             </LinearLayout>
         </LinearLayout>
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/material_white"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="35dp"></View>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/material_white"></View>
         <!-- 计划分类-->
         <RelativeLayout
+            android:id="@+id/add_longplan_selcategory_click"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:background="@color/material_white"
-            android:id="@+id/add_longplan_selcategory_click"
-            android:gravity="center_vertical"
+            android:background="@color/add_longplan_item_selec"
             android:clickable="true"
+            android:gravity="center_vertical"
             android:paddingLeft="20dp">
 
             <TextView
+                android:id="@+id/add_longplan_selcategory_content"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:drawableLeft="@drawable/long_plan_category_tag"
-                android:id="@+id/add_longplan_selcategory_content"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:text="选择分类"
                 android:textSize="@dimen/textSize_normal" />
+
             <ImageView
+                android:id="@+id/add_longplan_selcategory_imvtag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/add_longplan_selcategory_imvtag"
-                android:visibility="gone"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="30dp"
-                android:src="@drawable/add_longplan_seitem_lected"/>
+                android:src="@drawable/add_longplan_seitem_lected"
+                android:visibility="gone" />
 
         </RelativeLayout>
         <!--计划截止时间-->
@@ -90,7 +103,9 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginTop="0.5dp"
-            android:background="@color/material_white"
+            android:id="@+id/add_longplan_plandeadline_click"
+            android:background="@color/add_longplan_item_selec"
+            android:clickable="true"
             android:paddingLeft="20dp">
 
             <TextView
@@ -101,20 +116,23 @@
                 android:gravity="center_vertical"
                 android:text="计划截止时间"
                 android:textSize="@dimen/textSize_normal" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="30dp"
-                android:src="@drawable/add_longplan_seitem_lected"/>
+                android:src="@drawable/add_longplan_seitem_lected" />
         </RelativeLayout>
         <!--定时提醒-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginTop="0.5dp"
-            android:background="@color/material_white"
+            android:id="@+id/add_longplan_plannotify_click"
+            android:background="@color/add_longplan_item_selec"
+            android:clickable="true"
             android:paddingLeft="20dp">
 
             <TextView
@@ -125,22 +143,24 @@
                 android:gravity="center_vertical"
                 android:text="定时提醒"
                 android:textSize="@dimen/textSize_normal" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="30dp"
-                android:src="@drawable/add_longplan_seitem_lected"/>
+                android:src="@drawable/add_longplan_seitem_lected" />
         </RelativeLayout>
 
         <!--计划分期-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:layout_marginTop="0.5dp"
-            android:background="@color/material_white"
             android:layout_marginBottom="30dp"
+            android:layout_marginTop="0.5dp"
+            android:background="@color/add_longplan_item_selec"
+            android:clickable="true"
             android:paddingLeft="20dp">
 
             <TextView
@@ -151,13 +171,19 @@
                 android:gravity="center_vertical"
                 android:text="计划分期进行"
                 android:textSize="@dimen/textSize_normal" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="30dp"
-                android:src="@drawable/add_longplan_seitem_lected"/>
+                android:src="@drawable/add_longplan_seitem_lected" />
         </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/material_white"></View>
     </LinearLayout>
 </ScrollView>

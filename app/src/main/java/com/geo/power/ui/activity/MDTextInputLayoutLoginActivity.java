@@ -47,7 +47,7 @@ public class MDTextInputLayoutLoginActivity extends BaseActivity {
      * @param v
      */
     @Override
-    protected void handlOnClickListener(View v) {
+    public void handlOnClickListener(View v) {
         super.handlOnClickListener(v);
         switch (v.getId()) {
             case R.id.login:

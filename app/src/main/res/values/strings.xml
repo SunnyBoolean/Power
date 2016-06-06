@@ -16,4 +16,8 @@
     <item>学习</item>
     <item>工作</item>
 </array>
+
+    <string name="colorpicker_dialog_title">选择颜色</string>
+    <string name="colorpicker_dialog_cancel">取消</string>
+    <string name="colorpicker_dialog_ok">完成</string>
 </resources>

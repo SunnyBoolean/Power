@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:color="@null" android:state_selected="true"/>
-    <item android:color="@null" android:state_pressed="true"/>
-    <item android:color="@null" android:state_checked="true"/>
-    <item android:color="@color/material_white"></item>
-
+    <item android:color="@color/material_blueGrey_50" android:state_selected="true">
+        <color android:color="@color/material_blueGrey_50" />
+    </item>
+    <item android:color="@color/material_blueGrey_50" android:state_pressed="true">
+        <color android:color="@color/material_blueGrey_50" />
+    </item>
+    <item android:color="@color/material_blueGrey_50" android:state_checked="true">
+        <color android:color="@color/material_blueGrey_50" />
+    </item>
+<item android:color="@color/material_white">
+    <color android:color="@color/material_white" />
+</item>
 </selector>

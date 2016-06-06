@@ -2,6 +2,7 @@ package com.geo.power.ui.activity;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -54,6 +55,11 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         if (mToolBar != null) {
             init();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -156,7 +162,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
      *
      * @param v
      */
-    protected void handlOnClickListener(View v) {
+    public void handlOnClickListener(View v) {
 
     }
 
@@ -166,7 +172,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
      * @param v The view that was clicked.
      */
     @Override
-    final public void onClick(View v) {
+     public void onClick(View v) {
         handlOnClickListener(v);
     }
 
@@ -175,7 +181,9 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
      * 关于Toolbar的操作均在此完成
      */
     protected void initToolBar() {
-
+        if(mToolBar == null){
+            return;
+        }
         mToolBar.setNavigationIcon(R.drawable.back); //设置导航按钮，典型的就是返回箭头
         int color = Color.parseColor("#FFFFFF");
         mToolBar.setTitleTextColor(getResources().getColor(R.color.material_white));  //设置标题字体颜色

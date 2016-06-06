@@ -24,4 +24,15 @@
     <!-- 这个是item上的图标左padding值 -->
     <dimen name="setting_list_item_icon_left_padding">72dp</dimen>
     <dimen name="setting_list_item_height">48dp</dimen>
+
+
+
+
+        <!--  Design guidelines -->
+        <dimen name="activity_horizontal_margin">16dp</dimen>
+        <dimen name="activity_vertical_margin">16dp</dimen>
+        <dimen name="action_button_height">32dp</dimen>
+        <dimen name="action_button_text_size">14sp</dimen>
+        <dimen name="action_button_min_width">56dp</dimen>
+        <dimen name="action_button_padding_horizontal">4dp</dimen>
 </resources>
