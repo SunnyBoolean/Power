@@ -15,17 +15,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.geo.com.geo.power.util.DensityUtil;
 import com.geo.com.geo.power.util.ScreenUtil;
 import com.geo.power.ui.fragment.DiscoverFragment;
 import com.geo.power.ui.fragment.HomeFragment;
 import com.geo.power.ui.fragment.PersonalCenterFragment;
 import com.rey.material.app.BottomSheetDialog;
+import com.rey.material.widget.Spinner;
 
 import android.support.design.widget.FloatingActionButton;
 
@@ -33,7 +36,7 @@ import java.util.List;
 
 import ui.geo.com.power.R;
 
-public class MainActivity extends BaseActivity implements DiscoverFragment.FMCallback {
+public class MainActivity extends HomeBaseActivity implements DiscoverFragment.FMCallback {
     private RadioButton mHomeBtn, mDiscoverBtn, mPersonerCenterBtn;
     private TextView mSettingBtn, mAboutBtn;
     private DrawerLayout mDrawerLayout;
@@ -45,7 +48,7 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PLog(P_TAG, "子类类onCreate()");
-        setContentView(R.layout.activity_main, false);
+        setContentView(R.layout.activity_main, true);
 //        setContentView(R.layout.activity_main);
 
     }
@@ -82,6 +85,7 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
     @Override
     protected void initToolBar() {
         super.initToolBar();
+
 //        setSupportActionBar(mToolBar);这个方法会报错
         mToolBar.setNavigationIcon(R.drawable.home_main_menu);//设置导航按钮，典型的就是返回箭头
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -126,8 +130,43 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
                 return false;
             }
         });
+
+
+        spinner();
     }
 
+    private void spinner() {
+//    View v = View.inflate(mContext,R.layout.fragment_spinner, null);
+
+        Spinner spn_label = (Spinner) findViewById(R.id.spinner_labels);
+        if(spn_label == null){
+            return;
+        }
+        String[] items = {"生活","运动","学习","工作"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, R.layout.row_spn, items);
+        adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
+        spn_label.setAdapter(adapter);
+        View view = spn_label.getSelectedView();
+        com.rey.material.widget.TextView tvd = (com.rey.material.widget.TextView) view;
+        final int tsize = DensityUtil.dip2px(mContext,6);
+        tvd.setTextColor(Color.WHITE);
+        tvd.setTextSize(tsize);
+        Toast.makeText(mContext,"没选啊",Toast.LENGTH_SHORT).show();
+//        spn_label.setSelection(0);
+
+        spn_label.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(Spinner parent, View view, int position, long id) {
+                com.rey.material.widget.TextView tv = (com.rey.material.widget.TextView) view;
+                tv.setTextColor(Color.WHITE);
+                tv.setTextSize(tsize);
+
+            Toast.makeText(mContext,"选中",Toast.LENGTH_LONG).show();
+            }
+
+        });
+        spn_label.performItemClick(tvd,0,0);
+    }
 
     protected void initListener() {
 
@@ -281,7 +320,7 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
             }
         });
         //习惯壁纸
-        View xgbz =  content.findViewById(R.id.home_addplan_xgbz);
+        View xgbz = content.findViewById(R.id.home_addplan_xgbz);
         xgbz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -301,7 +340,7 @@ public class MainActivity extends BaseActivity implements DiscoverFragment.FMCal
             }
         });
         //随想笔记
-        View sxbj =  content.findViewById(R.id.home_addplan_sxbj);
+        View sxbj = content.findViewById(R.id.home_addplan_sxbj);
         sxbj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

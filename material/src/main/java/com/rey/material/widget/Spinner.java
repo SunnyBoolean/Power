@@ -357,7 +357,6 @@ public class Spinner extends FrameLayout implements ThemeManager.OnThemeChangedL
         boolean rtl = layoutDirection == LAYOUT_DIRECTION_RTL;
         if(mIsRtl != rtl) {
             mIsRtl = rtl;
-
             if(mLabelView != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
                 mLabelView.setTextDirection(mIsRtl ? TEXT_DIRECTION_RTL : TEXT_DIRECTION_LTR);
 

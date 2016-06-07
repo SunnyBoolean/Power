@@ -7,14 +7,14 @@
     android:orientation="vertical">
 
     <com.rey.material.widget.Slider
-        android:id="@+id/add_wallpaper_textsize_slider"
-        style="@style/Material.Widget.Slider.Discrete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="16dp"
-        app:sl_value="50"
-        app:v_styleId="@array/slider_discrete" />
+    android:id="@+id/add_wallpaper_textsize_slider"
+    style="@style/Material.Widget.Slider.Discrete"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="16dp"
+    app:sl_value="50"
+    app:v_styleId="@array/slider_discrete" />
 
 
     <LinearLayout
@@ -25,19 +25,27 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
+        <com.rey.material.widget.Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
+            android:layout_height="40dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
             android:id="@+id/add_wallpaper_textsize_slder_cancel"
+            app:v_styleId="@array/button_flat_wave"
+            style="@style/LightFlatWaveButtonRippleStyle"
+            android:background="@null"
             android:text="取消" />
 
-        <Button
+        <com.rey.material.widget.Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
             android:layout_marginLeft="50dp"
             android:id="@+id/add_wallpaper_textsize_slider_confirm"
             android:background="@null"
+            style="@style/LightFlatWaveButtonRippleStyle"
+            app:v_styleId="@array/button_flat_wave"
             android:text="确定" />
     </LinearLayout>
 </LinearLayout>

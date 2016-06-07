@@ -10,29 +10,25 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.geo.com.geo.power.util.DensityUtil;
-import com.geo.com.geo.power.util.ScreenUtil;
 import com.geo.widget.colorpicker.ColorPicker;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rey.material.app.BottomSheetDialog;
 import com.rey.material.app.Dialog;
 import com.rey.material.app.DialogFragment;
-import com.rey.material.app.SimpleDialog;
+import com.rey.material.widget.Button;
 import com.rey.material.widget.EditText;
 import com.rey.material.widget.Slider;
 
@@ -230,14 +226,14 @@ public class AddWallpaperActivity extends BaseActivity {
         mTextSizeSlider = (Slider) content.findViewById(R.id.add_wallpaper_textsize_slider);
         mTextSizeSlider.setPrimaryColor(mCommonColor);
         mTextSizeSlider.setValueRange(3, 32, true);
-        Button cancer = (Button) content.findViewById(R.id.add_wallpaper_textsize_slder_cancel);
+        com.rey.material.widget.Button cancer = (Button) content.findViewById(R.id.add_wallpaper_textsize_slder_cancel);
         cancer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mBottomSheetDialog.dismiss();
             }
         });
-        Button confirm = (Button) content.findViewById(R.id.add_wallpaper_textsize_slider_confirm);
+        com.rey.material.widget.Button confirm = (Button) content.findViewById(R.id.add_wallpaper_textsize_slider_confirm);
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

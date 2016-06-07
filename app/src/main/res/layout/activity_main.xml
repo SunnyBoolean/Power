@@ -20,7 +20,7 @@
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <include layout="@layout/tool_bar"></include>
+
             </android.support.design.widget.AppBarLayout>
 
             <include layout="@layout/main_content"></include>

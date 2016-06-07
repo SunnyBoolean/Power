@@ -14,5 +14,15 @@
             android:theme="@style/ToolBarStyle"
             app:titleMargins="-2dp">
 
+            <com.rey.material.widget.Spinner
+                android:id="@+id/spinner_labels"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/material_white"
+                style="@style/Power.LightSpinner"
+                android:gravity="center"
+                app:spn_labelTextColor="@color/material_white"
+                android:dropDownWidth="125dp"
+                app:v_styleId="@array/spinner"/>
         </android.support.v7.widget.Toolbar>
 </android.support.design.widget.CoordinatorLayout>
