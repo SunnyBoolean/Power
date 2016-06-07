@@ -1,6 +1,7 @@
 package com.geo.power.ui.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -31,9 +32,9 @@ import ui.geo.com.power.R;
  * Created by Administrator on 2016/6/3.
  */
 public class AddLongPlanActivity extends BaseActivity {
-    private View mSelectCategory, mPlanDeadline, mPlanNotify, mPlanJieduan;
-    private TextView mSelectCategoryContent;
-    private ImageView mCategorySelectegIV;
+    private View mSelectCategory, mPlanDeadline, mPlanNotify, mPlanLocation,mPlanJieduan;
+    private TextView mSelectCategoryContent, mPlanDeadLineTv, mPlanNotifyShow;
+    private ImageView mCategorySelectegIV, mPlanDeadlineIm, mPlanNotifyIm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,11 @@ public class AddLongPlanActivity extends BaseActivity {
         mCategorySelectegIV = (ImageView) findViewById(R.id.add_longplan_selcategory_imvtag);
         mPlanDeadline = findViewById(R.id.add_longplan_plandeadline_click);
         mPlanNotify = findViewById(R.id.add_longplan_plannotify_click);
-
+        mPlanDeadLineTv = (TextView) findViewById(R.id.add_longplan_plandeadline__tvshow);
+        mPlanDeadlineIm = (ImageView) findViewById(R.id.add_longplan_plandeadline__imgone);
+        mPlanNotifyShow = (TextView) findViewById(R.id.add_longplan_plannotify_noftivshow);
+        mPlanNotifyIm = (ImageView) findViewById(R.id.add_longplan_plannotify_imgone);
+    mPlanLocation = findViewById(R.id.addlongplan_location_click);
     }
 
     @Override
@@ -61,6 +66,7 @@ public class AddLongPlanActivity extends BaseActivity {
         mSelectCategory.setOnClickListener(this);
         mPlanDeadline.setOnClickListener(this);
         mPlanNotify.setOnClickListener(this);
+        mPlanLocation.setOnClickListener(this);
     }
 
     /**
@@ -72,6 +78,10 @@ public class AddLongPlanActivity extends BaseActivity {
     public void handlOnClickListener(View v) {
         super.handlOnClickListener(v);
         switch (v.getId()) {
+            case R.id.addlongplan_location_click:  //选择位置
+                Intent intent = new Intent(mContext,AddLongPlanLocationActivity.class);
+                startActivity(intent);
+                break;
             case R.id.add_longplan_selcategory_click:  //选择分类
 //          //      popupWindowForPlanTag();
                 showPlanCategoryDialog();
@@ -91,7 +101,10 @@ public class AddLongPlanActivity extends BaseActivity {
             @Override
             public void onPositiveActionClicked(DialogFragment fragment) {
                 TimePickerDialog dialog = (TimePickerDialog) fragment.getDialog();
-                Toast.makeText(mContext, "Time is " + dialog.getFormattedTime(SimpleDateFormat.getTimeInstance()), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "Time is " + dialog.getFormattedTime(SimpleDateFormat.getTimeInstance()), Toast.LENGTH_SHORT).show();
+                String time = dialog.getFormattedTime(SimpleDateFormat.getTimeInstance());
+                mPlanNotifyShow.setText(time);
+                mPlanNotifyIm.setVisibility(View.VISIBLE);
                 super.onPositiveActionClicked(fragment);
             }
 
@@ -101,9 +114,10 @@ public class AddLongPlanActivity extends BaseActivity {
                 super.onNegativeActionClicked(fragment);
             }
         };
-
-        builder.positiveAction("OK")
-                .negativeAction("CANCEL");
+        builder.positiveAction("完成")
+                .negativeAction("取消");
+        DialogFragment fragment = DialogFragment.newInstance(builder);
+        fragment.show(getSupportFragmentManager(), null);
     }
 
     /**
@@ -115,13 +129,15 @@ public class AddLongPlanActivity extends BaseActivity {
             public void onPositiveActionClicked(DialogFragment fragment) {
                 DatePickerDialog dialog = (DatePickerDialog) fragment.getDialog();
                 String date = dialog.getFormattedDate(SimpleDateFormat.getDateInstance());
-                Toast.makeText(mContext, "Date is " + date, Toast.LENGTH_SHORT).show();
+                mPlanDeadLineTv.setText(date);
+                mPlanDeadlineIm.setVisibility(View.VISIBLE);
+//                Toast.makeText(mContext, "Date is " + date, Toast.LENGTH_SHORT).show();
                 super.onPositiveActionClicked(fragment);
             }
 
             @Override
             public void onNegativeActionClicked(DialogFragment fragment) {
-                Toast.makeText(mContext, "Cancelled", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "Cancelled", Toast.LENGTH_SHORT).show();
                 super.onNegativeActionClicked(fragment);
             }
         };

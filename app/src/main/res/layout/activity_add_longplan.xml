@@ -37,6 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_marginTop="12dp"
+                android:id="@+id/addlongplan_location_click"
                 android:background="@color/add_longplan_item_selec"
                 android:clickable="true"
                 android:orientation="vertical"
@@ -44,6 +45,7 @@
 
                 <TextView
                     android:layout_width="wrap_content"
+                    android:id="@+id/addlongplan_location_tvshow"
                     android:layout_height="match_parent"
                     android:drawableLeft="@drawable/add_longplan_location"
                     android:drawablePadding="10dp"
@@ -112,6 +114,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:drawableLeft="@drawable/mylongplan_deadline"
+                android:id="@+id/add_longplan_plandeadline__tvshow"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:text="计划截止时间"
@@ -121,8 +124,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:id="@+id/add_longplan_plandeadline__imgone"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="30dp"
+                android:visibility="gone"
                 android:src="@drawable/add_longplan_seitem_lected" />
         </RelativeLayout>
         <!--定时提醒-->
@@ -139,6 +144,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:drawableLeft="@drawable/mylongplan_notifi"
+                android:id="@+id/add_longplan_plannotify_noftivshow"
                 android:drawablePadding="12dp"
                 android:gravity="center_vertical"
                 android:text="定时提醒"
@@ -148,7 +154,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:id="@+id/add_longplan_plannotify_imgone"
                 android:layout_centerVertical="true"
+                android:visibility="gone"
                 android:layout_marginRight="30dp"
                 android:src="@drawable/add_longplan_seitem_lected" />
         </RelativeLayout>
