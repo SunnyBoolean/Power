@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/material_grey_200"
     android:scrollbars="none">
-
     <LinearLayout
         android:id="@+id/addplan_kjkdsa"
         android:layout_width="match_parent"
@@ -65,6 +65,37 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"></View>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/material_white"></View>
+        <!--公开还是私有-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@color/material_white"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:clickable="true"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/textSize_normal"
+                android:gravity="center_vertical"
+                android:id="@+id/add_longplan_pubprio_cv"
+                android:text="公开"/>
+
+            <com.rey.material.widget.Switch
+                android:id="@+id/add_longplan_pubprio_switcher"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                style="@style/Material.Widget.Switch"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:checked="true"
+                app:v_styleId="@array/switches"/>
+        </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="0.2dp"

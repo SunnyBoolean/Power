@@ -2,6 +2,7 @@ package com.geo.power.ui.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +24,7 @@ import com.geo.com.geo.power.util.ScreenUtil;
 import com.rey.material.app.DatePickerDialog;
 import com.rey.material.app.DialogFragment;
 import com.rey.material.app.TimePickerDialog;
+import com.rey.material.widget.Switch;
 
 import java.text.SimpleDateFormat;
 
@@ -32,9 +34,10 @@ import ui.geo.com.power.R;
  * Created by Administrator on 2016/6/3.
  */
 public class AddLongPlanActivity extends BaseActivity {
-    private View mSelectCategory, mPlanDeadline, mPlanNotify, mPlanLocation,mPlanJieduan;
-    private TextView mSelectCategoryContent, mPlanDeadLineTv, mPlanNotifyShow;
+    private View mSelectCategory, mPlanDeadline, mPlanNotify, mPlanLocation, mPlanJieduan;
+    private TextView mSelectCategoryContent, mPlanDeadLineTv, mPlanNotifyShow, mIsPublicTV;
     private ImageView mCategorySelectegIV, mPlanDeadlineIm, mPlanNotifyIm;
+    private Switch mIsPublicSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +60,9 @@ public class AddLongPlanActivity extends BaseActivity {
         mPlanDeadlineIm = (ImageView) findViewById(R.id.add_longplan_plandeadline__imgone);
         mPlanNotifyShow = (TextView) findViewById(R.id.add_longplan_plannotify_noftivshow);
         mPlanNotifyIm = (ImageView) findViewById(R.id.add_longplan_plannotify_imgone);
-    mPlanLocation = findViewById(R.id.addlongplan_location_click);
+        mPlanLocation = findViewById(R.id.addlongplan_location_click);
+        mIsPublicSwitch = (Switch) findViewById(R.id.add_longplan_pubprio_switcher);
+        mIsPublicTV = (TextView) findViewById(R.id.add_longplan_pubprio_cv);
     }
 
     @Override
@@ -67,6 +72,18 @@ public class AddLongPlanActivity extends BaseActivity {
         mPlanDeadline.setOnClickListener(this);
         mPlanNotify.setOnClickListener(this);
         mPlanLocation.setOnClickListener(this);
+        mIsPublicSwitch.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(Switch view, boolean checked) {
+                if (checked) {
+                    mIsPublicTV.setText("公开");
+                    mIsPublicTV.setTextColor(mCommonColor);
+                } else {
+                    mIsPublicTV.setText("私有");
+                    mIsPublicTV.setTextColor(Color.GRAY);
+                }
+            }
+        });
     }
 
     /**
@@ -79,7 +96,7 @@ public class AddLongPlanActivity extends BaseActivity {
         super.handlOnClickListener(v);
         switch (v.getId()) {
             case R.id.addlongplan_location_click:  //选择位置
-                Intent intent = new Intent(mContext,AddLongPlanLocationActivity.class);
+                Intent intent = new Intent(mContext, AddLongPlanLocationActivity.class);
                 startActivity(intent);
                 break;
             case R.id.add_longplan_selcategory_click:  //选择分类
@@ -105,6 +122,7 @@ public class AddLongPlanActivity extends BaseActivity {
                 String time = dialog.getFormattedTime(SimpleDateFormat.getTimeInstance());
                 mPlanNotifyShow.setText(time);
                 mPlanNotifyIm.setVisibility(View.VISIBLE);
+                mPlanNotifyShow.setTextColor(mCommonColor);
                 super.onPositiveActionClicked(fragment);
             }
 
@@ -130,6 +148,7 @@ public class AddLongPlanActivity extends BaseActivity {
                 DatePickerDialog dialog = (DatePickerDialog) fragment.getDialog();
                 String date = dialog.getFormattedDate(SimpleDateFormat.getDateInstance());
                 mPlanDeadLineTv.setText(date);
+                mPlanDeadLineTv.setTextColor(mCommonColor);
                 mPlanDeadlineIm.setVisibility(View.VISIBLE);
 //                Toast.makeText(mContext, "Date is " + date, Toast.LENGTH_SHORT).show();
                 super.onPositiveActionClicked(fragment);
@@ -170,7 +189,6 @@ public class AddLongPlanActivity extends BaseActivity {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    int color = Color.parseColor("#004d40");
                     mSelectCategoryContent.setTextColor(mCommonColor);
                     mSelectCategoryContent.setText(view.getText().toString());
                     mCategorySelectegIV.setVisibility(View.VISIBLE);

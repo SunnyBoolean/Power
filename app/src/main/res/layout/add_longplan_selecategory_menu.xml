@@ -1,53 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <Button
+    <com.rey.material.widget.Button
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/add_longplan_item_selec"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:textSize="@dimen/textSize_normal"
         android:gravity="center"
-        android:text="生活"
-        android:textSize="@dimen/textSize_normal" />
+        android:background="@null"
+        style="@style/LightFlatWaveButtonRippleStyle"
+        app:v_styleId="@array/button_flat_wave"
+        android:text="生活" />
+
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0.2dp"
         android:background="@color/material_grey_500" />
 
-    <Button
+    <com.rey.material.widget.Button
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/add_longplan_item_selec"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:textSize="@dimen/textSize_normal"
         android:gravity="center"
-        android:text="运动"
-        android:textSize="@dimen/textSize_normal" />
+        android:background="@null"
+        style="@style/LightFlatWaveButtonRippleStyle"
+        app:v_styleId="@array/button_flat_wave"
+        android:text="运动" />
+
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0.2dp"
         android:background="@color/material_grey_500" />
 
-    <Button
+    <com.rey.material.widget.Button
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/add_longplan_item_selec"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:textSize="@dimen/textSize_normal"
         android:gravity="center"
-        android:text="学习"
-        android:textSize="@dimen/textSize_normal" />
+        android:background="@null"
+        style="@style/LightFlatWaveButtonRippleStyle"
+        app:v_styleId="@array/button_flat_wave"
+        android:text="学习" />
+
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0.2dp"
         android:background="@color/material_grey_500" />
 
-    <Button
+
+    <com.rey.material.widget.Button
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/add_longplan_item_selec"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:textSize="@dimen/textSize_normal"
         android:gravity="center"
-        android:text="工作"
-        android:textSize="@dimen/textSize_normal" />
+        android:background="@null"
+        style="@style/LightFlatWaveButtonRippleStyle"
+        app:v_styleId="@array/button_flat_wave"
+        android:text="工作" />
+
 </LinearLayout>

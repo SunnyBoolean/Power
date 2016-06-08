@@ -43,12 +43,12 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
     private FloatingActionButton mAddPlanFAB;
     private NavigationView mNavigationView;
     private BottomSheetDialog mBottomSheetDialog;
-
+    private Spinner mSpinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PLog(P_TAG, "子类类onCreate()");
-        setContentView(R.layout.activity_main, true);
+        setContentView(R.layout.activity_main, false);
 //        setContentView(R.layout.activity_main);
 
     }
@@ -66,6 +66,7 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
         mSettingBtn = (TextView) findViewById(R.id.home_main_setting_btn);
         mAboutBtn = (TextView) findViewById(R.id.home_main_about_btn);
         mAddPlanFAB = (FloatingActionButton) findViewById(R.id.home_addplan);
+        mSpinner = (Spinner) findViewById(R.id.spinner_labels);
         changedRadioButtonByClick(mHomeBtn);
         setSlideMenuWidth();
     }
@@ -136,36 +137,13 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
     }
 
     private void spinner() {
-//    View v = View.inflate(mContext,R.layout.fragment_spinner, null);
-
-        Spinner spn_label = (Spinner) findViewById(R.id.spinner_labels);
-        if(spn_label == null){
-            return;
-        }
-        String[] items = {"生活","运动","学习","工作"};
+        final int tsize = DensityUtil.dip2px(mContext, 6);
+        String[] items = {"生活", "运动", "学习", "工作"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, R.layout.row_spn, items);
         adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
-        spn_label.setAdapter(adapter);
-        View view = spn_label.getSelectedView();
-        com.rey.material.widget.TextView tvd = (com.rey.material.widget.TextView) view;
-        final int tsize = DensityUtil.dip2px(mContext,6);
-        tvd.setTextColor(Color.WHITE);
-        tvd.setTextSize(tsize);
-        Toast.makeText(mContext,"没选啊",Toast.LENGTH_SHORT).show();
-//        spn_label.setSelection(0);
-
-        spn_label.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(Spinner parent, View view, int position, long id) {
-                com.rey.material.widget.TextView tv = (com.rey.material.widget.TextView) view;
-                tv.setTextColor(Color.WHITE);
-                tv.setTextSize(tsize);
-
-            Toast.makeText(mContext,"选中",Toast.LENGTH_LONG).show();
-            }
-
-        });
-        spn_label.performItemClick(tvd,0,0);
+        mSpinner.setAdapter(adapter);
+        mSpinner.setmShowTextColor(Color.WHITE);
+        mSpinner.setShowTextSize(tsize);
     }
 
     protected void initListener() {
@@ -174,8 +152,8 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
         mDiscoverBtn.setOnClickListener(this);
         mPersonerCenterBtn.setOnClickListener(this);
         mAddPlanFAB.setOnClickListener(this);
-//        mSettingBtn.setOnClickListener(this);
-//        mAboutBtn.setOnClickListener(this);
+        mSettingBtn.setOnClickListener(this);
+        mAboutBtn.setOnClickListener(this);
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -205,13 +183,16 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
         super.handlOnClickListener(v);
         Intent intent = new Intent();
         switch (v.getId()) {
-            case R.id.main_home_home:
+            case R.id.main_home_home:    //主界面/发现
+                mSpinner.setVisibility(View.VISIBLE);
                 changedRadioButtonByClick(mHomeBtn);
                 break;
-            case R.id.main_home_discover:
+            case R.id.main_home_discover:   //计划
+                mSpinner.setVisibility(View.GONE);
                 changedRadioButtonByClick(mDiscoverBtn);
                 break;
-            case R.id.main_home_personal:
+            case R.id.main_home_personal:  //个人中心
+                mSpinner.setVisibility(View.GONE);
                 changedRadioButtonByClick(mPersonerCenterBtn);
                 break;
             case R.id.home_main_about_btn: //关于
@@ -282,7 +263,6 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
         FragmentManager fm = getSupportFragmentManager();
         return fm;
     }
-
     /**
      * 用于控制导航栏图标颜色变化
      *
@@ -297,7 +277,7 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
     }
 
     /**
-     * 显示菜单
+     * 显示新增计划菜单
      */
     private void showBottomSheet() {
         mBottomSheetDialog = new BottomSheetDialog(mContext, R.style.Material_App_BottomSheetDialog);
