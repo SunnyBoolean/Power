@@ -363,7 +363,6 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

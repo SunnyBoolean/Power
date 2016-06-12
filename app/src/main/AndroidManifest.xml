@@ -94,6 +94,10 @@
         <activity
             android:name="com.geo.power.ui.activity.AddLongPlanLocationActivity"
             android:label="选择位置" />
+        <activity android:name="com.geo.power.ui.activity.NoteListActivity"
+            android:label="笔记列表"/>
+        <activity android:name="com.geo.power.ui.activity.NoteDetailActivity"
+            android:label="笔记详情"/>
     </application>
 
 </manifest>

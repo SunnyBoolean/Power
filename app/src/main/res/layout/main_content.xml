@@ -1,10 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/main_content"
@@ -12,12 +12,11 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:fitsSystemWindows="true">
-    <FrameLayout
-        android:id="@+id/main_fragment_container"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        >
-    </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/main_fragment_container"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"></FrameLayout>
         <!--第三部分：漂浮按钮-->
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/home_addplan"
@@ -26,37 +25,40 @@
             android:layout_margin="16dp"
             android:clickable="true"
             android:src="@drawable/ic_add"
-            app:layout_anchor="@id/main_fragment_container"
             app:backgroundTint="@color/material_blue_500"
+            app:layout_anchor="@id/main_fragment_container"
             app:layout_anchorGravity="bottom|right" />
     </android.support.design.widget.CoordinatorLayout>
+
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:background="@color/material_white"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="match_parent"
-            android:background="@color/material_grey_400"
-            android:layout_height="0.5dp" />
+            android:layout_height="0.5dp"
+            android:background="@color/material_grey_400" />
 
         <RadioGroup
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_marginTop="8dp"
             android:alpha="0.5"
+            android:background="@color/material_white"
             android:baselineAligned="false"
             android:clipChildren="false"
             android:layerType="software"
             android:measureWithLargestChild="true"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/main_home_home"
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:background="@null"
+                android:background="@color/material_white"
                 android:button="@null"
                 android:drawablePadding="1dip"
                 android:drawableTop="@drawable/selector_home_btn"
@@ -70,7 +72,7 @@
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@null"
+                android:background="@color/material_white"
                 android:button="@null"
                 android:drawablePadding="5dip"
                 android:drawableTop="@drawable/selector_home_discover_btn"
@@ -84,7 +86,7 @@
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:background="@null"
+                android:background="@color/material_white"
                 android:button="@null"
                 android:drawablePadding="0dip"
                 android:drawableTop="@drawable/selector_home_personal_btn"

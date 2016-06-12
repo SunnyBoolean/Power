@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.geo.power.ui.activity.MyPlanActivity;
+import com.geo.power.ui.activity.NoteListActivity;
 
 import ui.geo.com.power.R;
 
@@ -16,8 +17,7 @@ import ui.geo.com.power.R;
  */
 public class PersonalCenterFragment extends BaseFragment {
     private static PersonalCenterFragment mInstance;
-    private View mMyPlan;
-
+    private View mNoteBtn;
     public static PersonalCenterFragment getInstance() {
         if (mInstance == null) {
             mInstance = new PersonalCenterFragment();
@@ -29,14 +29,14 @@ public class PersonalCenterFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View content = View.inflate(mContext, R.layout.profile_setting, null);
-        mMyPlan = content.findViewById(R.id.personal_my_aim);
+        mNoteBtn = content.findViewById(R.id.personal_my_note);
         initListener();
 
         return content;
     }
 
     private void initListener() {
-        mMyPlan.setOnClickListener(this);
+        mNoteBtn.setOnClickListener(this);
     }
 
     @Override
@@ -44,11 +44,10 @@ public class PersonalCenterFragment extends BaseFragment {
         super.handlerClick(view);
         Intent intent = new Intent();
         switch (view.getId()) {
-            case R.id.personal_my_aim:  //我的计划
-                intent.setClass(mContext, MyPlanActivity.class);
+            case R.id.personal_my_note:
+                intent.setClass(mContext, NoteListActivity.class);
                 startActivity(intent);
                 break;
-
         }
     }
 }

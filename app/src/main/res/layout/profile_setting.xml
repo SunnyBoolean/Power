@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/material_grey_400"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
     <LinearLayout
@@ -11,109 +12,84 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.design.widget.CoordinatorLayout
-            android:id="@+id/main_content"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true">
+            android:layout_height="200dp">
 
-            <!--第一部分：伸缩工具栏-->
-            <android.support.design.widget.AppBarLayout
-                android:id="@+id/appbar"
+
+            <ImageView
+                android:id="@+id/backdrop"
                 android:layout_width="match_parent"
-                android:layout_height="245dp"
+                android:layout_height="200dp"
                 android:fitsSystemWindows="true"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+                android:scaleType="centerCrop"
+                android:src="@drawable/dream_bg" />
 
-                <android.support.design.widget.CollapsingToolbarLayout
-                    android:id="@+id/collapsing_toolbar"
+            <include layout="@layout/personal_image_header"></include>
+
+            <LinearLayout
+                android:id="@+id/personal_tit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/setting_list_item_height"
+                android:layout_gravity="bottom"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fitsSystemWindows="true"
-                    app:contentScrim="?attr/colorPrimary"
-                    app:expandedTitleMarginEnd="64dp"
-                    app:expandedTitleMarginStart="48dp"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                    android:layout_height="@dimen/setting_list_item_height"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
-                    <ImageView
-                        android:id="@+id/backdrop"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fitsSystemWindows="true"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/dream_bg" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="能量值"
+                        android:textColor="@color/material_white" />
 
-                    <include layout="@layout/personal_image_header"></include>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="3dp"
+                        android:text="6520"
+                        android:textColor="@color/material_white" />
+                </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/personal_tit"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/setting_list_item_height"
-                        android:layout_gravity="bottom"
-                        android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0.5dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:background="@color/material_grey_400"
+                    app:layout_anchor="@id/personal_tit" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/setting_list_item_height"
-                            android:layout_weight="1"
-                            android:gravity="center_horizontal|center_vertical"
-                            android:orientation="vertical"
-                            android:padding="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/setting_list_item_height"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="能量值"
-                                android:textColor="@color/material_white" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="关注我的"
+                        android:textColor="@color/material_white" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:layout_centerHorizontal="true"
-                                android:layout_marginTop="3dp"
-                                android:text="6520"
-                                android:textColor="@color/material_white" />
-                        </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="1250"
+                        android:textColor="@color/material_white" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
 
-                        <TextView
-                            android:layout_width="0.5dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center_horizontal|center_vertical"
-                            android:background="@color/material_grey_400"
-                            app:layout_anchor="@id/personal_tit" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/setting_list_item_height"
-                            android:layout_weight="1"
-                            android:gravity="center_horizontal|center_vertical"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="关注我的"
-                                android:textColor="@color/material_white" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="3dp"
-                                android:text="1250"
-                                android:textColor="@color/material_white" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </android.support.design.widget.CollapsingToolbarLayout>
-
-            </android.support.design.widget.AppBarLayout>
-
-        </android.support.design.widget.CoordinatorLayout>
-
-
-<include layout="@layout/personal_center_menu_item"></include>
-
-
+        <include layout="@layout/personal_center_menu_item"></include>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
