@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.rey.material.widget.Button
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:textSize="@dimen/textSize_normal"
+        android:gravity="center"
+        android:background="@null"
+        style="@style/LightFlatWaveButtonRippleStyle"
+        app:v_styleId="@array/button_flat_wave"
+        android:text="我要参与" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/material_grey_500" />
+
+    <com.rey.material.widget.Button
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:textSize="@dimen/textSize_normal"
+        android:gravity="center"
+        android:background="@null"
+        style="@style/LightFlatWaveButtonRippleStyle"
+        app:v_styleId="@array/button_flat_wave"
+        android:text="添加收藏" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:background="@color/material_grey_500" />
+
+</LinearLayout>

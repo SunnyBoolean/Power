@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
     android:orientation="vertical">
     <!--头像区域-->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/list_homeplan_userimg"
@@ -18,8 +18,9 @@
             android:src="@drawable/list_homeplan_userimg" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginLeft="8dp"
             android:orientation="vertical">
 
@@ -27,7 +28,8 @@
                 android:id="@+id/list_homeplan_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="炭灰思学" />
+                android:text="炭灰思学"
+                android:textSize="@dimen/textSize_normal" />
 
             <TextView
                 android:id="@+id/list_homeplan_plantime"
@@ -37,14 +39,22 @@
                 android:text="2016-05-20"
                 android:textSize="@dimen/textSize_small" />
         </LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/home_listitem_moreu"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/item_more_arrowdown"/>
     </LinearLayout>
     <!--内容区域-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
+        android:padding="10dp"
         android:singleLine="true"
         android:text="我决定在今年年底也就是2017年1月份之前一定要把体重减到75KG"
+        android:textSize="@dimen/textSize_normal"
         android:visibility="gone" />
 
     <TextView
@@ -52,19 +62,22 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="3"
-        android:text="  解决流量过大的基本方法就是使用高度压缩的通信协议，而数据压缩后流量减小带来的自然结果也就是省电：因为大数据量的传输必然需要更久的网络操作、数据序列化及反序列化操作，这些都是电量消耗过快的根源。" />
+        android:padding="10dp"
+        android:text="  解决流量过大的基本方法就是使用高度压缩的通信协议，而数据压缩后流量减小带来的自然结果也就是省电：因为大数据量的传输必然需要更久的网络操作、数据序列化及反序列化操作，这些都是电量消耗过快的根源。"
+        android:textSize="@dimen/textSize_normal" />
 
     <com.geo.widget.MyExpandGridView
         android:id="@+id/list_homeplan_img_gridview"
         android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="10dp"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:horizontalSpacing="5dp"
-        android:verticalSpacing="5dp"
-        android:numColumns="3" />
+        android:numColumns="3"
+        android:padding="10dp"
+        android:verticalSpacing="5dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -76,7 +89,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/list_homeplan_zan"
@@ -84,7 +98,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical|center_horizontal"
-            android:text="点赞(12)" />
+            android:text="点赞(12)"
+            android:textSize="@dimen/textSize_normal" />
 
         <TextView
             android:id="@+id/list_homeplan_comment"
@@ -92,7 +107,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical|center_horizontal"
-            android:text="鼓励(53)" />
+            android:text="鼓励(53)"
+            android:textSize="@dimen/textSize_normal" />
 
         <TextView
             android:id="@+id/list_homeplan_scan"
@@ -100,7 +116,13 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical|center_horizontal"
-            android:text="参与(668)" />
-
+            android:text="参与(668)"
+            android:textSize="@dimen/textSize_normal" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:background="@color/material_grey_200" />
+
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.geo.power.ui.fragment;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -16,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
@@ -24,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.geo.com.geo.power.bean.PlanInfo;
 import com.geo.com.geo.power.util.ScreenUtil;
@@ -100,7 +104,7 @@ public class HomeFragment extends BaseFragment {
         mRecycleView.setAdapter(mAdapter);
         mRecycleView.setItemAnimator(new DefaultItemAnimator());
         //添加Item之间的分隔线
-        mRecycleView.addItemDecoration(new MyItemDecoration(mContext, LinearLayoutManager.VERTICAL));
+      //  mRecycleView.addItemDecoration(new MyItemDecoration(mContext, LinearLayoutManager.VERTICAL));
 
     }
 
@@ -196,14 +200,41 @@ public class HomeFragment extends BaseFragment {
     private class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView mTcontext;
         public GridView mImagheView;
-
+        public ImageView mMoreIm;
         public MyViewHolder(View itemView) {
             super(itemView);
             mTcontext = (TextView) itemView.findViewById(R.id.list_homeplan_comment);
             mImagheView = (GridView) itemView.findViewById(R.id.list_homeplan_img_gridview);
+            mMoreIm = (ImageView) itemView.findViewById(R.id.home_listitem_moreu);
         }
     }
+    /**
+     * 点击列表下拉箭头操作更多
+     */
+    private void showOPMoreDialog() {
+        LinearLayout content = (LinearLayout) View.inflate(mContext, R.layout.home_list_item_op_more, null);
+        final Dialog dialog = new Dialog(mContext);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(content);
+        int[] size = ScreenUtil.getScreenSize(mContext);
+        WindowManager.LayoutParams p = dialog.getWindow().getAttributes(); // 获取对话框当前的参数值
+        // p.height = (int) (size[1] * 0.5); // 高度设置为屏幕的0.5
+        p.width = (int) (size[0] * 0.7); // 宽度设置为屏幕的0.8
+        dialog.getWindow().setAttributes(p);
+        dialog.show();
 
+        int childs = content.getChildCount();
+        for (int i = 0; i < childs; i++) {
+            final TextView view = (TextView) content.getChildAt(i);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mContext, view.getText().toString(), Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
+                }
+            });
+        }
+    }
     /**
      * 创建适配器
      */
@@ -243,12 +274,17 @@ public class HomeFragment extends BaseFragment {
                     Intent intent = new Intent();
                     intent.setClass(mContext, ImageShowActivity.class);
                     intent.putExtra("img_url", mPictureUrls[position]);
-                    intent.putExtra("position",position);
-                    intent.putExtra("img_urls",mPictureUrls);
+                    intent.putExtra("position", position);
+                    intent.putExtra("img_urls", mPictureUrls);
                     startActivity(intent);
                 }
             });
-
+            myViewHolder.mMoreIm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showOPMoreDialog();
+                }
+            });
             Log.e(TAG, "onBindViewHolder()两个参数的");
         }
 
