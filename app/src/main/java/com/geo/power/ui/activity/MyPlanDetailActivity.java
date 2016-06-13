@@ -31,7 +31,6 @@ import ui.geo.com.power.R;
 public class MyPlanDetailActivity extends BaseActivity{
     private GridView mPicGridView;
     private final String[] mTabTitle = {"历史状态", "为我加油", "参与者"};
-    private TabLayout mTabLayout;
     public static final String[] mPictureUrls = {
             "http://ac-6ptjoad9.clouddn.com/3MekCrFaIezGOmrmbmvkILWjyF2dGIItve4AYXQC",
             "http://ac-6ptjoad9.clouddn.com/aEealv8tKqUxuSn3DHhHKPUQUtkUoVdZcwqN8i9y",
@@ -52,25 +51,11 @@ public class MyPlanDetailActivity extends BaseActivity{
     protected void initCompontent() {
         super.initCompontent();
         mPicGridView = (GridView) findViewById(R.id.home_myplan_detail_img_gridview);
-        mTabLayout = (TabLayout) findViewById(R.id.myplan_detail_tablayout);
         //计划图片适配器
         mPicGridView.setAdapter(new GridAdapter());
 //        initTabViewpager();
     }
-    private void initTabViewpager(){
-        //设置Tab的模式
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        //设置Tab
-        mTabLayout.addTab(mTabLayout.newTab().setText(mTabTitle[0]));
-        mTabLayout.addTab(mTabLayout.newTab().setText(mTabTitle[1]));
-        mTabLayout.addTab(mTabLayout.newTab().setText(mTabTitle[2]));
-        List<Fragment> list = new ArrayList<Fragment>();
-        list.add(MyPlanDoingFragment.getInstance());
-        list.add(MyPlanCommonOnFragment.getInstance());
-        list.add(MyPlanVisitorFragment.getInstance());
-        FragmentManager fm = getSupportFragmentManager();
-        PlanFragmentAdapter adapter = new PlanFragmentAdapter(fm, list, mTabTitle);
-    }
+
     @Override
     protected void initListener() {
         super.initListener();

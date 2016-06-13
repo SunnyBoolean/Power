@@ -2,6 +2,7 @@ package com.geo.power.ui.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.geo.com.geo.power.util.ScreenUtil;
+import com.rey.material.widget.Switch;
 
 import ui.geo.com.power.R;
 
@@ -17,7 +19,9 @@ import ui.geo.com.power.R;
  * Created by Administrator on 2016/6/3.
  */
 public class AddDreamPlanActivity extends BaseActivity{
-    private TextView mSelectCategoryContent;
+    private TextView mSelectCategoryContent,mIsPublic;
+    private View mSelectCategoryClick;
+    private Switch mSwitch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,13 +35,17 @@ public class AddDreamPlanActivity extends BaseActivity{
     protected void initCompontent() {
         super.initCompontent();
         mSelectCategoryContent = (TextView) findViewById(R.id.add_dream_selcategory_content);
+        mSelectCategoryClick = findViewById(R.id.add_longplan_selcategory_click);
+        mSwitch = (Switch) findViewById(R.id.add_dream_pubprio_switcher);
+        mIsPublic = (TextView) findViewById(R.id.add_dreamj_rexdh_cv);
+
     }
 
     @Override
     public void handlOnClickListener(View v) {
         super.handlOnClickListener(v);
         switch(v.getId()){
-            case R.id.add_dream_selcategory_content:
+            case R.id.add_longplan_selcategory_click:
                 showPlanCategoryDialog();
                 break;
         }
@@ -74,7 +82,19 @@ public class AddDreamPlanActivity extends BaseActivity{
     @Override
     protected void initListener() {
         super.initListener();
-        mSelectCategoryContent.setOnClickListener(this);
+        mSelectCategoryClick.setOnClickListener(this);
+        mSwitch.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(Switch view, boolean checked) {
+                if(checked){
+                    mIsPublic.setText("抛向大海");
+                    mIsPublic.setTextColor(mCommonColor);
+                }else{
+                    mIsPublic.setTextColor(Color.GRAY);
+                    mIsPublic.setText("自己保留");
+                }
+            }
+        });
     }
 
     /**
@@ -83,5 +103,6 @@ public class AddDreamPlanActivity extends BaseActivity{
     @Override
     protected void initToolBar() {
         super.initToolBar();
+        mToolBar.setTitle("许愿");
     }
 }

@@ -243,6 +243,8 @@ public class HomeFragment extends BaseFragment {
                     Intent intent = new Intent();
                     intent.setClass(mContext, ImageShowActivity.class);
                     intent.putExtra("img_url", mPictureUrls[position]);
+                    intent.putExtra("position",position);
+                    intent.putExtra("img_urls",mPictureUrls);
                     startActivity(intent);
                 }
             });

@@ -99,7 +99,9 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         mTintManager.setStatusBarTintEnabled(true);
         mTintManager.setNavigationBarTintEnabled(false);
         mTintManager.setStatusBarTintResource(R.color.material_teal_800);
-
+    }
+    public void setStatubarColor(int color){
+        mTintManager.setStatusBarTintResource(color);
     }
     @TargetApi(19)
     private void setTranslucentStatus(boolean on) {

@@ -78,6 +78,7 @@ public class NoteListActivity extends BaseActivity {
     @Override
     protected void initToolBar() {
         super.initToolBar();
+        mToolBar.setTitle("我的笔记");
     }
 
     private class NoteAdapter extends BaseAdapter {

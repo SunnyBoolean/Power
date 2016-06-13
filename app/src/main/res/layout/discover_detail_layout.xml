@@ -11,12 +11,12 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="wrap_content">
 
             <app.geo.com.viewflow.ViewFlow
                 android:id="@+id/viewflow"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 app:sidebuffer="3" />
 
             <app.geo.com.viewflow.CircleFlowIndicator

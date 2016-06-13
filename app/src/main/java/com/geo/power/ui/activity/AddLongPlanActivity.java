@@ -250,6 +250,7 @@ public class AddLongPlanActivity extends BaseActivity {
     @Override
     protected void initToolBar() {
         super.initToolBar();
+        mToolBar.setTitle("新建计划");
         Menu menu = mToolBar.getMenu();
         //第二个参数是itemid，就根据这个来判断单击事件了
         MenuItem item = menu.add(0, 1, 2, "发送");

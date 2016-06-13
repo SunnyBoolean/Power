@@ -3,234 +3,281 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
     android:fillViewport="true"
     android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/material_grey_200"
         android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@color/material_accentPink_a200"
-            android:padding="3dp"
-            android:text="生活"
-            android:textColor="@color/material_white"
-            android:textSize="@dimen/textSize_small" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="      今天很受打击啊，面个试还被嫌弃长得肥，我长得胖出的多又没吃你家饭！我决定要努力运动减肥！不瘦到150斤就一直减！" />
-        <!-- 计划图片-->
-        <com.geo.widget.MyExpandGridView
-            android:id="@+id/home_myplan_detail_img_gridview"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:horizontalSpacing="5dp"
-            android:numColumns="3"
-            android:verticalSpacing="5dp" />
-
-        <include layout="@layout/divier"></include>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:background="@color/material_white"
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/shape_plan_detail_progress_bg"
-                android:gravity="center"
-                android:text="30%"
-                android:textColor="@color/material_white"
-                android:textSize="@dimen/textSize_large"></TextView>
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@drawable/lit_dot"
+                android:drawablePadding="5dp"
+                android:text="目标"
+                android:textColor="@color/et_divider_focused"
+                android:textSize="@dimen/textSize_large" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="      今天很受打击啊，面个试还被嫌弃长得肥，我长得胖出的多又没吃你家饭！我决定要努力运动减肥！不瘦到150斤就一直减！" />
+            <!-- 计划图片-->
+            <com.geo.widget.MyExpandGridView
+                android:id="@+id/home_myplan_detail_img_gridview"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:horizontalSpacing="5dp"
+                android:numColumns="3"
+                android:verticalSpacing="5dp" />
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:drawableLeft="@drawable/myplan_createtime"
-            android:drawablePadding="5dp"
-            android:text="创建时间：2016-05-31" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:drawableLeft="@drawable/myplan_endtime"
-            android:drawablePadding="5dp"
-            android:text="截止时间：2016-10-31" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:drawableLeft="@drawable/myplan_process"
-            android:drawablePadding="5dp"
-            android:text="完成进度：90%" />
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/myplan_detail_tablayout"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="25dp"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/material_white"
-            app:tabIndicatorColor="@color/material_teal_800"
-            app:tabIndicatorHeight="2dp"
-            app:tabSelectedTextColor="@color/material_teal_800"
-            app:tabTextColor="@color/material_blueGrey_800" />
-
-        <include layout="@layout/divier"></include>
-        <!--历史记录-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/material_white">
-
-            <TextView
-                android:id="@+id/flag_myplan_detai"
-                android:layout_width="3dp"
-                android:layout_height="match_parent"
-                android:background="@color/main_theme_color" />
-
-            <TextView
-                android:id="@+id/myplan_detail_history_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
-                android:layout_toRightOf="@id/flag_myplan_detai"
-                android:text="历史记录" />
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/myplan_detail_history_item"
-                android:layout_marginLeft="6dp"
-                android:layout_marginTop="8dp"
-                android:layout_toRightOf="@id/flag_myplan_detai"
-                android:text="坚持就是胜利！"
-                android:textSize="@dimen/textSize_small" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="8dp"
-                android:background="@null"
-                android:drawablePadding="8dp"
-                android:drawableRight="@drawable/item_arrow_right"
-                android:gravity="center"
-                android:text="65" />
-        </RelativeLayout>
+                android:layout_marginLeft="8dp"
+                android:drawableLeft="@drawable/lit_dot"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="基本信息"
+                android:textColor="@color/et_divider_focused"
+                android:textSize="@dimen/textSize_large" />
 
-        <include layout="@layout/divier"></include>
-        <!--留言板-->
-        <RelativeLayout
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/material_grey_200"></View>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginLeft="8dp"
+                android:drawableLeft="@drawable/myplan_createtime"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="创建时间：2016-05-31" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@color/material_grey_200" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginLeft="8dp"
+                android:drawableLeft="@drawable/myplan_endtime"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="截止时间：2016-10-31" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@color/material_grey_200" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginLeft="8dp"
+                android:drawableLeft="@drawable/myplan_process"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="完成进度：90%" />
+
+        </LinearLayout>
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/material_white">
+            android:layout_height="25dp"></View>
 
-            <TextView
-                android:id="@+id/flag_a_myplan_detai"
-                android:layout_width="3dp"
-                android:layout_height="match_parent"
-                android:background="@color/main_theme_color" />
-
-            <TextView
-                android:id="@+id/myplan_detail_mycurrage_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
-                android:layout_toRightOf="@id/flag_a_myplan_detai"
-                android:text="留言板" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/myplan_detail_mycurrage_item"
-                android:layout_marginLeft="6dp"
-                android:layout_marginTop="8dp"
-                android:layout_toRightOf="@id/flag_a_myplan_detai"
-                android:text="在这有很多人给你留言鼓励"
-                android:textSize="@dimen/textSize_small" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="8dp"
-                android:background="@null"
-                android:drawablePadding="8dp"
-                android:drawableRight="@drawable/item_arrow_right"
-                android:gravity="center"
-                android:text="86" />
-        </RelativeLayout>
-        <!--参与者-->
-        <include layout="@layout/divier"></include>
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/material_white">
-
-            <TextView
-                android:id="@+id/flag_b_myplan_detai"
-                android:layout_width="3dp"
-                android:layout_height="match_parent"
-                android:background="@color/main_theme_color" />
-
-            <TextView
-                android:id="@+id/myplan_detail_myjoin_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
-                android:layout_toRightOf="@id/flag_b_myplan_detai"
-                android:text="参与者" />
+            android:layout_height="wrap_content"
+            android:background="@color/material_white"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/myplan_detail_myjoin_item"
-                android:layout_marginLeft="6dp"
-                android:layout_marginTop="8dp"
-                android:layout_toRightOf="@id/flag_b_myplan_detai"
-                android:text="还有很多人跟你一起完成这个计划呢！"
-                android:textSize="@dimen/textSize_small" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="8dp"
-                android:background="@null"
-                android:drawablePadding="8dp"
-                android:drawableRight="@drawable/item_arrow_right"
-                android:gravity="center"
-                android:text="16" />
-        </RelativeLayout>
+                android:layout_marginLeft="8dp"
+                android:drawableLeft="@drawable/lit_dot"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="其它"
+                android:textColor="@color/et_divider_focused"
+                android:textSize="@dimen/textSize_large" />
+            <!--历史记录-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/material_white"
+                >
+
+                <TextView
+                    android:id="@+id/flag_myplan_detai"
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/main_theme_color" />
+
+                <TextView
+                    android:id="@+id/myplan_detail_history_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_toRightOf="@id/flag_myplan_detai"
+                    android:text="历史记录" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/myplan_detail_history_item"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/flag_myplan_detai"
+                    android:text="坚持就是胜利！"
+                    android:textSize="@dimen/textSize_small" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="8dp"
+                    android:background="@null"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@drawable/item_arrow_right"
+                    android:gravity="center"
+                    android:text="65" />
+            </RelativeLayout>
+
+            <include layout="@layout/divier"></include>
+            <!--留言板-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/material_white">
+
+                <TextView
+                    android:id="@+id/flag_a_myplan_detai"
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/main_theme_color" />
+
+                <TextView
+                    android:id="@+id/myplan_detail_mycurrage_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_toRightOf="@id/flag_a_myplan_detai"
+                    android:text="留言板" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/myplan_detail_mycurrage_item"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/flag_a_myplan_detai"
+                    android:text="在这有很多人给你留言鼓励"
+                    android:textSize="@dimen/textSize_small" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="8dp"
+                    android:background="@null"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@drawable/item_arrow_right"
+                    android:gravity="center"
+                    android:text="86" />
+            </RelativeLayout>
+            <!--参与者-->
+            <include layout="@layout/divier"></include>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/material_white">
+
+                <TextView
+                    android:id="@+id/flag_b_myplan_detai"
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/main_theme_color" />
+
+                <TextView
+                    android:id="@+id/myplan_detail_myjoin_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_toRightOf="@id/flag_b_myplan_detai"
+                    android:text="参与者" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/myplan_detail_myjoin_item"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/flag_b_myplan_detai"
+                    android:text="还有很多人跟你一起完成这个计划呢！"
+                    android:textSize="@dimen/textSize_small" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="8dp"
+                    android:background="@null"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@drawable/item_arrow_right"
+                    android:gravity="center"
+                    android:text="16" />
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 </com.geo.widget.CustomScrollView>

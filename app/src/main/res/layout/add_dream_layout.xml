@@ -3,18 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/material_grey_200"
     android:orientation="vertical">
 
     <com.rey.material.widget.EditText
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@color/material_white"
         android:layout_marginTop="10dp"
+        android:background="@color/material_white"
         android:gravity="start|top"
-        android:hint="你的心愿是什么呢"
+        android:hint="此刻你有什么心愿呢"
+        android:padding="15dp"
         app:et_supportMode="charCounter"
-        app:v_styleId="@array/edittext"
-        android:padding="15dp" />
+        app:v_styleId="@array/edittext" />
 
     <LinearLayout
         android:id="@+id/addlongplan_location_click"
@@ -41,6 +42,7 @@
         android:id="@+id/add_longplan_selcategory_click"
         android:layout_width="match_parent"
         android:layout_height="55dp"
+        android:layout_marginTop="0.5dp"
         android:background="@color/add_longplan_item_selec"
         android:clickable="true"
         android:gravity="center_vertical"
@@ -52,19 +54,17 @@
             android:layout_height="match_parent"
             android:drawableLeft="@drawable/long_plan_category_tag"
             android:drawablePadding="10dp"
+            android:clickable="true"
             android:gravity="center_vertical"
             android:text="心愿分类"
             android:textSize="@dimen/textSize_normal" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.2dp"
-        android:background="@color/material_white"></View>
     <!--公开还是私有-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
+        android:layout_marginTop="0.5dp"
         android:background="@color/material_white"
         android:clickable="true"
         android:gravity="center_vertical"
@@ -72,7 +72,7 @@
         android:paddingLeft="20dp">
 
         <TextView
-            android:id="@+id/add_longplan_pubprio_cv"
+            android:id="@+id/add_dreamj_rexdh_cv"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
@@ -80,7 +80,7 @@
             android:textSize="@dimen/textSize_normal" />
 
         <com.rey.material.widget.Switch
-            android:id="@+id/add_longplan_pubprio_switcher"
+            android:id="@+id/add_dream_pubprio_switcher"
             style="@style/Material.Widget.Switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

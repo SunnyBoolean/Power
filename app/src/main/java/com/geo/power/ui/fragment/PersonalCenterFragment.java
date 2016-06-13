@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.geo.power.ui.activity.DreamListActivity;
 import com.geo.power.ui.activity.MessageNotificationActivity;
 import com.geo.power.ui.activity.NoteListActivity;
 import com.geo.power.ui.activity.SuggestionActivity;
@@ -18,7 +19,8 @@ import ui.geo.com.power.R;
  */
 public class PersonalCenterFragment extends BaseFragment {
     private static PersonalCenterFragment mInstance;
-    private View mNoteBtn, mYjfkBtn,mMessageBtn;
+    private View mNoteBtn, mYjfkBtn, mMessageBtn, mDreamPingziBtn;
+
     public static PersonalCenterFragment getInstance() {
         if (mInstance == null) {
             mInstance = new PersonalCenterFragment();
@@ -33,6 +35,7 @@ public class PersonalCenterFragment extends BaseFragment {
         mNoteBtn = content.findViewById(R.id.personal_my_note);
         mYjfkBtn = content.findViewById(R.id.personal_yjfk);
         mMessageBtn = content.findViewById(R.id.personal_xiaoxibutton);
+        mDreamPingziBtn = content.findViewById(R.id.personal_dream_pingzi);
         initListener();
 
         return content;
@@ -42,6 +45,7 @@ public class PersonalCenterFragment extends BaseFragment {
         mNoteBtn.setOnClickListener(this);
         mYjfkBtn.setOnClickListener(this);
         mMessageBtn.setOnClickListener(this);
+        mDreamPingziBtn.setOnClickListener(this);
     }
 
     @Override
@@ -59,6 +63,10 @@ public class PersonalCenterFragment extends BaseFragment {
                 break;
             case R.id.personal_xiaoxibutton:  //消息
                 intent.setClass(mContext, MessageNotificationActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.personal_dream_pingzi:
+                intent.setClass(mContext, DreamListActivity.class);
                 startActivity(intent);
                 break;
         }

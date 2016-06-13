@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:background="@color/material_grey_200"
     android:layout_height="match_parent">
     <com.rey.material.widget.EditText
         android:layout_width="match_parent"
@@ -12,7 +13,9 @@
         android:hint="随时记录"
         app:et_supportMode="charCounter"
         app:v_styleId="@array/edittext"/>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"></View>
     <TextView
         android:layout_width="match_parent"
         android:id="@+id/addlongplan_location_tvshow"
