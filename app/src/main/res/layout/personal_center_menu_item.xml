@@ -43,7 +43,7 @@
         android:background="@color/material_grey_400" />
 
     <TextView
-        android:id="@+id/button"
+        android:id="@+id/personal_xiaoxibutton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/add_longplan_item_selec"
@@ -62,7 +62,7 @@
         android:background="@color/material_grey_400" />
 
     <TextView
-        android:id="@+id/ds"
+        android:id="@+id/personal_yjfk"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/add_longplan_item_selec"

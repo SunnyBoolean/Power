@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_grey_200"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="问题和意见"
+        android:textSize="@dimen/textSize_normal" />
+
+    <com.rey.material.widget.EditText
+        android:id="@+id/suggestion_et_fankui"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@color/material_white"
+        android:padding="10dp"
+        android:textDirection="locale"
+        app:et_supportMode="charCounter"
+        app:v_styleId="@array/edittext" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/suggestion_subbmit"
+        android:paddingLeft="25dp"
+        android:layout_marginTop="140dp"
+        android:paddingRight="18dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:textColor="@color/material_white"
+        android:textSize="@dimen/textSize_normal"
+        android:gravity="center"
+        android:background="@color/selector_suggestion_submit"
+        android:text="提 交" />
+</LinearLayout>

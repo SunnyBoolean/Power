@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/item_search_history_content"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:drawableLeft="@drawable/search_history"
+        android:drawablePadding="6dp"
+        android:paddingLeft="10dp"
+        android:textSize="@dimen/textSize_normal"
+        android:background="@color/add_longplan_item_selec"
+        android:gravity="center_vertical"></TextView>
+</LinearLayout>

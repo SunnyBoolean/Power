@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/search_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/material_teal_800"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ToolBarStyle"
+        app:titleMargins="-2dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.rey.material.widget.Spinner
+                android:id="@+id/search_spinner_labels"
+                style="@style/Power.LightSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="-8dp"
+                android:dropDownWidth="125dp"
+                android:gravity="center"
+                android:paddingLeft="-8dp"
+                android:textColor="@color/material_white"
+                android:visibility="gone"
+                app:spn_labelTextColor="@color/material_white"
+                app:v_styleId="@array/spinner" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:background="@color/material_cyan_900" />
+
+            <com.rey.material.widget.EditText
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:hint="你想找什么"
+                android:gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:textColor="@color/material_white"
+                android:textColorHint="@color/material_textWhite_secondaryText"
+                android:textSize="@dimen/textSize_normal"
+                app:et_dividerColor="@color/material_white"
+                android:layout_marginRight="7dp"
+                app:et_dividerHeight="1dp"
+                app:et_labelEnable="false">
+
+            </com.rey.material.widget.EditText>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:background="@null"
+                android:id="@+id/start_serarc"
+                android:scaleType="center"
+                android:src="@drawable/search" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+</android.support.design.widget.CoordinatorLayout>

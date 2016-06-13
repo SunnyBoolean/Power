@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.geo.com.geo.power.bean.PlanInfo;
 import com.geo.com.geo.power.util.ScreenUtil;
+import com.geo.power.ui.activity.DiscoverDetailActivity;
 import com.geo.power.ui.activity.ImageShowActivity;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -220,6 +221,13 @@ public class HomeFragment extends BaseFragment {
                     from(viewGroup.getContext()).
                     inflate(R.layout.list_home_plan_item, viewGroup, false);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, DiscoverDetailActivity.class);
+                    startActivity(intent);
+                }
+            });
             Log.e(TAG, "MyViewHolder()构造器");
             return new MyViewHolder(itemView);
         }
@@ -238,6 +246,7 @@ public class HomeFragment extends BaseFragment {
                     startActivity(intent);
                 }
             });
+
             Log.e(TAG, "onBindViewHolder()两个参数的");
         }
 

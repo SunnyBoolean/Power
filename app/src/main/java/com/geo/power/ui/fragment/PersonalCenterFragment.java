@@ -7,8 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.geo.power.ui.activity.MyPlanActivity;
+import com.geo.power.ui.activity.MessageNotificationActivity;
 import com.geo.power.ui.activity.NoteListActivity;
+import com.geo.power.ui.activity.SuggestionActivity;
 
 import ui.geo.com.power.R;
 
@@ -17,7 +18,7 @@ import ui.geo.com.power.R;
  */
 public class PersonalCenterFragment extends BaseFragment {
     private static PersonalCenterFragment mInstance;
-    private View mNoteBtn;
+    private View mNoteBtn, mYjfkBtn,mMessageBtn;
     public static PersonalCenterFragment getInstance() {
         if (mInstance == null) {
             mInstance = new PersonalCenterFragment();
@@ -30,6 +31,8 @@ public class PersonalCenterFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View content = View.inflate(mContext, R.layout.profile_setting, null);
         mNoteBtn = content.findViewById(R.id.personal_my_note);
+        mYjfkBtn = content.findViewById(R.id.personal_yjfk);
+        mMessageBtn = content.findViewById(R.id.personal_xiaoxibutton);
         initListener();
 
         return content;
@@ -37,6 +40,8 @@ public class PersonalCenterFragment extends BaseFragment {
 
     private void initListener() {
         mNoteBtn.setOnClickListener(this);
+        mYjfkBtn.setOnClickListener(this);
+        mMessageBtn.setOnClickListener(this);
     }
 
     @Override
@@ -44,8 +49,16 @@ public class PersonalCenterFragment extends BaseFragment {
         super.handlerClick(view);
         Intent intent = new Intent();
         switch (view.getId()) {
-            case R.id.personal_my_note:
+            case R.id.personal_my_note:   //随想笔记
                 intent.setClass(mContext, NoteListActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.personal_yjfk:  //意见反馈
+                intent.setClass(mContext, SuggestionActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.personal_xiaoxibutton:  //消息
+                intent.setClass(mContext, MessageNotificationActivity.class);
                 startActivity(intent);
                 break;
         }

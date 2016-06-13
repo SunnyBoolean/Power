@@ -98,6 +98,13 @@
             android:label="笔记列表"/>
         <activity android:name="com.geo.power.ui.activity.NoteDetailActivity"
             android:label="笔记详情"/>
+        <activity android:name="com.geo.power.ui.activity.SuggestionActivity"
+            android:label="意见反馈"/>
+        <activity android:name="com.geo.power.ui.activity.MessageNotificationActivity"
+            android:label="消息"/>
+        <activity android:name="com.geo.power.ui.activity.EditPlanActivity" android:label="编辑目标" />
+        <activity android:name="com.geo.power.ui.activity.DiscoverDetailActivity" android:label="发现详情" />
+
     </application>
 
 </manifest>
