@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
+        android:layout_marginLeft="28dp">
+
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:background="@color/material_grey_300" />
+        <!--68-->
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/plan_detail_history_pro"
+            android:layout_centerInParent="true"
+            android:background="@drawable/shape_plan_detail_progress_bg"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="80%"
+            android:textSize="@dimen/textSize_bigest" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/material_grey_300"></View>
+
+    <ListView
+        android:id="@+id/history_doplan_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:scrollbars="none" />
+</LinearLayout>

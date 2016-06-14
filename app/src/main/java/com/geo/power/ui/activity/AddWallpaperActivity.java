@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 
 import com.geo.com.geo.power.util.DensityUtil;
+import com.geo.com.geo.power.util.ScreenUtil;
 import com.geo.widget.colorpicker.ColorPicker;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rey.material.app.BottomSheetDialog;
@@ -298,6 +299,7 @@ public class AddWallpaperActivity extends BaseActivity {
         try {
 //            View content = View.inflate(mContext, R.layout.activity_addwallpaper, null);
             mInputContentContainer.setDrawingCacheEnabled(true);
+            int[] size = ScreenUtil.getScreenSize(mContext);
             Bitmap bit = Bitmap.createBitmap(mInputContentContainer.getWidth(), mInputContentContainer.getHeight(),
                     Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bit);

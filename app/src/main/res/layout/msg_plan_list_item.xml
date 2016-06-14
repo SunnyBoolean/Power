@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_white"
+    android:orientation="vertical">
+    <!--头像区域-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/msg_plan_item_uimg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/list_homeplan_userimg" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/msg_plan_item_uname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="炭灰思学"
+                android:textSize="@dimen/textSize_normal" />
+
+            <TextView
+                android:id="@+id/msg_plan_item_createtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="2016-05-20"
+                android:textSize="@dimen/textSize_small" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/msg_plan_item_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="25dp"
+        android:text="啥评论都没有啊，竟然没有人评论一下？" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/material_grey_200" />
+
+</LinearLayout>

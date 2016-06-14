@@ -26,7 +26,7 @@ public class MyPlanVisitorFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View content = View.inflate(mContext, R.layout.fragment_myplan_visitor,null);
+        View content = View.inflate(mContext, R.layout.fragment_myplan_visitor, null);
         initListener();
 
         return content;

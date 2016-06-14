@@ -9,6 +9,6 @@
         android:width="1dp"
         android:color="@color/material_grey_300" />
     <size
-        android:width="20dp"
-        android:height="20dp" />
+        android:width="60dp"
+        android:height="60dp" />
 </shape>

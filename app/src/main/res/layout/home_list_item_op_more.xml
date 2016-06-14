@@ -15,7 +15,7 @@
         android:background="@null"
         style="@style/LightFlatWaveButtonRippleStyle"
         app:v_styleId="@array/button_flat_wave"
-        android:text="我要参与" />
+        android:text="加入计划" />
 
 
     <TextView

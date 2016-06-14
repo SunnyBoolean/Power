@@ -115,6 +115,8 @@
         <activity
             android:name="com.geo.power.ui.activity.DreamListActivity"
             android:label="心愿瓶子" />
+        <activity android:name="com.geo.power.ui.activity.DoPlanHistoryActivity"
+            android:label="历史记录"/>
     </application>
 
 </manifest>

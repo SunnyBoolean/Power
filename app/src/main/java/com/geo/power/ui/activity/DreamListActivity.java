@@ -25,7 +25,7 @@ import ui.geo.com.power.R;
  * 心愿瓶子
  */
 public class DreamListActivity extends BaseActivity{
-    private final String[] mTabTitle = {"未实现", "已实现", "我参与的"};
+    private final String[] mTabTitle = {"未开启", "已开启", "我参与的"};
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
 

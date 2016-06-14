@@ -90,4 +90,9 @@
         android:text="意见反馈"
         android:textColor="@color/material_black" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/material_grey_400" />
+
 </LinearLayout>

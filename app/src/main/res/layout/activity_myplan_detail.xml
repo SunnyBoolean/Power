@@ -161,6 +161,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:id="@+id/edit_plan_history_click"
                 android:background="@color/add_longplan_item_selec"
                 android:clickable="true"
                 android:padding="10dp">
@@ -203,16 +204,17 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:id="@+id/myplan_detail_mycurrage_item_click"
                 android:background="@color/add_longplan_item_selec"
                 android:clickable="true"
                 android:padding="10dp">
 
                 <TextView
-                    android:id="@+id/myplan_detail_mycurrage_item"
                     android:layout_width="wrap_content"
+                    android:id="@+id/myplan_detail_mycurrage_item"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
-                    android:text="留言板"
+                    android:text="收到鼓励"
                     android:textSize="@dimen/textSize_normal" />
 
                 <TextView

@@ -1,23 +1,32 @@
 package com.geo.power.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import com.geo.com.geo.power.bean.LeaveMsgInfo;
+import com.geo.com.geo.power.util.ScreenUtil;
 import com.geo.power.ui.fragment.MyPlanCommonOnFragment;
 import com.geo.power.ui.fragment.MyPlanDoingFragment;
 import com.geo.power.ui.fragment.MyPlanVisitorFragment;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.rey.material.app.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +37,12 @@ import ui.geo.com.power.R;
  * Created by Administrator on 2016/5/31.
  * 我的计划详情
  */
-public class MyPlanDetailActivity extends BaseActivity{
+public class MyPlanDetailActivity extends BaseActivity {
     private GridView mPicGridView;
-    private final String[] mTabTitle = {"历史状态", "为我加油", "参与者"};
+    private View mHistoryBtn,mLeaveMsgBtn;
+    private BottomSheetDialog mBottomSheetDialog;
+    private List<LeaveMsgInfo> mMsgData;
+    private MsgAdapter mMsgAdapter;
     public static final String[] mPictureUrls = {
             "http://ac-6ptjoad9.clouddn.com/3MekCrFaIezGOmrmbmvkILWjyF2dGIItve4AYXQC",
             "http://ac-6ptjoad9.clouddn.com/aEealv8tKqUxuSn3DHhHKPUQUtkUoVdZcwqN8i9y",
@@ -38,6 +50,7 @@ public class MyPlanDetailActivity extends BaseActivity{
             "http://ac-6ptjoad9.clouddn.com/Itzvdzj3QZG5zR9dNMmPVAZNNviQt5tzJEsaU6jW",
             "http://ac-6ptjoad9.clouddn.com/Q61AFSIOoOipiucsdR8NctVIvkSHimJK9RIZWlnh"
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,14 +64,18 @@ public class MyPlanDetailActivity extends BaseActivity{
     protected void initCompontent() {
         super.initCompontent();
         mPicGridView = (GridView) findViewById(R.id.home_myplan_detail_img_gridview);
+        mHistoryBtn = findViewById(R.id.edit_plan_history_click);
+        mLeaveMsgBtn = findViewById(R.id.myplan_detail_mycurrage_item_click);
         //计划图片适配器
         mPicGridView.setAdapter(new GridAdapter());
-//        initTabViewpager();
+        initData();
     }
 
     @Override
     protected void initListener() {
         super.initListener();
+        mHistoryBtn.setOnClickListener(this);
+        mLeaveMsgBtn.setOnClickListener(this);
     }
 
     /**
@@ -69,6 +86,58 @@ public class MyPlanDetailActivity extends BaseActivity{
     @Override
     public void handlOnClickListener(View v) {
         super.handlOnClickListener(v);
+        Intent intent = new Intent();
+        switch (v.getId()) {
+            case R.id.edit_plan_history_click:   //计划执行的历史记录
+                intent.setClass(mContext, DoPlanHistoryActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.myplan_detail_mycurrage_item_click:  //我收到的鼓励
+                showBottomSheetForMsg();
+                break;
+        }
+    }
+
+    private void initData() {
+        initMsgData();
+    }
+
+    /**
+     * 初始化留言板数据
+     */
+    private void initMsgData() {
+        if (mMsgData == null) {
+            mMsgData = new ArrayList<LeaveMsgInfo>();
+        } else {
+            mMsgData.clear();
+        }
+        mMsgAdapter = new MsgAdapter(mMsgData);
+        for (int i = 0; i < 20; i++) {
+            LeaveMsgInfo info = new LeaveMsgInfo();
+            info.content = "你都坚持减肥那么久了，有效果吗？";
+            info.createtime = "2016-06-14";
+            info.name = "泼墨";
+            mMsgData.add(info);
+        }
+    }
+
+    /**
+     * 显示新增计划菜单
+     */
+    private void showBottomSheetForMsg() {
+        mBottomSheetDialog = new BottomSheetDialog(mContext, R.style.Material_App_BottomSheetDialog);
+        View content = LayoutInflater.from(mContext).inflate(R.layout.msg_myplan, null);
+        ListView msgListview = (ListView) content.findViewById(R.id.msg_listview);
+        msgListview.setAdapter(mMsgAdapter);
+        int size[] = ScreenUtil.getScreenSize(mContext);
+//        ViewUtil.setBackground(v, new ThemeDrawable(R.array.bg_window));
+//                mBottomSheetDialog.heightParam(ViewGroup.LayoutParams.MATCH_PARENT);
+//        Button bt_wrap = (Button)v.findViewById(R.id.sheet_bt_wrap);
+//                mBottomSheetDialog.heightParam(ViewGroup.LayoutParams.WRAP_CONTENT);
+//        });
+        mBottomSheetDialog.heightParam(size[1]*2/3);
+        mBottomSheetDialog.contentView(content)
+                .show();
     }
 
     /**
@@ -77,39 +146,25 @@ public class MyPlanDetailActivity extends BaseActivity{
     @Override
     protected void initToolBar() {
         super.initToolBar();
-    }
-
-    /**
-     * 三个Fragment：
-     */
-    private class PlanFragmentAdapter extends FragmentPagerAdapter {
-
-        private List<Fragment> list_fragment;                         //fragment列表
-        private String[] list_Title;                              //tab名的列表
-
-
-        public PlanFragmentAdapter(FragmentManager fm, List<Fragment> list_fragment, String[] list_Title) {
-            super(fm);
-            this.list_fragment = list_fragment;
-            this.list_Title = list_Title;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return list_fragment.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return list_Title.length;
-        }
-
-        //此方法用来显示tab上的名字
-        @Override
-        public CharSequence getPageTitle(int position) {
-
-            return list_Title[(position % list_Title.length)];
-        }
+        Menu menu = mToolBar.getMenu();
+        //第二个参数是itemid，就根据这个来判断单击事件了
+        MenuItem item = menu.add(0, 1, 2, "编辑");
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        item.setIcon(R.drawable.myplan_continue_edit);
+        //---------- 对子菜单MenuItem进行响应 ------------
+        mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case 1:
+                        Intent intent = new Intent();
+                        intent.setClass(mContext, EditPlanActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     /**
@@ -117,57 +172,22 @@ public class MyPlanDetailActivity extends BaseActivity{
      */
     private class GridAdapter extends BaseAdapter {
 
-        /**
-         * How many items are in the data set represented by this Adapter.
-         *
-         * @return Count of items.
-         */
+
         @Override
         public int getCount() {
             return mPictureUrls.length;
         }
 
-        /**
-         * Get the data item associated with the specified position in the data set.
-         *
-         * @param position Position of the item whose data we want within the adapter's
-         *                 data set.
-         * @return The data at the specified position.
-         */
         @Override
         public Object getItem(int position) {
             return mPictureUrls[position];
         }
 
-        /**
-         * Get the row id associated with the specified position in the list.
-         *
-         * @param position The position of the item within the adapter's data set whose row id we want.
-         * @return The id of the item at the specified position.
-         */
         @Override
         public long getItemId(int position) {
             return 0;
         }
 
-        /**
-         * Get a View that displays the data at the specified position in the data set. You can either
-         * create a View manually or inflate it from an XML layout file. When the View is inflated, the
-         * parent View (GridView, ListView...) will apply default layout parameters unless you use
-         * {@link LayoutInflater#inflate(int, ViewGroup, boolean)}
-         * to specify a root view and to prevent attachment to the root.
-         *
-         * @param position    The position of the item within the adapter's data set of the item whose view
-         *                    we want.
-         * @param convertView The old view to reuse, if possible. Note: You should check that this view
-         *                    is non-null and of an appropriate type before using. If it is not possible to convert
-         *                    this view to display the correct data, this method can create a new view.
-         *                    Heterogeneous lists can specify their number of view types, so that this View is
-         *                    always of the right type (see {@link #getViewTypeCount()} and
-         *                    {@link #getItemViewType(int)}).
-         * @param parent      The parent that this view will eventually be attached to
-         * @return A View corresponding to the data at the specified position.
-         */
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
@@ -189,6 +209,57 @@ public class MyPlanDetailActivity extends BaseActivity{
 
         class ViewHolder {
             ImageView mImageView;
+        }
+    }
+
+    private class MsgAdapter extends BaseAdapter {
+        private List<LeaveMsgInfo> msgDatas;
+
+        public MsgAdapter(List<LeaveMsgInfo> data) {
+            this.msgDatas = data;
+        }
+
+        @Override
+        public int getCount() {
+            return msgDatas.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return msgDatas.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            MsgViewHolder holder = null;
+            if (convertView == null) {
+                holder = new MsgViewHolder();
+                convertView = View.inflate(mContext, R.layout.msg_plan_list_item, null);
+                holder.contentTv = (TextView) convertView.findViewById(R.id.msg_plan_item_content);
+                holder.createtimeTv = (TextView) convertView.findViewById(R.id.msg_plan_item_createtime);
+                holder.usernameTv = (TextView) convertView.findViewById(R.id.msg_plan_item_uname);
+                holder.uImg = (ImageView) convertView.findViewById(R.id.msg_plan_item_uimg);
+
+                convertView.setTag(holder);
+            } else {
+                holder = (MsgViewHolder) convertView.getTag();
+            }
+            LeaveMsgInfo info = msgDatas.get(position);
+
+            holder.contentTv.setText(info.content);
+            holder.createtimeTv.setText(info.createtime);
+            holder.usernameTv.setText(info.name);
+            return convertView;
+        }
+
+        class MsgViewHolder {
+            TextView contentTv, createtimeTv, usernameTv;
+            ImageView uImg;
         }
     }
 }
