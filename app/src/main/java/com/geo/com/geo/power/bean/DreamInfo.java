@@ -8,6 +8,9 @@ import cn.bmob.v3.BmobObject;
  */
 public class DreamInfo extends BmobObject{
     public String id;
+    /** 心愿分类*/
+    public String category;
+    /**心愿内容*/
     public String content;
     /** 创建时间*/
     public String createtime;
