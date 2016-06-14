@@ -97,7 +97,7 @@ public class NotDoneDreamFragmetn extends BaseFragment {
         }
         @Override
         public int getCount() {
-            return 1;
+            return datas.size();
         }
 
         @Override

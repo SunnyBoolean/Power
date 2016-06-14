@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-
-<!-- 描边：一般大小都是1dp -->
-<stroke
-    android:width="0.5dp"
-    android:color="@color/material_blueGrey_300"
-    />
-<!-- 背景颜色渐变 -->
+    <!-- 描边：一般大小都是1dp -->
+    <stroke
+        android:width="0.5dp"
+        android:color="@color/material_grey_400" />
+    <!-- 背景颜色渐变 -->
     <solid
-        android:padding="2dp"
-        android:color="@color/material_white"/>
+        android:color="@color/material_white"
+        android:padding="2dp" />
 </shape>
