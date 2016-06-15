@@ -1,16 +1,19 @@
 package com.geo.power.ui.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.geo.com.geo.power.util.DensityUtil;
 import com.geo.power.ui.activity.DreamListActivity;
 import com.geo.power.ui.activity.MessageNotificationActivity;
 import com.geo.power.ui.activity.NoteListActivity;
 import com.geo.power.ui.activity.SuggestionActivity;
+import com.geo.widget.BadgeView;
 
 import ui.geo.com.power.R;
 
@@ -36,8 +39,16 @@ public class PersonalCenterFragment extends BaseFragment {
         mYjfkBtn = content.findViewById(R.id.personal_yjfk);
         mMessageBtn = content.findViewById(R.id.personal_xiaoxibutton);
         mDreamPingziBtn = content.findViewById(R.id.personal_dream_pingzi);
-        initListener();
 
+        initListener();
+        BadgeView badge = new BadgeView(getActivity());
+        badge.setTargetView(mMessageBtn);
+
+        badge.setBadgeCount(42);
+        badge.setBackground(6, Color.RED);
+        int h = DensityUtil.dip2px(mContext, 25);
+        badge.setHeight(h);
+        badge.setWidth(h);
         return content;
     }
 
