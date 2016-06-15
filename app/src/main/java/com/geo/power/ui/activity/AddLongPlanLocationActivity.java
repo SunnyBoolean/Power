@@ -1,8 +1,15 @@
 package com.geo.power.ui.activity;
 
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -11,10 +18,17 @@ import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
+import com.geo.com.geo.power.bean.LbsAddressInfo;
+import com.geo.com.geo.power.bean.UserInfo;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobGeoPoint;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
 import ui.geo.com.power.R;
 
 /**
@@ -22,14 +36,13 @@ import ui.geo.com.power.R;
  */
 public class AddLongPlanLocationActivity extends BaseActivity implements LocationSource,
         AMapLocationListener, RadioGroup.OnCheckedChangeListener {
-    MapView mMapView = null;
     private AMapLocationClient mlocationClient;
-    private AMap aMap;
-    Bundle bundler;
+    private AMapLocationClientOption locationOption;
+    private ListView mLocationListLview;
+    private List<LbsAddressInfo> mAddressDatas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bundler = savedInstanceState;
         setContentView(R.layout.addlongplan_loacation);
 
     }
@@ -40,37 +53,20 @@ public class AddLongPlanLocationActivity extends BaseActivity implements Locatio
     @Override
     protected void initCompontent() {
         super.initCompontent();
-        //获取地图控件引用
-        mMapView = (MapView) findViewById(R.id.map);
-        //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，实现地图生命周期管理
-        mMapView.onCreate(bundler);
-//        aMap = mMapView.getMap();
-//        aMap.setLocationSource(this);// 设置定位监听
-//        aMap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
-//        aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
-//// 设置定位的类型为定位模式，参见类AMap。
-//        aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
+        mLocationListLview = (ListView) findViewById(R.id.location_listview);
+    //开始定位
+        startLocation();
     }
 
     private void startLocation() {
-        //声明mLocationOption对象
-        AMapLocationClientOption mLocationOption = null;
-        mlocationClient = new AMapLocationClient(this);
-//初始化定位参数
-        mLocationOption = new AMapLocationClientOption();
-//设置定位监听
+        mlocationClient = new AMapLocationClient(this.getApplicationContext());
+        locationOption = new AMapLocationClientOption();
+        // 设置定位模式为高精度模式
+        locationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        locationOption.setOnceLocation(true);
+        mlocationClient.setLocationOption(locationOption);
+        // 设置定位监听
         mlocationClient.setLocationListener(this);
-//设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-//设置定位间隔,单位毫秒,默认为2000ms
-//        mLocationOption.setInterval(2000);
-//设置定位参数
-        mlocationClient.setLocationOption(mLocationOption);
-// 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
-// 注意设置合适的定位时间的间隔（最小间隔支持为2000ms），并且在合适时间调用stopLocation()方法来取消定位请求
-// 在定位结束后，在合适的生命周期调用onDestroy()方法
-// 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
-//启动定位
         mlocationClient.startLocation();
     }
 
@@ -80,12 +76,42 @@ public class AddLongPlanLocationActivity extends BaseActivity implements Locatio
             if (amapLocation.getErrorCode() == 0) {
                 //定位成功回调信息，设置相关消息
                 amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
-                amapLocation.getLatitude();//获取纬度
-                amapLocation.getLongitude();//获取经度
-                amapLocation.getAccuracy();//获取精度信息
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                Date date = new Date(amapLocation.getTime());
-                df.format(date);//定位时间
+                double lat = amapLocation.getLatitude();//获取纬度
+                double lon = amapLocation.getLongitude();//获取经度
+                BmobGeoPoint gpoint = new BmobGeoPoint(lon, lat);
+                LbsAddressInfo info = new LbsAddressInfo();
+//                info.mGpsAdd = gpoint;
+//                info.save(mContext, new SaveListener() {
+//                    @Override
+//                    public void onSuccess() {
+//                        showToast("保存成功");
+//                    }
+//
+//                    @Override
+//                    public void onFailure(int i, String s) {
+//
+//                    }
+//                });
+
+
+                BmobQuery<LbsAddressInfo> bmobQuery = new BmobQuery<LbsAddressInfo>();
+                bmobQuery.addWhereNear("gpsAdd", gpoint);
+                bmobQuery.setLimit(10);    //获取最接近用户地点的10条数据
+                bmobQuery.findObjects(this, new FindListener<LbsAddressInfo>() {
+                    @Override
+                    public void onSuccess(List<LbsAddressInfo> object) {
+                        for(LbsAddressInfo lbs:object){
+                           BmobGeoPoint point= lbs.mGpsAdd;
+                            String str = point.toString();
+                        }
+                    }
+
+                    @Override
+                    public void onError(int code, String msg) {
+                        // TODO Auto-generated method stub
+                        showToast("error:"+msg);
+                    }
+                });
             } else {
                 //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
                 Log.e("AmapError", "location Error, ErrCode:"
@@ -112,28 +138,27 @@ public class AddLongPlanLocationActivity extends BaseActivity implements Locatio
     protected void onDestroy() {
         super.onDestroy();
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
-        mMapView.onDestroy();
+        mlocationClient.onDestroy();
+        mlocationClient = null;
+        locationOption = null;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         //在activity执行onResume时执行mMapView.onResume ()，实现地图生命周期管理
-        mMapView.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         //在activity执行onPause时执行mMapView.onPause ()，实现地图生命周期管理
-        mMapView.onPause();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，实现地图生命周期管理
-        mMapView.onSaveInstanceState(outState);
     }
 
 
@@ -157,5 +182,23 @@ public class AddLongPlanLocationActivity extends BaseActivity implements Locatio
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
 
+    }
+    private class AddrAdapter extends BaseAdapter{
+        @Override
+        public int getCount() {
+            return 0;
+        }
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return null;
+        }
     }
 }

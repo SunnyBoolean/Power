@@ -11,6 +11,7 @@
         android:layout_height="120dp"
         android:layout_marginTop="10dp"
         android:background="@color/material_white"
+        android:id="@+id/add_dream_inputline_asdxv"
         android:gravity="start|top"
         android:hint="此刻你有什么心愿呢"
         android:padding="15dp"

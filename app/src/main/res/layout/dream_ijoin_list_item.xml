@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/material_white"
+    android:layout_height="match_parent">
+    <!--头像区域-->
+    <LinearLayout
+        android:id="@+id/dreamijoin_cnntinah"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="2dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/mdreamijoin_item_uimg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/list_homeplan_userimg" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/dreamijoin_item_uname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="炭灰思学"
+                android:textSize="@dimen/textSize_normal" />
+
+            <TextView
+                android:id="@+id/dreamijoin_item_createtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="2016-05-20"
+                android:textSize="@dimen/textSize_small" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/dreamijoin_content_he"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dreamijoin_cnntinah"
+        android:paddingLeft="10dp"
+        android:text="其实世界至于我都无所谓有，也无所谓无，我就是我，我不会妥协成为任何事物的傀儡，我会活出自己的姿态。" />
+
+    <TextView
+        android:id="@+id/dshaionm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="10dp"
+        android:layout_below="@id/dreamijoin_content_he"
+        android:textSize="10sp"
+        android:text="事业 ·"/>
+    <TextView
+        android:id="@+id/dreamijoin_locarion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/dshaionm"
+        android:layout_below="@id/dreamijoin_content_he"
+        android:layout_marginTop="8dp"
+        android:drawableLeft="@drawable/dreamdone_locationicon"
+        android:drawablePadding="3dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="武汉光谷"
+        android:textSize="10sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/dreamijoin_locarion"
+        android:layout_marginTop="10dp"
+        android:background="@color/material_grey_200"/>
+</RelativeLayout>

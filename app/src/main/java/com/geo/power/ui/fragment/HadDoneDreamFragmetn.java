@@ -78,6 +78,7 @@ public class HadDoneDreamFragmetn extends BaseFragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            convertView = View.inflate(mContext,R.layout.done_dream_list_item,null);
             return convertView;
         }
     }

@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.geo.com.geo.power.util.ScreenUtil;
+import com.rey.material.widget.EditText;
 import com.rey.material.widget.Switch;
 
 import ui.geo.com.power.R;
@@ -22,6 +23,7 @@ public class AddDreamPlanActivity extends BaseActivity{
     private TextView mSelectCategoryContent,mIsPublic;
     private View mSelectCategoryClick;
     private Switch mSwitch;
+    private EditText mInputEt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +40,7 @@ public class AddDreamPlanActivity extends BaseActivity{
         mSelectCategoryClick = findViewById(R.id.add_longplan_selcategory_click);
         mSwitch = (Switch) findViewById(R.id.add_dream_pubprio_switcher);
         mIsPublic = (TextView) findViewById(R.id.add_dreamj_rexdh_cv);
+        mInputEt = (EditText) findViewById(R.id.add_dream_inputline_asdxv);
 
     }
 
@@ -82,6 +85,7 @@ public class AddDreamPlanActivity extends BaseActivity{
     @Override
     protected void initListener() {
         super.initListener();
+        mInputEt.setMaxEms(10);
         mSelectCategoryClick.setOnClickListener(this);
         mSwitch.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
             @Override
