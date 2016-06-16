@@ -282,7 +282,7 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
     private void showBottomSheet() {
         mBottomSheetDialog = new BottomSheetDialog(mContext, R.style.Material_App_BottomSheetDialog);
         View content = LayoutInflater.from(mContext).inflate(R.layout.home_add_view_bottomsheet, null);
-        ImageButton close = (ImageButton) content.findViewById(R.id.home_addplan_close);
+        View close = content.findViewById(R.id.home_addplan_close);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
