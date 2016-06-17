@@ -2,6 +2,7 @@ package com.geo.power.ui.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -13,11 +14,14 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +48,8 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
     private NavigationView mNavigationView;
     private BottomSheetDialog mBottomSheetDialog;
     private Spinner mSpinner;
+    private MenuItem mContitionMi;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +92,6 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
     @Override
     protected void initToolBar() {
         super.initToolBar();
-
 //        setSupportActionBar(mToolBar);这个方法会报错
         mToolBar.setNavigationIcon(R.drawable.home_main_menu);//设置导航按钮，典型的就是返回箭头
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -106,9 +111,10 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         item.setIcon(R.drawable.search);
 
-        MenuItem itemmore = menu.add(0, 2, 3, "更多");
-        itemmore.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        itemmore.setIcon(R.drawable.home_main_more);
+        mContitionMi = menu.add(0, 2, 3, "排序");
+        mContitionMi.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        mContitionMi.setIcon(R.drawable.home_list_condition);
+//        mOrderView =
         //---------- 对子菜单MenuItem进行响应 ------------
         mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -121,7 +127,8 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
                         break;
 
                     case 2:      //更多
-                        showToast("选择更多");
+//                        showToast("选择更多");
+                        popupWindowForListOrder();
                         break;
                     case android.R.id.home:
 
@@ -134,6 +141,43 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
 
 
         spinner();
+    }
+
+    private void popupWindowForListOrder() {
+        LinearLayout content = (LinearLayout) View.inflate(mContext, R.layout.home_main_clistorder_menu, null);
+        final PopupWindow popwindow = new PopupWindow(content, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popwindow.setTouchInterceptor(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+                    popwindow.dismiss();
+                    return true;
+                }
+
+                return false;
+            }
+        });
+        int[] size = ScreenUtil.getScreenSize(mContext);
+        popwindow.setWidth(size[0] / 2);
+        popwindow.setTouchable(true);
+        popwindow.setBackgroundDrawable(new BitmapDrawable());
+        popwindow.setOutsideTouchable(true);
+//        popwindow.showAsDropDown(mToolBar);
+        int disy = DensityUtil.dip2px(mContext,80);
+        int disx = DensityUtil.dip2px(mContext,4);
+        popwindow.showAtLocation(mToolBar, Gravity.RIGHT | Gravity.TOP, disx, disy);
+
+        int childs = content.getChildCount();
+        for (int i = 0; i < childs; i++) {
+            final TextView view = (TextView) content.getChildAt(i);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    mListOrderTvContent.setText(view.getText().toString());
+                    popwindow.dismiss();
+                }
+            });
+        }
     }
 
     private void spinner() {
@@ -185,18 +229,22 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
         switch (v.getId()) {
             case R.id.main_home_home:    //主界面/发现
                 mSpinner.setVisibility(View.VISIBLE);
+                mContitionMi.setVisible(true);
                 changedRadioButtonByClick(mHomeBtn);
                 break;
             case R.id.main_home_discover:   //计划
                 mSpinner.setVisibility(View.GONE);
                 changedRadioButtonByClick(mDiscoverBtn);
+                mContitionMi.setVisible(false);
                 break;
             case R.id.main_home_personal:  //个人中心
                 mSpinner.setVisibility(View.GONE);
                 changedRadioButtonByClick(mPersonerCenterBtn);
+                mContitionMi.setVisible(false);
                 break;
             case R.id.home_main_about_btn: //关于
                 intent.setClass(mContext, AboutActivity.class);
+                mContitionMi.setVisible(false);
                 startActivity(intent);
                 break;
             case R.id.home_main_setting_btn:  //设置:
@@ -263,6 +311,7 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
         FragmentManager fm = getSupportFragmentManager();
         return fm;
     }
+
     /**
      * 用于控制导航栏图标颜色变化
      *

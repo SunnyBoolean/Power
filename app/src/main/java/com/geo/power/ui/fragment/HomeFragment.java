@@ -29,14 +29,19 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.bigkoo.convenientbanner.holder.Holder;
 import com.geo.com.geo.power.bean.PlanInfo;
 import com.geo.com.geo.power.util.ScreenUtil;
 import com.geo.power.ui.activity.DiscoverDetailActivity;
 import com.geo.power.ui.activity.ImageShowActivity;
+import com.geo.widget.HeaderDecoration;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import ui.geo.com.power.R;
@@ -52,6 +57,7 @@ public class HomeFragment extends BaseFragment {
     private final String[] mCategorys = {"生活", "健康", "学习", "工作"};
     private TextView mCategoryTvContent, mListOrderTvContent;
     private FrameLayout mCategoryTv, mListOrderTv;
+    private ConvenientBanner mConverBanner;
     public static final String[] mPictureUrls = {
             "http://ac-6ptjoad9.clouddn.com/3MekCrFaIezGOmrmbmvkILWjyF2dGIItve4AYXQC",
             "http://ac-6ptjoad9.clouddn.com/aEealv8tKqUxuSn3DHhHKPUQUtkUoVdZcwqN8i9y",
@@ -83,13 +89,14 @@ public class HomeFragment extends BaseFragment {
         mListOrderTvContent = (TextView) content.findViewById(R.id.main_home_list_order_content);
         mCategoryTv = (FrameLayout) content.findViewById(R.id.main_home_category_choice);
         mListOrderTv = (FrameLayout) content.findViewById(R.id.main_home_list_order);
+
         initCompontent();
+
         return content;
     }
 
     private void initCompontent() {
-        //初始化导航栏
-        initNavigation();
+
         if (mPlanDataList == null) {
             mPlanDataList = new ArrayList<PlanInfo>();
         }
@@ -103,24 +110,56 @@ public class HomeFragment extends BaseFragment {
         mRecycleView.setLayoutManager(manager);
         mRecycleView.setAdapter(mAdapter);
         mRecycleView.setItemAnimator(new DefaultItemAnimator());
-        //添加Item之间的分隔线
-      //  mRecycleView.addItemDecoration(new MyItemDecoration(mContext, LinearLayoutManager.VERTICAL));
 
+        HeaderDecoration.Builder builder = new HeaderDecoration.Builder(mContext);
+        builder.inflate(R.layout.home_recycleview_header);
+        builder.parallax(0.2f);
+
+//                .inflate(R.layout.home_recycleview_header)
+//                .parallax(0.2f)
+//                .dropShadowDp(4)
+//                .build());
+        View container = builder.getContainer();
+        mConverBanner = (ConvenientBanner) container.findViewById(R.id.home_convenientBanner);
+        initBanner();
+//        HeaderDecoration header = builder.build();
+//        mRecycleView.addItemDecoration(header);
+        //添加Item之间的分隔线
+        //  mRecycleView.addItemDecoration(new MyItemDecoration(mContext, LinearLayoutManager.VERTICAL));
     }
 
-    private void initNavigation() {
-        mCategoryTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindowForCategory();
-            }
-        });
-        mListOrderTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindowForListOrder();
-            }
-        });
+    private void initBanner() {
+        List<String> datas = Arrays.asList(mPictureUrls);
+        mConverBanner.setPages(
+                new CBViewHolderCreator<NetworkImageHolderView>() {
+                    @Override
+                    public NetworkImageHolderView createHolder() {
+                        return new NetworkImageHolderView();
+                    }
+                }, datas)
+                //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
+                .setPageIndicator(new int[]{R.drawable.dot_normal, R.drawable.dot_focus})
+                        //设置指示器的方向
+                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT);
+        mConverBanner.startTurning(1500);
+    }
+
+    public class NetworkImageHolderView implements Holder<String> {
+        private ImageView imageView;
+
+        @Override
+        public View createView(Context context) {
+            //你可以通过layout文件来创建，也可以像我一样用代码创建，不一定是Image，任何控件都可以进行翻页
+            imageView = new ImageView(context);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            return imageView;
+        }
+
+        @Override
+        public void UpdateUI(Context context, int position, String data) {
+            imageView.setImageResource(R.drawable.message_creategroup_image_named);
+            ImageLoader.getInstance().displayImage(data, imageView);
+        }
     }
 
     private void popupWindowForCategory() {
@@ -145,49 +184,16 @@ public class HomeFragment extends BaseFragment {
         popwindow.showAsDropDown(mCategoryTv);
 
         int childs = content.getChildCount();
-        for(int i=0;i<childs;i++){
-           final TextView view = (TextView) content.getChildAt(i);
+        for (int i = 0; i < childs; i++) {
+            final TextView view = (TextView) content.getChildAt(i);
             String text = view.getText().toString();
-            if(mCategoryTvContent.getText().toString().equals(text)){
+            if (mCategoryTvContent.getText().toString().equals(text)) {
                 view.setVisibility(View.GONE);
             }
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                        mCategoryTvContent.setText(view.getText().toString());
-                    popwindow.dismiss();
-                }
-            });
-        }
-    }
-    private void popupWindowForListOrder() {
-        LinearLayout content = (LinearLayout) View.inflate(mContext, R.layout.home_main_clistorder_menu, null);
-        final PopupWindow popwindow = new PopupWindow(content, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        popwindow.setTouchInterceptor(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-                    popwindow.dismiss();
-                    return true;
-                }
-
-                return false;
-            }
-        });
-        int[] size = ScreenUtil.getScreenSize(mContext);
-        popwindow.setWidth(size[0] / 2);
-        popwindow.setTouchable(true);
-        popwindow.setBackgroundDrawable(new BitmapDrawable());
-        popwindow.setOutsideTouchable(true);
-        popwindow.showAsDropDown(mListOrderTv);
-
-        int childs = content.getChildCount();
-        for(int i=0;i<childs;i++){
-            final TextView view = (TextView) content.getChildAt(i);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mListOrderTvContent.setText(view.getText().toString());
+                    mCategoryTvContent.setText(view.getText().toString());
                     popwindow.dismiss();
                 }
             });
@@ -201,6 +207,7 @@ public class HomeFragment extends BaseFragment {
         public TextView mTcontext;
         public GridView mImagheView;
         public ImageView mMoreIm;
+
         public MyViewHolder(View itemView) {
             super(itemView);
             mTcontext = (TextView) itemView.findViewById(R.id.list_homeplan_comment);
@@ -208,6 +215,7 @@ public class HomeFragment extends BaseFragment {
             mMoreIm = (ImageView) itemView.findViewById(R.id.home_listitem_moreu);
         }
     }
+
     /**
      * 点击列表下拉箭头操作更多
      */
@@ -219,7 +227,7 @@ public class HomeFragment extends BaseFragment {
         int[] size = ScreenUtil.getScreenSize(mContext);
         WindowManager.LayoutParams p = dialog.getWindow().getAttributes(); // 获取对话框当前的参数值
         // p.height = (int) (size[1] * 0.5); // 高度设置为屏幕的0.5
-        p.width = (int) (size[0] * 0.7); // 宽度设置为屏幕的0.8
+        p.width = (int) (size[0] * 0.85); // 宽度设置为屏幕的0.8
         dialog.getWindow().setAttributes(p);
         dialog.show();
 
@@ -235,6 +243,7 @@ public class HomeFragment extends BaseFragment {
             });
         }
     }
+
     /**
      * 创建适配器
      */

@@ -7,10 +7,10 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/home_plan_tablayout"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:background="@color/material_white"
-        app:tabIndicatorColor="@color/material_teal_800"
-        app:tabSelectedTextColor="@color/material_teal_800"
+        app:tabIndicatorColor="@color/material_cyan_A700"
+        app:tabSelectedTextColor="@color/material_cyan_A700"
         app:tabTextColor="@color/material_blueGrey_800"
         app:tabIndicatorHeight="2dp"
         />

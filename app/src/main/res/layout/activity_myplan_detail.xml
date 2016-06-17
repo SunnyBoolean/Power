@@ -25,6 +25,7 @@
                 android:layout_alignParentRight="true"
                 android:drawableLeft="@drawable/lit_dot"
                 android:drawablePadding="5dp"
+                android:visibility="gone"
                 android:text="目标"
                 android:textColor="@color/et_divider_focused"
                 android:textSize="@dimen/textSize_large" />
@@ -73,6 +74,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="8dp"
                 android:drawableLeft="@drawable/lit_dot"
+                android:visibility="gone"
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"
                 android:text="基本信息"
@@ -143,6 +145,7 @@
                 android:layout_height="45dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="8dp"
+                android:visibility="gone"
                 android:drawableLeft="@drawable/lit_dot"
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"

@@ -9,46 +9,48 @@
     <TextView
         android:id="@+id/home_addplan_cqjh"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="60dp"
         android:background="@color/add_longplan_item_selec"
         android:drawableLeft="@drawable/home_addplan_longplan"
-        android:drawablePadding="10dp"
+        android:drawablePadding="15dp"
         android:gravity="center_vertical"
-        android:paddingLeft="10dp"
+        android:paddingLeft="15dp"
         android:text="我的计划"
         android:textSize="@dimen/textSize_normal" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0.2dp"
+        android:visibility="gone"
         android:background="@color/material_grey_400" />
 
     <TextView
         android:id="@+id/home_addplan_xyjy"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="60dp"
         android:background="@color/add_longplan_item_selec"
         android:drawableLeft="@drawable/home_addplanlong_xinyuan"
-        android:drawablePadding="10dp"
+        android:drawablePadding="15dp"
         android:gravity="center_vertical"
-        android:paddingLeft="10dp"
+        android:paddingLeft="15dp"
         android:text="心愿瓶子"
         android:textSize="@dimen/textSize_normal" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0.2dp"
+        android:visibility="gone"
         android:background="@color/material_grey_400" />
 
 
     <TextView
         android:id="@+id/home_addplan_xgbz"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="60dp"
         android:background="@color/add_longplan_item_selec"
         android:drawableLeft="@drawable/home_addplanlong_bizhi"
-        android:drawablePadding="10dp"
+        android:drawablePadding="15dp"
         android:gravity="center_vertical"
-        android:paddingLeft="10dp"
+        android:paddingLeft="15dp"
         android:text="习惯壁纸"
         android:textSize="@dimen/textSize_normal" />
 
@@ -56,34 +58,34 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0.2dp"
+        android:visibility="gone"
         android:background="@color/material_grey_400" />
 
     <TextView
         android:id="@+id/home_addplan_sxbj"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="66dp"
         android:background="@color/add_longplan_item_selec"
         android:drawableLeft="@drawable/home_addplanlong_note"
-        android:drawablePadding="10dp"
+        android:drawablePadding="15dp"
         android:gravity="center_vertical"
-        android:paddingLeft="10dp"
+        android:paddingLeft="15dp"
         android:text="随想笔记"
         android:textSize="@dimen/textSize_normal" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="1.5dp"
+        android:layout_height="1dp"
         android:background="@color/material_grey_400" />
     <TextView
         android:id="@+id/home_addplan_close"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="60dp"
         android:background="@color/add_longplan_item_selec"
         android:drawableLeft="@drawable/selector_home_add_close"
-        android:drawablePadding="10dp"
+        android:drawablePadding="15dp"
         android:gravity="center_vertical"
-        android:textColor="@color/et_divider_focused"
-        android:paddingLeft="10dp"
+        android:paddingLeft="15dp"
         android:text="取消"
         android:textSize="@dimen/textSize_large" />
 

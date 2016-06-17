@@ -1,178 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/material_grey_200"
+        android:scrollbars="none">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include layout="@layout/tool_bar"></include>
 
-            <app.geo.com.viewflow.ViewFlow
-                android:id="@+id/viewflow"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:sidebuffer="3" />
+                android:background="@color/material_white"
+                android:orientation="vertical"
+                android:paddingTop="10dp">
 
-            <app.geo.com.viewflow.CircleFlowIndicator
-                android:id="@+id/viewflowindic"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/discover_plan_uname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="炭灰思学Sunny"
+                    android:textSize="@dimen/textSize_normal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:drawableLeft="@drawable/dreamdone_locationicon"
+                    android:drawablePadding="3dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:text="湖北武汉光谷新天地"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/material_white"
+                    android:padding="10dp"
+                    android:text="        这就是所谓的那个莎莎也iom，我并不知道UI怎么设计，但是一样会尽全力把他做出来"
+                    android:textSize="@dimen/textSize_normal" />
+
+                <com.bigkoo.convenientbanner.ConvenientBanner
+                    android:id="@+id/home_convenientBanner"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:canLoop="true" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/material_grey_200" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@color/material_white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="动态 (30)" />
+
+                    <View
+                        android:layout_width="0.55dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/material_grey_200" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="参与者 (286)" />
+
+                    <View
+                        android:layout_width="0.55dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/material_grey_200" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="鼓励 (56)" />
+
+                    <View
+                        android:layout_width="0.55dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/material_grey_200" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="我要参与" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp"
-                android:padding="10dip"
-                app:activeColor="@color/material_grey_900"
-                app:fadeOut="1000"
-                app:inactiveColor="@color/material_white"
-                app:inactiveType="fill"
-                app:radius="5dp"
-                app:spacing="3dp" />
-        </RelativeLayout>
+                android:layout_marginTop="22dp"
+                android:background="@color/material_white"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="22dp"
+                    android:background="@color/material_grey_300"></View>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="8dp"
+                    android:drawableLeft="@drawable/myplan_createtime"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:text="创建时间：2016-05-31"
+                    android:textSize="@dimen/textSize_normal" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/material_grey_200" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="8dp"
+                    android:drawableLeft="@drawable/myplan_endtime"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:text="截止时间：2016-10-31"
+                    android:textSize="@dimen/textSize_normal" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/material_grey_200" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="8dp"
+                    android:drawableLeft="@drawable/myplan_process"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:text="完成进度：90%"
+                    android:textSize="@dimen/textSize_normal" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
+        </LinearLayout>
+    </ScrollView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/material_grey_200" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/material_grey_200"
+        android:padding="10dp">
+        <com.rey.material.widget.EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:hint="来了就鼓励下他呗..."
+            app:et_supportMode="charCounter"
+            app:v_styleId="@array/edittext" />
+    </FrameLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:text="以下是文本内容" />
-    </LinearLayout>
-</ScrollView>
-
+</LinearLayout>

@@ -98,9 +98,10 @@
             android:id="@+id/list_homeplan_zan"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:drawableLeft="@drawable/thumbs_up"
             android:layout_weight="1"
             android:gravity="center_vertical|center_horizontal"
-            android:text="点赞(12)"
+            android:text="(12)"
             android:textSize="@dimen/textSize_normal" />
 
         <TextView

@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Power.iml" filepath="$PROJECT_DIR$/Power.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/labelview/labelview.iml" filepath="$PROJECT_DIR$/labelview/labelview.iml" />
       <module fileurl="file://$PROJECT_DIR$/material/material.iml" filepath="$PROJECT_DIR$/material/material.iml" />
       <module fileurl="file://$PROJECT_DIR$/refreshview/refreshview.iml" filepath="$PROJECT_DIR$/refreshview/refreshview.iml" />
       <module fileurl="file://$PROJECT_DIR$/viewflow/viewflow.iml" filepath="$PROJECT_DIR$/viewflow/viewflow.iml" />
