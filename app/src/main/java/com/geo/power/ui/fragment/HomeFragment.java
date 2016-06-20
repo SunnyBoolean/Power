@@ -56,7 +56,6 @@ public class HomeFragment extends BaseFragment {
     private RecyclerView mRecycleView;
     private MyAdapter mAdapter;
     private final String[] mCategorys = {"生活", "健康", "学习", "工作"};
-    private FrameLayout mCategoryTv, mListOrderTv;
     private ConvenientBanner mConverBanner;
     SwipeRefreshLayout swipeRefreshLayout;
     public static final String[] mPictureUrls = {
