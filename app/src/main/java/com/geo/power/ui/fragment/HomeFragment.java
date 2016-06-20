@@ -6,15 +6,15 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -25,7 +25,6 @@ import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +42,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import ui.geo.com.power.R;
 
@@ -55,9 +56,9 @@ public class HomeFragment extends BaseFragment {
     private RecyclerView mRecycleView;
     private MyAdapter mAdapter;
     private final String[] mCategorys = {"生活", "健康", "学习", "工作"};
-    private TextView mCategoryTvContent, mListOrderTvContent;
     private FrameLayout mCategoryTv, mListOrderTv;
     private ConvenientBanner mConverBanner;
+    SwipeRefreshLayout swipeRefreshLayout;
     public static final String[] mPictureUrls = {
             "http://ac-6ptjoad9.clouddn.com/3MekCrFaIezGOmrmbmvkILWjyF2dGIItve4AYXQC",
             "http://ac-6ptjoad9.clouddn.com/aEealv8tKqUxuSn3DHhHKPUQUtkUoVdZcwqN8i9y",
@@ -85,11 +86,7 @@ public class HomeFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View content = View.inflate(mContext, R.layout.fragment_main_home, null);
         mRecycleView = (RecyclerView) content.findViewById(R.id.home_main_recyclerList);
-        mCategoryTvContent = (TextView) content.findViewById(R.id.main_home_category_choice_content);
-        mListOrderTvContent = (TextView) content.findViewById(R.id.main_home_list_order_content);
-        mCategoryTv = (FrameLayout) content.findViewById(R.id.main_home_category_choice);
-        mListOrderTv = (FrameLayout) content.findViewById(R.id.main_home_list_order);
-
+        swipeRefreshLayout = (SwipeRefreshLayout) content.findViewById(R.id.home_swipeLayout);
         initCompontent();
 
         return content;
@@ -114,20 +111,35 @@ public class HomeFragment extends BaseFragment {
         HeaderDecoration.Builder builder = new HeaderDecoration.Builder(mContext);
         builder.inflate(R.layout.home_recycleview_header);
         builder.parallax(0.2f);
-
-//                .inflate(R.layout.home_recycleview_header)
-//                .parallax(0.2f)
-//                .dropShadowDp(4)
-//                .build());
         View container = builder.getContainer();
         mConverBanner = (ConvenientBanner) container.findViewById(R.id.home_convenientBanner);
         initBanner();
-//        HeaderDecoration header = builder.build();
-//        mRecycleView.addItemDecoration(header);
-        //添加Item之间的分隔线
-        //  mRecycleView.addItemDecoration(new MyItemDecoration(mContext, LinearLayoutManager.VERTICAL));
+        initSwipeRefresh();
     }
-
+    private void initSwipeRefresh(){
+        swipeRefreshLayout.setColorSchemeResources(R.color.material_red_A700,
+                R.color.material_deepOrange_A700,
+                R.color.material_indigo_900,
+                R.color.material_teal_900);
+        swipeRefreshLayout.setSize(SwipeRefreshLayout.LARGE);;
+//        swipeRefreshLayout.setProgressBackgroundColor(R.color.material_white);
+//        swipeRefreshLayout.setPadding(20, 20, 20, 20);
+//        swipeRefreshLayout.setProgressViewOffset(true, 100, 200);
+//        swipeRefreshLayout.setDistanceToTriggerSync(50);
+//        swipeRefreshLayout.setProgressViewEndTarget(true, 100);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                handler.sendEmptyMessageDelayed(1,5000);
+            }
+        });
+    }
+    android.os.Handler handler = new android.os.Handler(){
+        @Override
+    public void handleMessage(Message msg){
+            swipeRefreshLayout.setRefreshing(false);
+        }
+    };
     private void initBanner() {
         List<String> datas = Arrays.asList(mPictureUrls);
         mConverBanner.setPages(
@@ -162,43 +174,6 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
-    private void popupWindowForCategory() {
-        LinearLayout content = (LinearLayout) View.inflate(mContext, R.layout.home_main_category_menu, null);
-        final PopupWindow popwindow = new PopupWindow(content, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        popwindow.setTouchInterceptor(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-                    popwindow.dismiss();
-                    return true;
-                }
-
-                return false;
-            }
-        });
-        int[] size = ScreenUtil.getScreenSize(mContext);
-        popwindow.setWidth(size[0] / 2);
-        popwindow.setTouchable(true);
-        popwindow.setBackgroundDrawable(new BitmapDrawable());
-        popwindow.setOutsideTouchable(true);
-        popwindow.showAsDropDown(mCategoryTv);
-
-        int childs = content.getChildCount();
-        for (int i = 0; i < childs; i++) {
-            final TextView view = (TextView) content.getChildAt(i);
-            String text = view.getText().toString();
-            if (mCategoryTvContent.getText().toString().equals(text)) {
-                view.setVisibility(View.GONE);
-            }
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mCategoryTvContent.setText(view.getText().toString());
-                    popwindow.dismiss();
-                }
-            });
-        }
-    }
 
     /**
      * 定义自己的ViewHolder，此ViewHolder需要继承实现RecycleView的ViewHolder

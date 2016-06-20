@@ -174,7 +174,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
-                    android:text="历史记录"
+                    android:text="历史动态"
                     android:textSize="@dimen/textSize_normal" />
 
                 <TextView

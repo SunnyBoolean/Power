@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <include layout="@layout/tool_bar"></include>
 
             <LinearLayout
@@ -57,10 +58,10 @@
 
                 <com.bigkoo.convenientbanner.ConvenientBanner
                     android:id="@+id/home_convenientBanner"
-                    android:layout_marginTop="10dp"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
+                    android:layout_marginTop="10dp"
+                    android:visibility="visible"
                     app:canLoop="true" />
 
                 <View
@@ -77,6 +78,8 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:clickable="true"
+                        android:background="@color/add_longplan_item_selec"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="动态 (30)" />
@@ -91,6 +94,8 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:clickable="true"
+                        android:background="@color/add_longplan_item_selec"
                         android:gravity="center"
                         android:text="参与者 (286)" />
 
@@ -104,6 +109,8 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:clickable="true"
+                        android:background="@color/add_longplan_item_selec"
                         android:gravity="center"
                         android:text="鼓励 (56)" />
 
@@ -117,6 +124,8 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:clickable="true"
+                        android:background="@color/add_longplan_item_selec"
                         android:gravity="center"
                         android:text="我要参与" />
                 </LinearLayout>
@@ -131,17 +140,10 @@
                 android:orientation="vertical"
                 android:padding="10dp">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginLeft="22dp"
-                    android:background="@color/material_grey_300"></View>
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:layout_marginLeft="8dp"
-                    android:drawableLeft="@drawable/myplan_createtime"
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
                     android:text="创建时间：2016-05-31"
@@ -156,7 +158,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:layout_marginLeft="8dp"
-                    android:drawableLeft="@drawable/myplan_endtime"
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
                     android:text="截止时间：2016-10-31"
@@ -171,7 +172,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:layout_marginLeft="8dp"
-                    android:drawableLeft="@drawable/myplan_process"
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
                     android:text="完成进度：90%"
@@ -187,18 +187,29 @@
         android:layout_height="0.5dp"
         android:background="@color/material_grey_200" />
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/material_grey_200"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp"
         android:padding="10dp">
-        <com.rey.material.widget.EditText
-            android:layout_width="match_parent"
+
+        <EditText
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@null"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:background="@color/material_white"
             android:hint="来了就鼓励下他呗..."
-            app:et_supportMode="charCounter"
-            app:v_styleId="@array/edittext" />
-    </FrameLayout>
+            android:paddingLeft="5dp" />
+
+        <Button
+            android:layout_width="65dp"
+            android:layout_height="60dp"
+            android:text="发送" />
+    </LinearLayout>
 
 </LinearLayout>

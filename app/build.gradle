@@ -1,7 +1,6 @@
 
 apply plugin: 'com.android.application'
 
-
 android {
     compileSdkVersion 23
     buildToolsVersion '23.0.2'
@@ -63,4 +62,5 @@ dependencies {
     //Material日历
     compile 'com.prolificinteractive:material-calendarview:1.4.0'
     compile project(':labelview')
+    compile project(':library')
 }

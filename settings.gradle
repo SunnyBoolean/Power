@@ -1,1 +1,1 @@
-include ':app', ':material', ':refreshview', ':viewflow', ':labelview'
+include ':app', ':material', ':refreshview', ':viewflow', ':labelview', ':library'

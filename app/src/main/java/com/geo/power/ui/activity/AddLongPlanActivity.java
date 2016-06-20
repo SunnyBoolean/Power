@@ -2,11 +2,14 @@ package com.geo.power.ui.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -14,19 +17,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.geo.com.geo.power.util.BitmapUtils;
 import com.geo.com.geo.power.util.ScreenUtil;
 import com.rey.material.app.DatePickerDialog;
 import com.rey.material.app.DialogFragment;
 import com.rey.material.app.TimePickerDialog;
 import com.rey.material.widget.Switch;
+import com.yongchun.library.view.ImagePreviewActivity;
+import com.yongchun.library.view.ImageSelectorActivity;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import ui.geo.com.power.R;
 
@@ -34,10 +45,14 @@ import ui.geo.com.power.R;
  * Created by Administrator on 2016/6/3.
  */
 public class AddLongPlanActivity extends BaseActivity {
-    private View mSelectCategory, mPlanDeadline, mPlanNotify, mPlanLocation, mPlanJieduan;
+    private View mSelectCategory, mPlanDeadline, mPlanNotify, mPlanLocation, mPlanJieduan, mAddPicBtn;
     private TextView mSelectCategoryContent, mPlanDeadLineTv, mPlanNotifyShow, mIsPublicTV;
     private ImageView mCategorySelectegIV, mPlanDeadlineIm, mPlanNotifyIm;
     private Switch mIsPublicSwitch;
+    private GridView mPicGridView;
+    private ArrayList<String> mSelectPics = new ArrayList<String>();
+    private ImageAdapter mPicAdapter;
+    private final String flag = "HelloPowerWorld";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +78,14 @@ public class AddLongPlanActivity extends BaseActivity {
         mPlanLocation = findViewById(R.id.addlongplan_location_click);
         mIsPublicSwitch = (Switch) findViewById(R.id.add_longplan_pubprio_switcher);
         mIsPublicTV = (TextView) findViewById(R.id.add_longplan_pubprio_cv);
+        mAddPicBtn = findViewById(R.id.add_longplan_pics);
+        mPicGridView = (GridView) findViewById(R.id.list_homeplan_img_select_gridview);
+        mSelectPics.clear();
+        ;
+        mSelectPics.add(flag);
+        mPicAdapter = new ImageAdapter();
+        mPicGridView.setAdapter(mPicAdapter);
+
     }
 
     @Override
@@ -72,6 +95,7 @@ public class AddLongPlanActivity extends BaseActivity {
         mPlanDeadline.setOnClickListener(this);
         mPlanNotify.setOnClickListener(this);
         mPlanLocation.setOnClickListener(this);
+//        mAddPicBtn.setOnClickListener(this);
         mIsPublicSwitch.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(Switch view, boolean checked) {
@@ -82,6 +106,18 @@ public class AddLongPlanActivity extends BaseActivity {
                     mIsPublicTV.setText("私有");
                     mIsPublicTV.setTextColor(Color.GRAY);
                 }
+            }
+        });
+        mPicGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String url = mSelectPics.get(position);
+                if (url.equals(flag)) {
+                    ImageSelectorActivity.start(AddLongPlanActivity.this, 12, ImageSelectorActivity.MODE_MULTIPLE, true, true, false);
+                } else {
+//                    ImageSelectorActivity.start(AddLongPlanActivity.this);
+                }
+
             }
         });
     }
@@ -108,8 +144,20 @@ public class AddLongPlanActivity extends BaseActivity {
                 break;
             case R.id.add_longplan_plannotify_click:  //定时提醒
                 showPlanNotify();
+            case R.id.add_longplan_pics:   //添加图片
+
                 break;
 
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //选中的图片
+        if (resultCode == RESULT_OK && requestCode == ImageSelectorActivity.REQUEST_IMAGE) {
+            ArrayList<String> images = (ArrayList<String>) data.getSerializableExtra(ImageSelectorActivity.REQUEST_OUTPUT);
+            mSelectPics.addAll(images);
+            mPicAdapter.notifyDataSetChanged();
         }
     }
 
@@ -120,7 +168,7 @@ public class AddLongPlanActivity extends BaseActivity {
                 TimePickerDialog dialog = (TimePickerDialog) fragment.getDialog();
 //                Toast.makeText(mContext, "Time is " + dialog.getFormattedTime(SimpleDateFormat.getTimeInstance()), Toast.LENGTH_SHORT).show();
                 String time = dialog.getFormattedTime(SimpleDateFormat.getTimeInstance());
-                mPlanNotifyShow.setText(time);
+                mPlanNotifyShow.setText("每天" + time);
                 mPlanNotifyIm.setVisibility(View.VISIBLE);
                 mPlanNotifyShow.setTextColor(mCommonColor);
                 super.onPositiveActionClicked(fragment);
@@ -265,4 +313,53 @@ public class AddLongPlanActivity extends BaseActivity {
             }
         });
     }
+
+    private class ImageAdapter extends BaseAdapter {
+
+        /**
+         * How many items are in the data set represented by this Adapter.
+         *
+         * @return Count of items.
+         */
+        @Override
+        public int getCount() {
+            return mSelectPics.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return mSelectPics.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            String url = mSelectPics.get(getCount()-position-1);
+            IViewHolder holder ;
+            if(convertView == null){
+                holder = new IViewHolder();
+                convertView = View.inflate(mContext, R.layout.item_image_select, null);
+                holder.img = (ImageView) convertView.findViewById(R.id.add_longplan_pics);
+                convertView.setTag(holder);
+            }else{
+                holder = (IViewHolder) convertView.getTag();
+            }
+            if (flag.equals(url)) {
+//                return convertView;
+            } else {
+                Bitmap bitmap = BitmapUtils.getBitmap(AddLongPlanActivity.this,url);
+//                BitmapFactory.dec
+                holder.img.setImageBitmap(bitmap);
+            }
+            return convertView;
+        }
+        class IViewHolder{
+            ImageView img;
+        }
+    }
+
 }

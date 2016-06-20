@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.geo.com.geo.power.util.DensityUtil;
 import com.geo.com.geo.power.util.ScreenUtil;
 import com.geo.power.ui.fragment.DiscoverFragment;
+import com.geo.power.ui.fragment.HomeDongtaiFragment;
 import com.geo.power.ui.fragment.HomeFragment;
 import com.geo.power.ui.fragment.PersonalCenterFragment;
 import com.rey.material.app.BottomSheetDialog;
@@ -41,7 +42,7 @@ import java.util.List;
 import ui.geo.com.power.R;
 
 public class MainActivity extends HomeBaseActivity implements DiscoverFragment.FMCallback {
-    private RadioButton mHomeBtn, mDiscoverBtn, mPersonerCenterBtn;
+    private RadioButton mHomeBtn, mDiscoverBtn, mPersonerCenterBtn,mDongtaiBtn;
     private TextView mSettingBtn, mAboutBtn;
     private DrawerLayout mDrawerLayout;
     private FloatingActionButton mAddPlanFAB;
@@ -69,6 +70,7 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
         mHomeBtn = (RadioButton) findViewById(R.id.main_home_home);
         mDiscoverBtn = (RadioButton) findViewById(R.id.main_home_discover);
         mPersonerCenterBtn = (RadioButton) findViewById(R.id.main_home_personal);
+        mDongtaiBtn = (RadioButton) findViewById(R.id.main_home_dongtai);
         mSettingBtn = (TextView) findViewById(R.id.home_main_setting_btn);
         mAboutBtn = (TextView) findViewById(R.id.home_main_about_btn);
         mAddPlanFAB = (FloatingActionButton) findViewById(R.id.home_addplan);
@@ -198,6 +200,7 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
         mAddPlanFAB.setOnClickListener(this);
         mSettingBtn.setOnClickListener(this);
         mAboutBtn.setOnClickListener(this);
+        mDongtaiBtn.setOnClickListener(this);
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -235,6 +238,11 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
             case R.id.main_home_discover:   //计划
                 mSpinner.setVisibility(View.GONE);
                 changedRadioButtonByClick(mDiscoverBtn);
+                mContitionMi.setVisible(false);
+                break;
+            case R.id.main_home_dongtai:  //动态
+                mSpinner.setVisibility(View.GONE);
+                changedRadioButtonByClick(mDongtaiBtn);
                 mContitionMi.setVisible(false);
                 break;
             case R.id.main_home_personal:  //个人中心
@@ -277,6 +285,17 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
                 }
                 ft.show(homeFragment);
                 break;
+            case R.id.main_home_dongtai:
+                HomeDongtaiFragment dongtai_fragment = (HomeDongtaiFragment) fm
+                        .findFragmentByTag("dongtai_fragment");
+                if (dongtai_fragment == null) {
+                    dongtai_fragment = HomeDongtaiFragment.getInstance();
+                    ft.add(R.id.main_fragment_container, dongtai_fragment,
+                            "dongtai_fragment");
+                }
+                ft.show(dongtai_fragment);
+                break;
+
             case R.id.main_home_discover:
                 DiscoverFragment questionFragment = (DiscoverFragment) fm
                         .findFragmentByTag("discover_fragment");
@@ -321,6 +340,7 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
         mHomeBtn.setSelected(false);
         mDiscoverBtn.setSelected(false);
         mPersonerCenterBtn.setSelected(false);
+        mDongtaiBtn.setSelected(false);
         btn.setSelected(true);
 
     }

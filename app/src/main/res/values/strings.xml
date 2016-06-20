@@ -10,6 +10,7 @@
     <string name="home_slidemenu_learn">学习</string>
     <string name="home_slidemenu_halerthy">健康</string>
     <string name="home_slidemenu_work">工作</string>
+    <string name="home_dongtai">动态</string>
 <array name="home_main_tite_category">
     <item>生活</item>
     <item>健康</item>
