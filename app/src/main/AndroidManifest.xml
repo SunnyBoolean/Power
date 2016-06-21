@@ -126,7 +126,12 @@
         <activity
             android:name="com.geo.power.ui.activity.DoPlanHistoryActivity"
             android:label="历史记录" />
-        <activity android:name="com.geo.power.ui.activity.DiscoverDreamActivity" />
+        <activity android:name="com.geo.power.ui.activity.DiscoverDreamActivity"
+            android:label="发现心愿瓶子"/>
+        <activity android:name="com.geo.power.ui.activity.ExperenceActivity"
+            android:label="经验之谈"/>
+        <activity android:name="com.geo.power.ui.activity.DreamDetailActivity"
+            android:label="心愿详情"/>
         <activity android:name="com.yongchun.library.view.ImageSelectorActivity"></activity>
         <activity android:name="com.yongchun.library.view.ImagePreviewActivity"></activity>
     </application>

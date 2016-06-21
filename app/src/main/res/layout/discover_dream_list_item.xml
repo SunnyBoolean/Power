@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_grey_100"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/material_white"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/home_myplan_item_tag_p"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/list_homeplan_userimg" />
+
+        <TextView
+            android:id="@+id/home_myplan_item_sigin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/home_myplan_item_tag_p"
+            android:text="泼墨"
+            android:textColor="@color/material_lightBlue_900" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/home_myplan_item_tag_p"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/home_myplan_item_tag_p"
+            android:text="2016-05-13" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@color/material_accentPink_a200"
+            android:padding="3dp"
+            android:text="生活"
+            android:textColor="@color/material_white"
+            android:textSize="@dimen/textSize_small" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/material_white"
+        android:padding="10dp"
+        android:text="没有什么可以比这个更加适合你说的哦你咳嗽啊扩大时胡佛ID啊是奇偶按洗澡一U盾副书记口即佛大傻鸟,没有什么驹桥啊，谁说不是呢，对不对啊" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/material_white"
+        android:paddingTop="6dp">
+
+        <TextView
+            android:id="@+id/haddone_dream_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/dreamdone_locationicon"
+            android:drawablePadding="3dp"
+            android:paddingBottom="8dp"
+            android:text="武汉光谷     1.2km"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/discover_dream_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:drawableLeft="@drawable/dream_comment"
+            android:drawablePadding="3dp"
+            android:text="16"
+            android:textSize="12sp" />
+        <TextView
+            android:id="@+id/discover_dream_zan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@id/discover_dream_comment"
+            android:drawableLeft="@drawable/dream_zan"
+            android:drawablePadding="3dp"
+            android:text="12"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@color/material_grey_200" />
+</LinearLayout>

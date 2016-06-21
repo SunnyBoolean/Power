@@ -18,6 +18,7 @@ import ui.geo.com.power.R;
 
 /**
  * Created by Administrator on 2016/5/18.
+ * Home界面计划
  */
 public class DiscoverFragment extends BaseFragment {
     private static DiscoverFragment mInstance;

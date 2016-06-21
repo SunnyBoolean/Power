@@ -25,10 +25,10 @@
                 android:layout_alignParentRight="true"
                 android:drawableLeft="@drawable/lit_dot"
                 android:drawablePadding="5dp"
-                android:visibility="gone"
                 android:text="目标"
                 android:textColor="@color/et_divider_focused"
-                android:textSize="@dimen/textSize_large" />
+                android:textSize="@dimen/textSize_large"
+                android:visibility="gone" />
 
             <View
                 android:layout_width="match_parent"
@@ -65,79 +65,6 @@
             android:layout_height="wrap_content"
             android:background="@color/material_white"
             android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="8dp"
-                android:drawableLeft="@drawable/lit_dot"
-                android:visibility="gone"
-                android:drawablePadding="5dp"
-                android:gravity="center_vertical"
-                android:text="基本信息"
-                android:textColor="@color/et_divider_focused"
-                android:textSize="@dimen/textSize_large" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="22dp"
-                android:background="@color/material_grey_300"></View>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_marginLeft="8dp"
-                android:drawableLeft="@drawable/myplan_createtime"
-                android:drawablePadding="5dp"
-                android:gravity="center_vertical"
-                android:text="创建时间：2016-05-31"
-                android:textSize="@dimen/textSize_normal" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/material_grey_200" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_marginLeft="8dp"
-                android:drawableLeft="@drawable/myplan_endtime"
-                android:drawablePadding="5dp"
-                android:gravity="center_vertical"
-                android:text="截止时间：2016-10-31"
-                android:textSize="@dimen/textSize_normal" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/material_grey_200" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_marginLeft="8dp"
-                android:drawableLeft="@drawable/myplan_process"
-                android:drawablePadding="5dp"
-                android:gravity="center_vertical"
-                android:text="完成进度：90%"
-                android:textSize="@dimen/textSize_normal" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="25dp"></View>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/material_white"
-            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <TextView
@@ -145,26 +72,25 @@
                 android:layout_height="45dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="8dp"
-                android:visibility="gone"
                 android:drawableLeft="@drawable/lit_dot"
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"
                 android:padding="10dp"
                 android:text="其它"
                 android:textColor="@color/et_divider_focused"
-                android:textSize="@dimen/textSize_large" />
+                android:textSize="@dimen/textSize_large"
+                android:visibility="gone" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginLeft="22dp"
                 android:background="@color/material_grey_300"></View>
 
             <!--历史记录-->
             <RelativeLayout
+                android:id="@+id/edit_plan_history_click"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:id="@+id/edit_plan_history_click"
                 android:background="@color/add_longplan_item_selec"
                 android:clickable="true"
                 android:padding="10dp">
@@ -205,16 +131,16 @@
                 android:background="@color/material_grey_200" />
             <!--留言板-->
             <RelativeLayout
+                android:id="@+id/myplan_detail_mycurrage_item_click"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:id="@+id/myplan_detail_mycurrage_item_click"
                 android:background="@color/add_longplan_item_selec"
                 android:clickable="true"
                 android:padding="10dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
                     android:id="@+id/myplan_detail_mycurrage_item"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
                     android:text="收到鼓励"
@@ -283,6 +209,81 @@
                     android:gravity="center"
                     android:text="16" />
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/material_grey_200"
+                android:layout_height="25dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/material_white"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="8dp"
+                    android:drawableLeft="@drawable/lit_dot"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:text="基本信息"
+                    android:textColor="@color/et_divider_focused"
+                    android:textSize="@dimen/textSize_large"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:visibility="gone"
+                    android:layout_marginLeft="22dp"
+                    android:background="@color/material_grey_300"></View>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="8dp"
+                    android:drawableLeft="@drawable/myplan_createtime"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:text="创建时间：2016-05-31"
+                    android:textSize="@dimen/textSize_normal" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/material_grey_200" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="8dp"
+                    android:drawableLeft="@drawable/myplan_endtime"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:text="截止时间：2016-10-31"
+                    android:textSize="@dimen/textSize_normal" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/material_grey_200" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="8dp"
+                    android:drawableLeft="@drawable/myplan_process"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical"
+                    android:text="完成进度：90%"
+                    android:textSize="@dimen/textSize_normal" />
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"

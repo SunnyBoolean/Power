@@ -30,7 +30,6 @@ import ui.geo.com.power.R;
 public class MessageNotificationActivity extends BaseActivity {
     private PullToRefreshListView mRefreshListView;
     private ListView mListView;
-    private SimpleDateFormat mDateFormat = new SimpleDateFormat("MM-dd HH:mm");
     private boolean mIsStart = true;
     private int mCurIndex = 0;
     private static final int mLoadDataCount = 100;
@@ -109,14 +108,6 @@ public class MessageNotificationActivity extends BaseActivity {
         mRefreshListView.setLastUpdatedLabel(text);
     }
 
-    private String formatDateTime(long time) {
-        if (0 == time) {
-            return "";
-        }
-
-        return mDateFormat.format(new Date(time));
-    }
-
     @Override
     protected void initListener() {
         super.initListener();
@@ -133,23 +124,11 @@ public class MessageNotificationActivity extends BaseActivity {
 
     private class MessageAdapter extends BaseAdapter {
 
-        /**
-         * How many items are in the data set represented by this Adapter.
-         *
-         * @return Count of items.
-         */
         @Override
         public int getCount() {
             return mData.size();
         }
 
-        /**
-         * Get the data item associated with the specified position in the data set.
-         *
-         * @param position Position of the item whose data we want within the adapter's
-         *                 data set.
-         * @return The data at the specified position.
-         */
         @Override
         public Object getItem(int position) {
             return mData.get(position);
@@ -183,10 +162,8 @@ public class MessageNotificationActivity extends BaseActivity {
                 holder.isWatchedTv.setBackgroundResource(R.drawable.msg_watched);
             } else if (info.isWatched == 1) {
                 Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.msg_notwatched);
-//                holder.isWatchedTv.setImageBitmap(bitmap);
                 holder.isWatchedTv.setBackgroundResource(R.drawable.msg_notwatched);
             }
-//            showToast("getView()"+info.content);
             return convertView;
         }
 

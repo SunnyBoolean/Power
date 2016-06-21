@@ -209,10 +209,16 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
                 mDrawerLayout.closeDrawers();
                 switch (id) {
                     case R.id.menu_item_home_slidemenu_xiguan: //习惯壁纸
-                        changedRadioButtonByClick(mHomeBtn);
                         break;
-                    case R.id.menu_item_home_slidemenu_xinyuan: //心愿寄语
-                        changedRadioButtonByClick(mHomeBtn);
+                    case R.id.menu_item_home_slidemenu_xinyuan: //心愿瓶子
+                        Intent intent = new Intent();
+                        intent.setClass(mContext,DiscoverDreamActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.menu_item_home_slidemenu_jingyan:  //经验之谈
+                        Intent intent1 = new Intent();
+                        intent1.setClass(mContext,ExperenceActivity.class);
+                        startActivity(intent1);
                         break;
                 }
                 return false;

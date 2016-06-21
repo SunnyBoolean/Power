@@ -15,6 +15,7 @@
             android:id="@+id/menu_item_home_slidemenu_jingyan"
             android:orderInCategory="100"
             android:title="经验之谈"
+            android:visible="false"
             android:icon="@drawable/selector_slidemenu_learn"
             app:showAsAction="never" />
         <item

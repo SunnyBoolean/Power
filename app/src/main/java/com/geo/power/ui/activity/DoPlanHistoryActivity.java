@@ -36,7 +36,7 @@ import ui.geo.com.power.R;
  * 计划执行的历史记录
  */
 public class DoPlanHistoryActivity extends BaseActivity {
-    private final String[] mTabTitle = {"我的记录", "参与者记录"};
+    private final String[] mTabTitle = {"我的动态", "参与者动态"};
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     @Override
@@ -83,6 +83,7 @@ public class DoPlanHistoryActivity extends BaseActivity {
     @Override
     protected void initToolBar() {
         super.initToolBar();
+        mToolBar.setTitle("历史动态");
     }
 
     /**

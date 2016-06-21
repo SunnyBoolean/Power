@@ -23,6 +23,8 @@ import com.geo.com.geo.power.util.ImmersedStatusbarUtils;
 import com.geo.com.geo.power.util.SystemBarTintManager;
 import com.geo.power.ui.fragment.BaseFragment;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -41,6 +43,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     private View mContent;
     public final static String P_TAG = "Power";
     public int mCommonColor = Color.parseColor("#004d40");
+    public SimpleDateFormat mDateFormat = new SimpleDateFormat("MM-dd HH:mm");
     /**
      * 是否显示Toolbar
      */
@@ -236,5 +239,14 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
     }
+
+    final public String formatDateTime(long time) {
+        if (0 == time) {
+            return "";
+        }
+
+        return mDateFormat.format(new Date(time));
+    }
+
 }
 

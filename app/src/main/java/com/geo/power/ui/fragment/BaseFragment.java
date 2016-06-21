@@ -9,12 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by Administrator on 2016/5/18.
  */
 public class BaseFragment extends Fragment implements View.OnClickListener {
     public Context mContext;
-
+    public SimpleDateFormat mDateFormat = new SimpleDateFormat("MM-dd HH:mm");
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,4 +70,13 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
     public interface TaskCallback {
         public void handleTask();
     }
+
+    final public String formatDateTime(long time) {
+        if (0 == time) {
+            return "";
+        }
+
+        return mDateFormat.format(new Date(time));
+    }
+
 }

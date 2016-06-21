@@ -4,20 +4,37 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
         android:gravity="center"
-        android:textColor="@color/material_grey_600"
-        android:textSize="16sp"
-        android:text="还没有任何动态" />
-    <TextView
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dp"
+            android:gravity="center"
+            android:text="还没有任何动态"
+            android:textColor="@color/material_grey_600"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="你可以去试试寻找心愿瓶子哟~"
+            android:textColor="@color/material_grey_600"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <com.geo.refresh.PullToRefreshListView
+        android:id="@+id/mhome_dongtai_rfshlistview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:textColor="@color/material_grey_600"
-        android:textSize="16sp"
-        android:text="你可以去试试寻找心愿瓶子哟~" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="3dp"
+        android:divider="@null"
+        android:scrollbars="none" />
+
 </LinearLayout>
