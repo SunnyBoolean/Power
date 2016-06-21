@@ -62,4 +62,5 @@ dependencies {
     //Material日历
     compile 'com.prolificinteractive:material-calendarview:1.4.0'
     compile project(':labelview')
+    compile project(':library')
 }

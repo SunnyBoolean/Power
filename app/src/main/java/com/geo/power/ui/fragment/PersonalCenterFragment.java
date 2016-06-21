@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.geo.com.geo.power.util.DensityUtil;
 import com.geo.power.ui.activity.DreamListActivity;
 import com.geo.power.ui.activity.MessageNotificationActivity;
+import com.geo.power.ui.activity.MyFavoriteActivity;
 import com.geo.power.ui.activity.NoteListActivity;
 import com.geo.power.ui.activity.SuggestionActivity;
 import com.geo.widget.BadgeView;
@@ -22,7 +23,7 @@ import ui.geo.com.power.R;
  */
 public class PersonalCenterFragment extends BaseFragment {
     private static PersonalCenterFragment mInstance;
-    private View mNoteBtn, mYjfkBtn, mMessageBtn, mDreamPingziBtn;
+    private View mNoteBtn, mYjfkBtn, mMessageBtn, mDreamPingziBtn,mMyFavorite;
 
     public static PersonalCenterFragment getInstance() {
         if (mInstance == null) {
@@ -39,6 +40,7 @@ public class PersonalCenterFragment extends BaseFragment {
         mYjfkBtn = content.findViewById(R.id.personal_yjfk);
         mMessageBtn = content.findViewById(R.id.personal_xiaoxibutton);
         mDreamPingziBtn = content.findViewById(R.id.personal_dream_pingzi);
+        mMyFavorite = content.findViewById(R.id.personal_floow_aim);
 
         initListener();
         BadgeView badge = new BadgeView(getActivity());
@@ -57,6 +59,7 @@ public class PersonalCenterFragment extends BaseFragment {
         mYjfkBtn.setOnClickListener(this);
         mMessageBtn.setOnClickListener(this);
         mDreamPingziBtn.setOnClickListener(this);
+        mMyFavorite.setOnClickListener(this);
     }
 
     @Override
@@ -76,8 +79,12 @@ public class PersonalCenterFragment extends BaseFragment {
                 intent.setClass(mContext, MessageNotificationActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.personal_dream_pingzi:
+            case R.id.personal_dream_pingzi:   //漂流瓶子
                 intent.setClass(mContext, DreamListActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.personal_floow_aim:  //我的收藏
+                intent.setClass(mContext, MyFavoriteActivity.class);
                 startActivity(intent);
                 break;
         }
