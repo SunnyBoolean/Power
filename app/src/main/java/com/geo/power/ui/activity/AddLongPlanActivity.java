@@ -111,7 +111,7 @@ public class AddLongPlanActivity extends BaseActivity {
         mPicGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String url = mSelectPics.get(position);
+                String url = mSelectPics.get(mPicAdapter.getCount()-position-1);
                 if (url.equals(flag)) {
                     ImageSelectorActivity.start(AddLongPlanActivity.this, 12, ImageSelectorActivity.MODE_MULTIPLE, true, true, false);
                 } else {
