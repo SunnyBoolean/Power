@@ -10,7 +10,12 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/labelview" />
             <option value="$PROJECT_DIR$/library" />
+            <option value="$PROJECT_DIR$/material" />
+            <option value="$PROJECT_DIR$/refreshview" />
+            <option value="$PROJECT_DIR$/viewflow" />
           </set>
         </option>
       </GradleProjectSettings>
