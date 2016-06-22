@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_grey_200"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/material_white"
+        android:paddingLeft="10dp"
+        android:paddingTop="15dp">
+
+        <ImageView
+            android:id="@+id/home_myplan_item_tag_p"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/plan_done_icon" />
+
+        <TextView
+            android:id="@+id/home_myplan_item_sigin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/home_myplan_item_tag_p"
+            android:text="2016-05-03"
+            android:textColor="@color/material_lightBlue_900" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/home_myplan_item_tag_p"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/home_myplan_item_tag_p"
+            android:text="用时12个月" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/done_plan_share"
+            android:textColor="@color/material_white"
+            android:textSize="@dimen/textSize_small" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/material_white"
+        android:paddingTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:padding="16dp"
+        android:text="      今天很受打击啊，面个试还被嫌弃长得肥，我长得胖出的多又没吃你家饭！我决定要努力运动减肥！不瘦到150斤就一直减！" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/material_grey_200" />
+</LinearLayout>

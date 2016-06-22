@@ -1,11 +1,13 @@
 package com.geo.power.ui.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -65,6 +67,13 @@ public class MyFavoriteActivity extends BaseActivity {
             public boolean onLongClick(View v) {
                 showOPMoreDialog();
                 return false;
+            }
+        });
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(mContext,DiscoverDetailActivity.class);
+                startActivity(intent);
             }
         });
     }

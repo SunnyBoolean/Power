@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
 import android.text.Editable;
 import android.text.InputFilter;
+import android.text.InputType;
 import android.text.Layout;
 import android.text.Spannable;
 import android.text.TextPaint;
@@ -330,6 +331,23 @@ public class EditText extends FrameLayout implements ThemeManager.OnThemeChanged
                 dividerAnimDuration = a.getInteger(attr, 0);
             else if(attr == R.styleable.EditText_et_dividerCompoundPadding)
                 mDividerCompoundPadding = a.getBoolean(attr, true);
+            else if(attr == R.styleable.EditText_et_password){
+                boolean isPassword = a.getBoolean(attr, false);  //默认不是密码
+                if(isPassword){
+                    mInputView.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }else if(attr == R.styleable.EditText_et_number){  //是否是数字
+                boolean isNumber = a.getBoolean(attr, false);  //默认不是数字
+                if(isNumber){
+                    mInputView.setInputType(InputType.TYPE_CLASS_PHONE);
+                }
+            }else if(attr == R.styleable.EditText_et_singline){  //是否单行显示
+                boolean isSingline = a.getBoolean(attr,false);
+                if(isSingline){
+                    mInputView.setSingleLine(true);
+                }
+
+            }
         }
 
         a.recycle();

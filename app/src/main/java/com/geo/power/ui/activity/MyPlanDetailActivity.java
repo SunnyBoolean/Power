@@ -43,6 +43,8 @@ public class MyPlanDetailActivity extends BaseActivity {
     private BottomSheetDialog mBottomSheetDialog;
     private List<LeaveMsgInfo> mMsgData;
     private MsgAdapter mMsgAdapter;
+    /** 计划是否完成，0表示已完成，1表示未完成，正在进行*/
+    private int mIsDone;
     public static final String[] mPictureUrls = {
             "http://ac-6ptjoad9.clouddn.com/3MekCrFaIezGOmrmbmvkILWjyF2dGIItve4AYXQC",
             "http://ac-6ptjoad9.clouddn.com/aEealv8tKqUxuSn3DHhHKPUQUtkUoVdZcwqN8i9y",
@@ -99,6 +101,9 @@ public class MyPlanDetailActivity extends BaseActivity {
     }
 
     private void initData() {
+        Intent intent = getIntent();
+        //默认是未完成的
+        mIsDone = intent.getIntExtra("isDone",1);
         initMsgData();
     }
 

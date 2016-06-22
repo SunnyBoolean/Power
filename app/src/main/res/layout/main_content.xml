@@ -65,7 +65,7 @@
                 android:gravity="center"
                 android:text="@string/home_home_name"
                 android:textColor="@color/btn_text_selector"
-                android:textSize="@dimen/textSize_normal" />
+                android:textSize="14sp" />
 
             <RadioButton
                 android:id="@+id/main_home_discover"
@@ -79,7 +79,7 @@
                 android:gravity="center"
                 android:text="@string/home_discover_name"
                 android:textColor="@color/btn_text_selector"
-                android:textSize="@dimen/textSize_normal" />
+                android:textSize="14sp" />
 
             <RadioButton
                 android:id="@+id/main_home_dongtai"
@@ -93,7 +93,7 @@
                 android:gravity="center"
                 android:text="@string/home_dongtai"
                 android:textColor="@color/btn_text_selector"
-                android:textSize="@dimen/textSize_normal" />
+                android:textSize="14sp" />
             <RadioButton
                 android:id="@+id/main_home_personal"
                 android:layout_width="0dip"
@@ -106,7 +106,7 @@
                 android:gravity="center"
                 android:text="@string/home_personalcenter_name"
                 android:textColor="@color/btn_text_selector"
-                android:textSize="@dimen/textSize_normal" />
+                android:textSize="14sp" />
         </RadioGroup>
     </RelativeLayout>
 
