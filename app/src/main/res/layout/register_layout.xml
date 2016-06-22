@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <!--密码-->
+    <!--手机号-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="60dp">
 
         <ImageView
             android:id="@+id/login_paswdimg"
@@ -17,31 +17,91 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
             android:paddingLeft="20dp"
-            android:src="@drawable/login_password" />
+            android:src="@drawable/register_phonenumber" />
 
         <com.rey.material.widget.EditText
-            android:id="@+id/lonin_password"
+            android:id="@+id/register_phonenumber"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
             android:layout_toRightOf="@id/login_paswdimg"
-            app:et_singline="true"
             android:gravity="center_vertical"
             android:hint="输入手机号"
-            app:et_number="true"
             android:paddingLeft="10dp"
+            app:et_supportTextSize="18sp"
+            app:et_number="true"
+            app:et_singline="true"
             app:et_supportMaxLines="1"
             app:et_supportMode="none"
             app:et_supportSingleLine="true"
             app:v_styleId="@array/edittext" />
 
         <View
+            android:id="@+id/register_jsiaaz"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_below="@id/lonin_password"
+            android:layout_below="@id/register_phonenumber"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:background="@color/material_teal_900" />
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <com.rey.material.widget.EditText
+            android:id="@+id/register_yanzm"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="45dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_toRightOf="@id/login_paswdimg"
+            android:gravity="center_vertical"
+            android:hint="输入验证码"
+            android:paddingLeft="10dp"
+            app:et_number="true"
+            app:et_singline="true"
+            app:et_supportMaxLines="1"
+            app:et_supportMode="none"
+            app:et_supportSingleLine="true"
+            app:v_styleId="@array/edittext" />
+
+        <Button
+            android:id="@+id/register_getyzmbtn"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:layout_below="@id/register_jsiaaz"
+            android:layout_marginRight="20dp"
+            android:text="获取验证码" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/register_yanzm"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/material_teal_900" />
+    <!--登录-->
+    <Button
+        android:id="@+id/register_next_btn"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginTop="45dp"
+        android:background="@color/selector_suggestion_submit"
+        android:gravity="center"
+        android:enabled="false"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:text="下 一 步"
+        android:textColor="@color/material_white"
+        android:textSize="@dimen/textSize_normal" />
 </LinearLayout>

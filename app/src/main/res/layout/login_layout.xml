@@ -96,6 +96,7 @@
         android:background="@color/selector_suggestion_submit"
         android:gravity="center"
         android:paddingLeft="25dp"
+        android:enabled="false"
         android:paddingRight="25dp"
         android:text="登  录"
         android:textColor="@color/material_white"
