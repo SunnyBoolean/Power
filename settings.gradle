@@ -1,1 +1,1 @@
-include ':app', ':material', ':refreshview', ':viewflow', ':labelview', ':library'
+include ':app', ':material', ':refreshview', ':viewflow', ':labelview', ':library', ':SMSSDK'

@@ -3,6 +3,7 @@ package com.geo.power.ui.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,18 +22,22 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.geo.com.geo.power.bean.UserInfo;
 import com.geo.com.geo.power.util.DensityUtil;
 import com.geo.com.geo.power.util.ScreenUtil;
 import com.geo.power.ui.fragment.DiscoverFragment;
 import com.geo.power.ui.fragment.HomeDongtaiFragment;
 import com.geo.power.ui.fragment.HomeFragment;
 import com.geo.power.ui.fragment.PersonalCenterFragment;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rey.material.app.BottomSheetDialog;
 import com.rey.material.widget.Spinner;
 
@@ -39,10 +45,11 @@ import android.support.design.widget.FloatingActionButton;
 
 import java.util.List;
 
+import cn.bmob.v3.BmobUser;
 import ui.geo.com.power.R;
 
 public class MainActivity extends HomeBaseActivity implements DiscoverFragment.FMCallback {
-    private RadioButton mHomeBtn, mDiscoverBtn, mPersonerCenterBtn,mDongtaiBtn;
+    private RadioButton mHomeBtn, mDiscoverBtn, mPersonerCenterBtn, mDongtaiBtn;
     private TextView mSettingBtn, mAboutBtn;
     private DrawerLayout mDrawerLayout;
     private FloatingActionButton mAddPlanFAB;
@@ -50,6 +57,8 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
     private BottomSheetDialog mBottomSheetDialog;
     private Spinner mSpinner;
     private MenuItem mContitionMi;
+    private ImageView mUserImage;
+    private TextView mUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +84,28 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
         mAboutBtn = (TextView) findViewById(R.id.home_main_about_btn);
         mAddPlanFAB = (FloatingActionButton) findViewById(R.id.home_addplan);
         mSpinner = (Spinner) findViewById(R.id.spinner_labels);
+       View header = mNavigationView.getHeaderView(0);
+        mUserImage = (ImageView) header.findViewById(R.id.homemain_uimgs);
+        mUserName = (TextView) header.findViewById(R.id.homemain_unamesd);
         changedRadioButtonByClick(mHomeBtn);
         setSlideMenuWidth();
+        initUser();
+    }
+
+    /**
+     * 初始化用户信息，如加载用户头像、名称等
+     */
+    private void initUser() {
+        UserInfo user = BmobUser.getCurrentUser(this, UserInfo.class);
+        if (!TextUtils.isEmpty(user.uimg) && mUserImage!=null) {
+            DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                    .cacheInMemory(true)
+                    .cacheOnDisk(true)
+                    .build();
+            ImageLoader.getInstance().displayImage(user.uimg, mUserImage, defaultOptions);
+        }
+        if(mUserName!=null)
+        mUserName.setText(user.getUsername());
     }
 
     /**
@@ -89,6 +118,7 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
         mNavigationView.setLayoutParams(lay);
         //默认选中生活选项
         mNavigationView.setCheckedItem(R.id.menu_item_home_slidemenu_xiguan);
+
     }
 
     @Override
@@ -165,8 +195,8 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
         popwindow.setBackgroundDrawable(new BitmapDrawable());
         popwindow.setOutsideTouchable(true);
 //        popwindow.showAsDropDown(mToolBar);
-        int disy = DensityUtil.dip2px(mContext,80);
-        int disx = DensityUtil.dip2px(mContext,4);
+        int disy = DensityUtil.dip2px(mContext, 80);
+        int disx = DensityUtil.dip2px(mContext, 4);
         popwindow.showAtLocation(mToolBar, Gravity.RIGHT | Gravity.TOP, disx, disy);
 
         int childs = content.getChildCount();
@@ -212,12 +242,12 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
                         break;
                     case R.id.menu_item_home_slidemenu_xinyuan: //心愿瓶子
                         Intent intent = new Intent();
-                        intent.setClass(mContext,DiscoverDreamActivity.class);
+                        intent.setClass(mContext, DiscoverDreamActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.menu_item_home_slidemenu_jingyan:  //经验之谈
                         Intent intent1 = new Intent();
-                        intent1.setClass(mContext,ExperenceActivity.class);
+                        intent1.setClass(mContext, ExperenceActivity.class);
                         startActivity(intent1);
                         break;
                 }

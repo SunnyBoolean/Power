@@ -11,5 +11,9 @@ public class UserInfo extends BmobUser{
     public double Latitude;
     /** 当前所在的经度*/
     public double mLongitude;
+    /** 用户昵称*/
+    public String unick="";
+    /** 用户头像地址*/
+    public String uimg = "";
     public BmobGeoPoint mGpsAdd;
 }

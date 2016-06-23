@@ -28,6 +28,7 @@ ext{
     libSupportVersion = '23.1.1'
 }
 dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile files('libs/universal-image-loader-1.9.5.jar')
     compile 'com.android.support:design:23.1.1'
     //    compile 'com.android.support:appcompat-v7:23.0.0'
@@ -63,4 +64,7 @@ dependencies {
     compile 'com.prolificinteractive:material-calendarview:1.4.0'
     compile project(':labelview')
     compile project(':library')
+    compile files('libs/MobCommons-2016.0303.1229.jar')
+    compile files('libs/MobTools-2016.0303.1229.jar')
+    compile project(':SMSSDK')
 }

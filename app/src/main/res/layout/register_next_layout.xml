@@ -1,7 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <ImageView
+        android:id="@+id/register_uimg_select"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/register_uimg" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp">
+
+        <ImageView
+            android:id="@+id/login_userimgsdappp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:src="@drawable/login_username" />
+
+        <com.rey.material.widget.EditText
+            android:id="@+id/register_usernick_input"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="center_vertical"
+            android:layout_toRightOf="@id/login_userimgsdappp"
+            android:gravity="center_vertical"
+            android:hint="昵称"
+            android:paddingLeft="10dp"
+            app:et_autoCompleteMode="single"
+            app:et_singline="true"
+            app:et_supportMaxLines="1"
+            app:et_supportMode="none"
+            app:et_supportSingleLine="true"
+            app:v_styleId="@array/edittext" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/register_usernick_input"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/material_teal_900" />
+    </RelativeLayout>
+
+
+    <!--密码-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/login_paswdimgadcxz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:src="@drawable/login_password" />
+
+        <com.rey.material.widget.EditText
+            android:id="@+id/register_asd_password"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_toRightOf="@id/login_paswdimgadcxz"
+            android:gravity="center_vertical"
+            android:hint="密码"
+            android:paddingLeft="10dp"
+            app:et_autoCompleteMode="single"
+            app:et_password="true"
+            app:et_singline="true"
+            app:et_supportMaxLines="1"
+            app:et_supportMode="none"
+            app:et_supportSingleLine="true"
+            app:v_styleId="@array/edittext" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/register_asd_password"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/material_teal_900" />
+    </RelativeLayout>
+    <!--确认密码-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/login_paswdimgadcxzaaa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:src="@drawable/login_password" />
+
+        <com.rey.material.widget.EditText
+            android:id="@+id/register_asd_password_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_toRightOf="@id/login_paswdimgadcxzaaa"
+            android:gravity="center_vertical"
+            android:hint="确认密码"
+            android:paddingLeft="10dp"
+            app:et_autoCompleteMode="single"
+            app:et_password="true"
+            app:et_singline="true"
+            app:et_supportMaxLines="1"
+            app:et_supportMode="none"
+            app:et_supportSingleLine="true"
+            app:v_styleId="@array/edittext" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/register_asd_password_confirm"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/material_teal_900" />
+    </RelativeLayout>
+    <Button
+        android:id="@+id/register_next_btn_send"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginTop="80dp"
+        android:background="@color/selector_suggestion_submit"
+        android:gravity="center"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:text="注 册"
+        android:textColor="@color/material_white"
+        android:textSize="@dimen/textSize_normal" />
 </LinearLayout>

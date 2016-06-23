@@ -8,6 +8,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.geo.com.geo.power.bean.UserInfo;
+import com.rey.material.widget.EditText;
+
+import cn.bmob.v3.listener.SaveListener;
 import ui.geo.com.power.R;
 
 /**
@@ -17,6 +21,9 @@ public class LoginActivity extends BaseActivity {
     private ImageButton mSinaLoginBt, mWechatLoginBt, mQQLoginBt;
     private Button mLoginBtnSend;
     private TextView mRegisterBtn;
+    private String mUserName, mPaswd;
+    private EditText musernameEt, mPaswdEt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +41,8 @@ public class LoginActivity extends BaseActivity {
         mQQLoginBt = (ImageButton) findViewById(R.id.qq_login);
         mLoginBtnSend = (Button) findViewById(R.id.login_btn_send);
         mRegisterBtn = (TextView) findViewById(R.id.login_register_btn);
+        musernameEt = (EditText) findViewById(R.id.login_uname_apo);
+        mPaswdEt = (EditText) findViewById(R.id.login_asx_password);
     }
 
     /**
@@ -46,27 +55,48 @@ public class LoginActivity extends BaseActivity {
         super.handlOnClickListener(v);
         Intent intent = new Intent(mContext, MainActivity.class);
         switch (v.getId()) {
-            case R.id.sina_login:
-                startActivity(intent);
-                finish();
+            case R.id.sina_login:   //微博登录
+//                startActivity(intent);
+//                finish();
                 break;
-            case R.id.wechat_login:
-                startActivity(intent);
-                finish();
+            case R.id.wechat_login:  //微信登录
+//                startActivity(intent);
+//                finish();
                 break;
-            case R.id.qq_login:
-                startActivity(intent);
-                finish();
+            case R.id.qq_login:  //qq登录
+//                startActivity(intent);
+//                finish();
                 break;
             case R.id.login_btn_send:  //点击登录
-                startActivity(intent);
-                finish();
+                login();
+//                finish();
                 break;
             case R.id.login_register_btn://注册
-                intent.setClass(mContext,RegisterActivity.class);
+                intent.setClass(mContext, RegisterActivity.class);
                 startActivity(intent);
                 break;
         }
+    }
+
+    private void login() {
+        mUserName = musernameEt.getText().toString().trim();
+        mPaswd = mPaswdEt.getText().toString().trim();
+        UserInfo user = new UserInfo();
+        user.setUsername(mUserName);
+        user.setPassword(mPaswd);
+        user.login(mContext, new SaveListener() {
+            @Override
+            public void onSuccess() {
+                Intent intent = new Intent(mContext,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+
+            }
+        });
     }
 
     @Override

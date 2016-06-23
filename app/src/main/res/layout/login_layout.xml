@@ -20,13 +20,13 @@
             android:src="@drawable/login_username" />
 
         <com.rey.material.widget.EditText
-            android:id="@+id/lonin_uname"
+            android:id="@+id/login_uname_apo"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_gravity="center_vertical"
             android:layout_toRightOf="@id/login_userimg"
             android:gravity="center_vertical"
-            android:hint="用户名/手机号"
+            android:hint="用户昵称"
             android:paddingLeft="10dp"
             app:et_autoCompleteMode="single"
             app:et_singline="true"
@@ -38,7 +38,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_below="@id/lonin_uname"
+            android:layout_below="@id/login_uname_apo"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:background="@color/material_teal_900" />
@@ -54,13 +54,14 @@
             android:id="@+id/login_paswdimg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
             android:paddingLeft="20dp"
             android:src="@drawable/login_password" />
 
         <com.rey.material.widget.EditText
-            android:id="@+id/lonin_password"
+            android:id="@+id/login_asx_password"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_centerVertical="true"
@@ -80,7 +81,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_below="@id/lonin_password"
+            android:layout_below="@id/login_asx_password"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:background="@color/material_teal_900" />
@@ -96,7 +97,7 @@
         android:background="@color/selector_suggestion_submit"
         android:gravity="center"
         android:paddingLeft="25dp"
-        android:enabled="false"
+        android:enabled="true"
         android:paddingRight="25dp"
         android:text="登  录"
         android:textColor="@color/material_white"
