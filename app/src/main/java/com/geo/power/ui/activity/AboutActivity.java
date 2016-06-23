@@ -1,6 +1,10 @@
 package com.geo.power.ui.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
+import android.view.Display;
+import android.view.WindowManager;
 
 import ui.geo.com.power.R;
 

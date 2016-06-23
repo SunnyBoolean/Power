@@ -20,7 +20,7 @@ import ui.geo.com.power.R;
 public class LoginActivity extends BaseActivity {
     private ImageButton mSinaLoginBt, mWechatLoginBt, mQQLoginBt;
     private Button mLoginBtnSend;
-    private TextView mRegisterBtn;
+    private TextView mRegisterBtn,mForgetPaswdBtn;
     private String mUserName, mPaswd;
     private EditText musernameEt, mPaswdEt;
 
@@ -43,6 +43,7 @@ public class LoginActivity extends BaseActivity {
         mRegisterBtn = (TextView) findViewById(R.id.login_register_btn);
         musernameEt = (EditText) findViewById(R.id.login_uname_apo);
         mPaswdEt = (EditText) findViewById(R.id.login_asx_password);
+        mForgetPaswdBtn = (TextView) findViewById(R.id.login_forgetpaswd);
     }
 
     /**
@@ -73,7 +74,15 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.login_register_btn://注册
                 intent.setClass(mContext, RegisterActivity.class);
+                intent.putExtra(RegisterActivity.I_KEY, RegisterActivity.REGISEN);
                 startActivity(intent);
+                finish();
+                break;
+            case R.id.login_forgetpaswd:  //忘记密码
+                intent.setClass(mContext, RegisterActivity.class);
+                intent.putExtra(RegisterActivity.I_KEY, RegisterActivity.FORGET_PASWD);
+                startActivity(intent);
+                finish();
                 break;
         }
     }
@@ -107,6 +116,7 @@ public class LoginActivity extends BaseActivity {
         mWechatLoginBt.setOnClickListener(this);
         mLoginBtnSend.setOnClickListener(this);
         mRegisterBtn.setOnClickListener(this);
+        mForgetPaswdBtn.setOnClickListener(this);
     }
 
     /**

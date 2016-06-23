@@ -140,6 +140,8 @@
             android:label="新账号注册"/>
         <activity android:name="com.geo.power.ui.activity.RegisterNextActivity"
             android:label="新账号注册详细信息"/>
+        <activity android:name="com.geo.power.ui.activity.ForgetPasswordActivity"
+            android:label="找回密码"/>
         <!-- 选择图片-->
         <activity android:name="com.yongchun.library.view.ImageSelectorActivity"></activity>
         <activity android:name="com.yongchun.library.view.ImagePreviewActivity"></activity>

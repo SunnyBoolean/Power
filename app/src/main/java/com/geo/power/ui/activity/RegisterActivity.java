@@ -10,15 +10,20 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 
+import com.geo.com.geo.power.bean.UserInfo;
 import com.geo.com.geo.power.util.DensityUtil;
 import com.rey.material.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UpdateListener;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import ui.geo.com.power.R;
@@ -30,6 +35,19 @@ import ui.geo.com.power.R;
 public class RegisterActivity extends BaseActivity {
     private EditText mPhoneNumberEt, mYzmEt;
     private Button mSendYzm, mNextBtn;
+    /**
+     * 传递过来的值
+     */
+    public final static String I_KEY = "extra_data";
+    /**
+     * 注册
+     */
+    public final static int REGISEN = 0;
+    /**
+     * 忘记密码
+     */
+    public final static int FORGET_PASWD = 1;
+    private int mExtra = 0;
     private String mPhone;
     private static final String[] AVATARS = {
             "http://tupian.qqjay.com/u/2011/0729/e755c434c91fed9f6f73152731788cb3.jpg",
@@ -62,6 +80,9 @@ public class RegisterActivity extends BaseActivity {
         mYzmEt = (EditText) findViewById(R.id.register_yanzm);
         mSendYzm = (Button) findViewById(R.id.register_getyzmbtn);
         mNextBtn = (Button) findViewById(R.id.register_next_btn);
+        Intent intent = getIntent();
+        mExtra = intent.getIntExtra(I_KEY, 0);
+
     }
 
     @Override
@@ -131,7 +152,7 @@ public class RegisterActivity extends BaseActivity {
                     public void handleMessage(Message msg) {
                         time[0]--;
                         mSendYzm.setText(time[0] + "秒");
-                        if(time[0]<0){
+                        if (time[0] < 0) {
                             mSendYzm.setText("重新发送");
                             mSendYzm.setEnabled(true);
                         }
@@ -152,10 +173,10 @@ public class RegisterActivity extends BaseActivity {
                 mNextBtn.setEnabled(true);
                 //读取验证码
                 String yzm = mYzmEt.getText().toString().replace(" ", "").trim();
-                //发送验证码
+                //发送验证码,如果验证成功会在回调里进行跳转到NextActivity
                 SMSSDK.submitVerificationCode("86", mPhone, yzm);
                 //暂时测试用，之后删除
-                Intent intent = new Intent(mContext, RegisterNextActivity.class);
+                Intent intent = new Intent(mContext, ForgetPasswordActivity.class);
                 intent.putExtra("phoneNum", mPhone);
                 startActivity(intent);
                 break;
@@ -173,7 +194,12 @@ public class RegisterActivity extends BaseActivity {
                     //回调完成
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                         showToast("验证成功！");
-                        Intent intent = new Intent(mContext, RegisterNextActivity.class);
+                        Intent intent = new Intent();
+                        if (mExtra == FORGET_PASWD) {
+                            intent.setClass(mContext, ForgetPasswordActivity.class);
+                        } else if (mExtra == REGISEN) {
+                            intent.setClass(mContext, RegisterNextActivity.class);
+                        }
                         intent.putExtra("phoneNum", mPhone);
                         startActivity(intent);
                         //提交验证码成功
@@ -203,6 +229,9 @@ public class RegisterActivity extends BaseActivity {
         SMSSDK.getVerificationCode("86", mPhone);
 
     }
+
+
+
 
     /**
      * 关于Toolbar的操作均在此完成

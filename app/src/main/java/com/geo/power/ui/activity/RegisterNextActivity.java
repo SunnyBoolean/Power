@@ -15,9 +15,12 @@ import com.yongchun.library.view.ImageSelectorActivity;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UploadFileListener;
 import ui.geo.com.power.R;
@@ -108,48 +111,69 @@ public class RegisterNextActivity extends BaseActivity {
             showToast("两次密码输入不一致");
             return;
         }
-        //上传头像
-        final BmobFile bmobFile = new BmobFile(new File(mUserImurl));
-        //首先上传图头像图片
-        bmobFile.uploadblock(mContext, new UploadFileListener() {
+        //首先检查该昵称是否已被注册，如果昵称已被注册则不允许使用
+        BmobQuery<UserInfo> query = new BmobQuery<UserInfo>();
+        query.addWhereEqualTo("username", mNick);
+        query.findObjects(mContext, new FindListener<UserInfo>() {
             @Override
-            public void onSuccess() {
-                //如果头像上传成功就开始注册
-                //bmobFile.getFileUrl(context)--返回的上传文件的完整地址
-                String fullUrl = bmobFile.getFileUrl(mContext);
-                UserInfo bu = new UserInfo();
-                bu.setUsername(mNick);
-                bu.uimg = fullUrl;
-                bu.setPassword("123");
-                bu.setMobilePhoneNumber(mPhoneNumber);
-//注意：不能用save方法进行注册
-                bu.signUp(mContext, new SaveListener() {
+            public void onSuccess(List<UserInfo> object) {
+                if (object == null || object.size() <= 0) {
+                    //账号已存在
+                    showToast("账号已存在");
+                    return;
+                }
+
+
+                //上传头像
+                final BmobFile bmobFile = new BmobFile(new File(mUserImurl));
+                //首先上传图头像图片
+                bmobFile.uploadblock(mContext, new UploadFileListener() {
                     @Override
                     public void onSuccess() {
-                        Intent intent = new Intent(mContext, MainActivity.class);
-                        startActivity(intent);
-                        //通过BmobUser.getCurrentUser(context)方法获取登录成功后的本地用户信息
+                        //如果头像上传成功就开始注册
+                        //bmobFile.getFileUrl(context)--返回的上传文件的完整地址
+                        String fullUrl = bmobFile.getFileUrl(mContext);
+                        UserInfo bu = new UserInfo();
+                        bu.setUsername(mNick);
+                        bu.uimg = fullUrl;
+                        bu.setPassword("123");
+                        bu.setMobilePhoneNumber(mPhoneNumber);
+//注意：不能用save方法进行注册
+                        bu.signUp(mContext, new SaveListener() {
+                            @Override
+                            public void onSuccess() {
+                                Intent intent = new Intent(mContext, MainActivity.class);
+                                startActivity(intent);
+                                //通过BmobUser.getCurrentUser(context)方法获取登录成功后的本地用户信息
+                            }
+
+                            @Override
+                            public void onFailure(int code, String msg) {
+                                showToast("注册失败");
+                                // TODO Auto-generated method stub
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onProgress(Integer value) {
+                        // 返回的上传进度（百分比）
                     }
 
                     @Override
                     public void onFailure(int code, String msg) {
-                        showToast("注册失败");
-                        // TODO Auto-generated method stub
+                        showToast("头像上传失败");
                     }
                 });
 
             }
 
             @Override
-            public void onProgress(Integer value) {
-                // 返回的上传进度（百分比）
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                showToast("头像上传失败");
+            public void onError(int code, String msg) {
             }
         });
+
     }
 
     @Override

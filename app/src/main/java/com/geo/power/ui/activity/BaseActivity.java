@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.geo.com.geo.power.util.ImmersedStatusbarUtils;
@@ -40,7 +42,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public Handler mHandler;
     public Executor mExecutor;
     private SystemBarTintManager mTintManager;
-    private View mContent;
+    private ViewGroup mContent;
     public final static String P_TAG = "Power";
     public int mCommonColor = Color.parseColor("#004d40");
     public SimpleDateFormat mDateFormat = new SimpleDateFormat("MM-dd HH:mm");
@@ -246,6 +248,17 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         return mDateFormat.format(new Date(time));
+    }
+
+    public void showSnackBar(String content){
+        Snackbar.make(mContent, content, Snackbar.LENGTH_LONG)
+                .setAction("关闭", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                })
+                .show();
     }
 
 }
