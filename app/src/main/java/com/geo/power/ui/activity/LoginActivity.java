@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.geo.com.geo.power.Constants;
 import com.geo.com.geo.power.bean.UserInfo;
 import com.rey.material.widget.EditText;
 
@@ -98,6 +99,9 @@ public class LoginActivity extends BaseActivity {
             public void onSuccess() {
                 Intent intent = new Intent(mContext,MainActivity.class);
                 startActivity(intent);
+                //登录成功,保存登录的值
+                mSharedPreference.edit().putBoolean(Constants.SP_KEY_ISLOGINEd,true).commit();
+
                 finish();
             }
 

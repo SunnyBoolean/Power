@@ -33,5 +33,7 @@ public class AboutActivity extends BaseActivity {
     @Override
     protected void initToolBar() {
         super.initToolBar();
+        mToolBar.setTitle("关于");
     }
+
 }

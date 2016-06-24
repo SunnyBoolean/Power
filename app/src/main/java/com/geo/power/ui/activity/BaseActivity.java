@@ -1,8 +1,10 @@
 package com.geo.power.ui.activity;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.geo.com.geo.power.Constants;
 import com.geo.com.geo.power.util.ImmersedStatusbarUtils;
 import com.geo.com.geo.power.util.SystemBarTintManager;
 import com.geo.power.ui.fragment.BaseFragment;
@@ -46,6 +49,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public final static String P_TAG = "Power";
     public int mCommonColor = Color.parseColor("#004d40");
     public SimpleDateFormat mDateFormat = new SimpleDateFormat("MM-dd HH:mm");
+    public SharedPreferences mSharedPreference;
     /**
      * 是否显示Toolbar
      */
@@ -55,7 +59,6 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PLog(P_TAG,"父类onCreate()");
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         mContext = this;
         if (mToolBar != null) {
             init();
@@ -147,6 +150,8 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
      * 开始布局前的初始化
      */
     private void init() {
+        mSharedPreference= getSharedPreferences(Constants.SP_NAME,
+                Activity.MODE_PRIVATE);
         //实现沉浸式状态栏
         initTint();
         initCompontent();

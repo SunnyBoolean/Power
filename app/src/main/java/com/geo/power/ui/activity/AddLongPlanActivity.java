@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,6 +27,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.services.core.PoiItem;
 import com.geo.com.geo.power.util.BitmapUtils;
 import com.geo.com.geo.power.util.ScreenUtil;
 import com.rey.material.app.DatePickerDialog;
@@ -46,14 +48,13 @@ import ui.geo.com.power.R;
  */
 public class AddLongPlanActivity extends BaseActivity {
     private View mSelectCategory, mPlanDeadline, mPlanNotify, mPlanLocation, mPlanJieduan, mAddPicBtn;
-    private TextView mSelectCategoryContent, mPlanDeadLineTv, mPlanNotifyShow, mIsPublicTV;
+    private TextView mSelectCategoryContent, mPlanDeadLineTv, mPlanNotifyShow, mIsPublicTV, mLocationTv;
     private ImageView mCategorySelectegIV, mPlanDeadlineIm, mPlanNotifyIm;
     private Switch mIsPublicSwitch;
     private GridView mPicGridView;
     private ArrayList<String> mSelectPics = new ArrayList<String>();
     private ImageAdapter mPicAdapter;
     private final String flag = "HelloPowerWorld";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,8 +81,8 @@ public class AddLongPlanActivity extends BaseActivity {
         mIsPublicTV = (TextView) findViewById(R.id.add_longplan_pubprio_cv);
         mAddPicBtn = findViewById(R.id.add_longplan_pics);
         mPicGridView = (GridView) findViewById(R.id.list_homeplan_img_select_gridview);
+        mLocationTv = (TextView) findViewById(R.id.addlongplan_location_tvshow);
         mSelectPics.clear();
-        ;
         mSelectPics.add(flag);
         mPicAdapter = new ImageAdapter();
         mPicGridView.setAdapter(mPicAdapter);
@@ -111,7 +112,7 @@ public class AddLongPlanActivity extends BaseActivity {
         mPicGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String url = mSelectPics.get(mPicAdapter.getCount()-position-1);
+                String url = mSelectPics.get(mPicAdapter.getCount() - position - 1);
                 if (url.equals(flag)) {
                     ImageSelectorActivity.start(AddLongPlanActivity.this, 12, ImageSelectorActivity.MODE_MULTIPLE, true, true, false);
                 } else {
@@ -133,7 +134,7 @@ public class AddLongPlanActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.addlongplan_location_click:  //选择位置
                 Intent intent = new Intent(mContext, AddLongPlanLocationActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, AddLongPlanLocationActivity.REQUEST_CODE);
                 break;
             case R.id.add_longplan_selcategory_click:  //选择分类
 //          //      popupWindowForPlanTag();
@@ -158,6 +159,13 @@ public class AddLongPlanActivity extends BaseActivity {
             ArrayList<String> images = (ArrayList<String>) data.getSerializableExtra(ImageSelectorActivity.REQUEST_OUTPUT);
             mSelectPics.addAll(images);
             mPicAdapter.notifyDataSetChanged();
+        } else if (resultCode == RESULT_OK && requestCode == AddLongPlanLocationActivity.REQUEST_CODE && data != null) {  //选择的位置
+//            PoiItem item = (PoiItem) data.getSerializableExtra("location");
+            String addr = data.getStringExtra("address");
+            if(!TextUtils.isEmpty(addr)){
+                mLocationTv.setText(addr);
+                mLocationTv.setTextColor(mCommonColor);
+            }
         }
     }
 
@@ -338,26 +346,27 @@ public class AddLongPlanActivity extends BaseActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            String url = mSelectPics.get(getCount()-position-1);
-            IViewHolder holder ;
-            if(convertView == null){
+            String url = mSelectPics.get(getCount() - position - 1);
+            IViewHolder holder;
+            if (convertView == null) {
                 holder = new IViewHolder();
                 convertView = View.inflate(mContext, R.layout.item_image_select, null);
                 holder.img = (ImageView) convertView.findViewById(R.id.add_longplan_pics);
                 convertView.setTag(holder);
-            }else{
+            } else {
                 holder = (IViewHolder) convertView.getTag();
             }
             if (flag.equals(url)) {
 //                return convertView;
             } else {
-                Bitmap bitmap = BitmapUtils.getBitmap(AddLongPlanActivity.this,url);
+                Bitmap bitmap = BitmapUtils.getBitmap(AddLongPlanActivity.this, url);
 //                BitmapFactory.dec
                 holder.img.setImageBitmap(bitmap);
             }
             return convertView;
         }
-        class IViewHolder{
+
+        class IViewHolder {
             ImageView img;
         }
     }

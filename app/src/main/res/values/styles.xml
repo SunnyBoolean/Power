@@ -125,8 +125,6 @@
         <item name="actionMenuTextColor">@color/material_white</item>
     </style>
 
-
-
         <style name="ActionButton">
             <item name="android:layout_width">wrap_content</item>
             <item name="android:layout_height">@dimen/action_button_height</item>

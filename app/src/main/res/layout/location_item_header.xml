@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/textSize_normal"
+        android:text="不显示位置" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:id="@+id/location_load_contain"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+        <com.rey.material.widget.ProgressView
+            android:id="@+id/progress_pv_circular"
+            android:layout_width="30dp"
+            style="@style/LightCircularProgressView"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            app:v_styleId="@array/pv_circular"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="附近位置搜索中..."/>
+    </LinearLayout>
+</LinearLayout>
