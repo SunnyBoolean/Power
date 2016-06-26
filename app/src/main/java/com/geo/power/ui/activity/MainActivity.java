@@ -59,7 +59,7 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
     private MenuItem mContitionMi;
     private ImageView mUserImage;
     private TextView mUserName;
-
+    private LoadCallback mLoadCallBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,7 +174,7 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
 
         spinner();
     }
-
+    //弹出排序菜单
     private void popupWindowForListOrder() {
         LinearLayout content = (LinearLayout) View.inflate(mContext, R.layout.home_main_clistorder_menu, null);
         final PopupWindow popwindow = new PopupWindow(content, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
@@ -205,7 +205,17 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    mListOrderTvContent.setText(view.getText().toString());
+                    String order = view.getText().toString().trim();
+                    if("时间最新".equals(order)){
+                        mLoadCallBack.doLoadForOrder(0);
+                    }else if("参与最多".equals(order)){
+                        mLoadCallBack.doLoadForOrder(1);
+                    }else if("执行最多".equals(order)){
+                        mLoadCallBack.doLoadForOrder(2);
+                    }else if("已完成".equals(order)){
+                        mLoadCallBack.doLoadForOrder(3);
+                    }
+
                     popwindow.dismiss();
                 }
             });
@@ -214,12 +224,19 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
 
     private void spinner() {
         final int tsize = DensityUtil.dip2px(mContext, 6);
-        String[] items = {"生活", "运动", "学习", "工作"};
+       final String[] items = {"生活", "运动", "学习", "工作"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, R.layout.row_spn, items);
         adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
         mSpinner.setAdapter(adapter);
         mSpinner.setmShowTextColor(Color.WHITE);
         mSpinner.setShowTextSize(tsize);
+        mSpinner.setOnItemClickListener(new Spinner.OnItemClickListener() {
+            @Override
+            public boolean onItemClick(Spinner parent, View view, int position, long id) {
+                mLoadCallBack.doLoadForCategory(items[position]);
+                return true;
+            }
+        });
     }
 
     protected void initListener() {
@@ -474,5 +491,16 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
     @Override
     public FragmentManager getFragmentM() {
         return getFragmentManagerHelp();
+    }
+     public void setmLoadCallBackListener(LoadCallback listener){
+         this.mLoadCallBack = listener;
+     }
+    /**
+     * 一个接口，在主界面的选择计划分类和排序时需要通知GineFragment去加载数据，因此该接口是在HomeFragment中去实现的
+     */
+    public interface LoadCallback{
+        public void doLoadForCategory(String category);
+        //0表示按照时间最新、1参与最多、2执行最多、3已完成
+        public void doLoadForOrder(int order);
     }
 }

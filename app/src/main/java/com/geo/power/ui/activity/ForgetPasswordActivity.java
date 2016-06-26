@@ -101,6 +101,7 @@ public class ForgetPasswordActivity extends BaseActivity {
 
             @Override
             public void onError(int code, String msg) {
+                showToast("错误:"+msg+code);
             }
         });
     }

@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/SMSSDK/SMSSDK.iml" filepath="$PROJECT_DIR$/SMSSDK/SMSSDK.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/labelview/labelview.iml" filepath="$PROJECT_DIR$/labelview/labelview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lazylibrary/lazylibrary.iml" filepath="$PROJECT_DIR$/lazylibrary/lazylibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/material/material.iml" filepath="$PROJECT_DIR$/material/material.iml" />
       <module fileurl="file://$PROJECT_DIR$/refreshview/refreshview.iml" filepath="$PROJECT_DIR$/refreshview/refreshview.iml" />

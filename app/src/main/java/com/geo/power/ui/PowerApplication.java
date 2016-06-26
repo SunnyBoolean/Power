@@ -79,6 +79,7 @@ public class PowerApplication extends Application {
     private void initBmob() {
         //第一：默认初始化
         Bmob.initialize(this, Constants.BMOB_APP_KEY);
+        //Mob短信初始化
         SMSSDK.initSDK(this, Constants.MOB_APP_KEY, Constants.MOB_APP_SECRET);
         //第二：自v3.4.7版本开始,设置BmobConfig,允许设置请求超时时间、文件分片上传时每片的大小、文件的过期时间(单位为秒)，
         //BmobConfig config =new BmobConfig.Builder(this)

@@ -27,6 +27,7 @@ import com.geo.com.geo.power.Constants;
 import com.geo.com.geo.power.util.ImmersedStatusbarUtils;
 import com.geo.com.geo.power.util.SystemBarTintManager;
 import com.geo.power.ui.fragment.BaseFragment;
+import com.github.lazylibrary.util.DateUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -245,6 +246,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
     }
 
     final public String formatDateTime(long time) {

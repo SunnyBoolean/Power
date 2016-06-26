@@ -1,1 +1,1 @@
-include ':app', ':material', ':refreshview', ':viewflow', ':labelview', ':library', ':SMSSDK'
+include ':app', ':material', ':refreshview', ':viewflow', ':labelview', ':library', ':SMSSDK', ':lazylibrary'

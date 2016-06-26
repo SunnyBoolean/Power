@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.geo.com.geo.power.Constants;
 import com.geo.com.geo.power.bean.UserInfo;
+import com.github.lazylibrary.util.ToastUtils;
 import com.rey.material.widget.EditText;
 
 import cn.bmob.v3.listener.SaveListener;
@@ -107,7 +108,7 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onFailure(int i, String s) {
-
+                showToast("错误："+s+i);
             }
         });
     }

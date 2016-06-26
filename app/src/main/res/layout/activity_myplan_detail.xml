@@ -34,12 +34,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginLeft="22dp"
+                android:visibility="gone"
                 android:background="@color/material_grey_300"></View>
 
             <TextView
                 android:layout_width="wrap_content"
+                android:id="@+id/myplan_detail_contaihsd"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:lineSpacingExtra="3dp"
+                android:textScaleX="1"
+                android:textColor="@color/material_black"
+                android:textSize="@dimen/textSize_normal"
                 android:text="      今天很受打击啊，面个试还被嫌弃长得肥，我长得胖出的多又没吃你家饭！我决定要努力运动减肥！不瘦到150斤就一直减！" />
             <!-- 计划图片-->
             <com.geo.widget.MyExpandGridView
@@ -119,6 +125,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="8dp"
                     android:background="@null"
+                    android:id="@+id/plan_detail_histori"
                     android:drawablePadding="8dp"
                     android:drawableRight="@drawable/item_arrow_right"
                     android:gravity="center"
@@ -248,6 +255,7 @@
                     android:layout_height="45dp"
                     android:layout_marginLeft="8dp"
                     android:drawableLeft="@drawable/myplan_createtime"
+                    android:id="@+id/plan_detail_createtime"
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
                     android:text="创建时间：2016-05-31"
@@ -264,6 +272,7 @@
                     android:layout_marginLeft="8dp"
                     android:drawableLeft="@drawable/myplan_endtime"
                     android:drawablePadding="5dp"
+                    android:id="@+id/plan_detail_deadftime"
                     android:gravity="center_vertical"
                     android:text="截止时间：2016-10-31"
                     android:textSize="@dimen/textSize_normal" />
@@ -278,6 +287,7 @@
                     android:layout_height="45dp"
                     android:layout_marginLeft="8dp"
                     android:drawableLeft="@drawable/myplan_process"
+                    android:id="@+id/plan_detail_wcjd"
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
                     android:text="完成进度：90%"

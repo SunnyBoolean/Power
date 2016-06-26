@@ -14,9 +14,11 @@
 
         <include layout="@layout/divier"></include>
 
-        <android.support.v7.widget.RecyclerView
+        <ListView
             android:id="@+id/home_main_recyclerList"
             android:layout_width="match_parent"
+            android:divider="@null"
+            android:scrollbars="none"
             android:layout_height="match_parent" />
     </LinearLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

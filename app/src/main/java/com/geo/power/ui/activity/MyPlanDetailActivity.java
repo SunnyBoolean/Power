@@ -20,10 +20,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.geo.com.geo.power.bean.LeaveMsgInfo;
+import com.geo.com.geo.power.bean.PlanHistoryInfo;
+import com.geo.com.geo.power.bean.PlanInfo;
 import com.geo.com.geo.power.util.ScreenUtil;
 import com.geo.power.ui.fragment.MyPlanCommonOnFragment;
 import com.geo.power.ui.fragment.MyPlanDoingFragment;
 import com.geo.power.ui.fragment.MyPlanVisitorFragment;
+import com.github.lazylibrary.util.DateUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rey.material.app.BottomSheetDialog;
@@ -31,6 +34,8 @@ import com.rey.material.app.BottomSheetDialog;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.CountListener;
 import ui.geo.com.power.R;
 
 /**
@@ -39,19 +44,17 @@ import ui.geo.com.power.R;
  */
 public class MyPlanDetailActivity extends BaseActivity {
     private GridView mPicGridView;
-    private View mHistoryBtn,mLeaveMsgBtn;
+    private View mHistoryBtn, mLeaveMsgBtn;
     private BottomSheetDialog mBottomSheetDialog;
     private List<LeaveMsgInfo> mMsgData;
     private MsgAdapter mMsgAdapter;
-    /** 计划是否完成，0表示已完成，1表示未完成，正在进行*/
+    private PlanInfo mPlanInfo;
+    private TextView mHistoryTotalTv, mWcjdTv, mDeatlineTv, mCreateTime, mDetailContentTv;
+    private int mHistoryTotal;
+    /**
+     * 计划是否完成，0表示已完成，1表示未完成，正在进行
+     */
     private int mIsDone;
-    public static final String[] mPictureUrls = {
-            "http://ac-6ptjoad9.clouddn.com/3MekCrFaIezGOmrmbmvkILWjyF2dGIItve4AYXQC",
-            "http://ac-6ptjoad9.clouddn.com/aEealv8tKqUxuSn3DHhHKPUQUtkUoVdZcwqN8i9y",
-            "http://ac-6ptjoad9.clouddn.com/Itzvdzj3QZG5zR9dNMmPVAZNNviQt5tzJEsaU6jW",
-            "http://ac-6ptjoad9.clouddn.com/Itzvdzj3QZG5zR9dNMmPVAZNNviQt5tzJEsaU6jW",
-            "http://ac-6ptjoad9.clouddn.com/Q61AFSIOoOipiucsdR8NctVIvkSHimJK9RIZWlnh"
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +71,11 @@ public class MyPlanDetailActivity extends BaseActivity {
         mPicGridView = (GridView) findViewById(R.id.home_myplan_detail_img_gridview);
         mHistoryBtn = findViewById(R.id.edit_plan_history_click);
         mLeaveMsgBtn = findViewById(R.id.myplan_detail_mycurrage_item_click);
-        //计划图片适配器
-        mPicGridView.setAdapter(new GridAdapter());
+        mHistoryTotalTv = (TextView) findViewById(R.id.plan_detail_histori);
+        mWcjdTv = (TextView) findViewById(R.id.plan_detail_wcjd);
+        mDeatlineTv = (TextView) findViewById(R.id.plan_detail_deadftime);
+        mCreateTime = (TextView) findViewById(R.id.plan_detail_createtime);
+        mDetailContentTv = (TextView) findViewById(R.id.myplan_detail_contaihsd);
         initData();
     }
 
@@ -92,6 +98,7 @@ public class MyPlanDetailActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.edit_plan_history_click:   //计划执行的历史记录
                 intent.setClass(mContext, DoPlanHistoryActivity.class);
+                intent.putExtra("planinfo",mPlanInfo);
                 startActivity(intent);
                 break;
             case R.id.myplan_detail_mycurrage_item_click:  //我收到的鼓励
@@ -103,8 +110,29 @@ public class MyPlanDetailActivity extends BaseActivity {
     private void initData() {
         Intent intent = getIntent();
         //默认是未完成的
-        mIsDone = intent.getIntExtra("isDone",1);
+        mIsDone = intent.getIntExtra("isDone", 1);
+        mPlanInfo = (PlanInfo) intent.getSerializableExtra("plan_info");
+        //计划图片适配器
+        mPicGridView.setAdapter(new GridAdapter(mPlanInfo.picLists));
+        initOthers();
+        //加载历史动态总数
+        loadhistory();
+        //加载鼓励评论的消息
         initMsgData();
+    }
+
+    private void initOthers() {
+        mDetailContentTv.setText("   "+mPlanInfo.content);
+        mCreateTime.setText("创建时间：" + mPlanInfo.startDate);
+        mDeatlineTv.setText("截止时间：" + mPlanInfo.completeDate);
+        //计算已经执行了多少天
+        int djs = DateUtil.countDays(mPlanInfo.startDate, "yyyy-MM-dd") + 1;
+        //计算百分比
+        int bfb = 0;
+        if (mPlanInfo.plantotalDay != 0) {
+            bfb = djs / mPlanInfo.plantotalDay;
+        }
+        mWcjdTv.setText("完成进度：" + bfb + "%");
     }
 
     /**
@@ -126,6 +154,26 @@ public class MyPlanDetailActivity extends BaseActivity {
         }
     }
 
+    private void loadhistory() {
+        BmobQuery<PlanInfo> query = new BmobQuery<PlanInfo>();
+        query.addWhereEqualTo("originalPlanId", mPlanInfo.getObjectId());
+        query.count(this, PlanInfo.class, new CountListener() {
+            @Override
+            public void onSuccess(int count) {
+                mHistoryTotal = count;
+                mHistoryTotalTv.setText("" + count + " ");
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                // TODO Auto-generated method stub
+                showToast("count failure：" + msg);
+            }
+        });
+    }
+
     /**
      * 显示新增计划菜单
      */
@@ -140,7 +188,7 @@ public class MyPlanDetailActivity extends BaseActivity {
 //        Button bt_wrap = (Button)v.findViewById(R.id.sheet_bt_wrap);
 //                mBottomSheetDialog.heightParam(ViewGroup.LayoutParams.WRAP_CONTENT);
 //        });
-        mBottomSheetDialog.heightParam(size[1]*2/3);
+        mBottomSheetDialog.heightParam(size[1] * 2 / 3);
         mBottomSheetDialog.contentView(content)
                 .show();
     }
@@ -164,6 +212,7 @@ public class MyPlanDetailActivity extends BaseActivity {
                     case 1:
                         Intent intent = new Intent();
                         intent.setClass(mContext, EditPlanActivity.class);
+                        intent.putExtra("plan_info", mPlanInfo);
                         startActivity(intent);
                         break;
                 }
@@ -176,16 +225,20 @@ public class MyPlanDetailActivity extends BaseActivity {
      * 图片适配器
      */
     private class GridAdapter extends BaseAdapter {
+        private List<String> pics;
 
+        public GridAdapter(List<String> mpics) {
+            this.pics = mpics;
+        }
 
         @Override
         public int getCount() {
-            return mPictureUrls.length;
+            return pics.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return mPictureUrls[position];
+            return pics.get(position);
         }
 
         @Override
@@ -208,7 +261,7 @@ public class MyPlanDetailActivity extends BaseActivity {
                     .cacheInMemory(true)
                     .cacheOnDisk(true)
                     .build();
-            ImageLoader.getInstance().displayImage(mPictureUrls[position], holder.mImageView, defaultOptions);
+            ImageLoader.getInstance().displayImage(pics.get(position), holder.mImageView, defaultOptions);
             return convertView;
         }
 

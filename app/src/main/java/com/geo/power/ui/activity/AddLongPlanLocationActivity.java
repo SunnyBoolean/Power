@@ -169,16 +169,20 @@ public class AddLongPlanLocationActivity extends BaseActivity {
         mLocationListLview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = new Intent();
                 if(position ==0){
-                    setResult(RESULT_OK);
+                    intent.putExtra("address","");
+                    setResult(RESULT_OK,intent);
                     finish();
                     return;
                 }
                 PoiItem item = (PoiItem) mAdapter.getItem(position-1);
                 String addr = item.getProvinceName()+item.getCityName()+item.getSnippet();
-                Intent intent = new Intent();
                 intent.putExtra("detail",addr);
                 intent.putExtra("address",item.getTitle());
+                intent.putExtra("lat",item.getLatLonPoint().getLatitude());
+                intent.putExtra("lon",item.getLatLonPoint().getLongitude());
                 setResult(RESULT_OK, intent);
                 finish();
             }

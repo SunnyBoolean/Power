@@ -42,7 +42,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="2646deca1f74ed4bcc9da55b22e490fc"></meta-data>
+            android:value="666f9ab6b2bf7beda814499c067c6708"></meta-data>
 
         <activity
             android:name="com.geo.power.ui.activity.SplashActivity"
@@ -118,6 +118,7 @@
             android:label="消息" />
         <activity
             android:name="com.geo.power.ui.activity.EditPlanActivity"
+            android:windowSoftInputMode="adjustPan"
             android:label="编辑目标" />
         <activity
             android:name="com.geo.power.ui.activity.DiscoverDetailActivity"

@@ -19,12 +19,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,32 +34,56 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.geo.com.geo.power.bean.PlanInfo;
+import com.geo.com.geo.power.bean.UserInfo;
 import com.geo.com.geo.power.util.ScreenUtil;
 import com.geo.power.ui.activity.DiscoverDetailActivity;
 import com.geo.power.ui.activity.ImageShowActivity;
+import com.geo.power.ui.activity.MainActivity;
 import com.geo.widget.HeaderDecoration;
+import com.github.lazylibrary.util.DateUtil;
+import com.github.lazylibrary.util.ToastUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.listener.FindListener;
 import ui.geo.com.power.R;
 
 /**
  * Created by Administrator on 2016/5/18.
  * 首页
  */
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements MainActivity.LoadCallback {
     private static HomeFragment mInstance;
-    private RecyclerView mRecycleView;
+    private ListView mDataListView;
+    //    private RecyclerView mRecycleView;
     private MyAdapter mAdapter;
     private final String[] mCategorys = {"生活", "健康", "学习", "工作"};
     private ConvenientBanner mConverBanner;
     SwipeRefreshLayout swipeRefreshLayout;
+    private final int mPageSize = 10;
+    private int mCurPage = 0;
+    private View mFooterView;
+    /**
+     * 默认分类是生活
+     */
+    private String mCategory = "生活";
+    /**
+     * 默认排序是时间最新0表示时间最新、1表示参与者最多、2表示执行次数最多、3表示已经完成的计划
+     */
+    private int mOrder = 0;
+    /**
+     * 是否有更多数据
+     */
+    private boolean hasMore = false;
     public static final String[] mPictureUrls = {
             "http://ac-6ptjoad9.clouddn.com/3MekCrFaIezGOmrmbmvkILWjyF2dGIItve4AYXQC",
             "http://ac-6ptjoad9.clouddn.com/aEealv8tKqUxuSn3DHhHKPUQUtkUoVdZcwqN8i9y",
@@ -81,11 +107,17 @@ public class HomeFragment extends BaseFragment {
         }
         return mInstance;
     }
-
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        MainActivity activity = (MainActivity) context;
+        activity.setmLoadCallBackListener(this);
+    }
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View content = View.inflate(mContext, R.layout.fragment_main_home, null);
-        mRecycleView = (RecyclerView) content.findViewById(R.id.home_main_recyclerList);
+        mDataListView = (ListView) content.findViewById(R.id.home_main_recyclerList);
         swipeRefreshLayout = (SwipeRefreshLayout) content.findViewById(R.id.home_swipeLayout);
+
         initCompontent();
 
         return content;
@@ -96,49 +128,154 @@ public class HomeFragment extends BaseFragment {
         if (mPlanDataList == null) {
             mPlanDataList = new ArrayList<PlanInfo>();
         }
-        for (int i = 0; i < 10; i++) {
-            mPlanDataList.add(new PlanInfo());
-        }
         mAdapter = new MyAdapter(mPlanDataList);
-        LinearLayoutManager manager = new LinearLayoutManager(mContext);
-        //线性管理横向
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecycleView.setLayoutManager(manager);
-        mRecycleView.setAdapter(mAdapter);
-        mRecycleView.setItemAnimator(new DefaultItemAnimator());
+        View header = View.inflate(mContext, R.layout.home_recycleview_header, null);
+        mConverBanner = (ConvenientBanner) header.findViewById(R.id.home_convenientBanner);
 
-        HeaderDecoration.Builder builder = new HeaderDecoration.Builder(mContext);
-        builder.inflate(R.layout.home_recycleview_header);
-        builder.parallax(0.2f);
-        View container = builder.getContainer();
-        mConverBanner = (ConvenientBanner) container.findViewById(R.id.home_convenientBanner);
+        mDataListView.setAdapter(mAdapter);
+        mDataListView.addHeaderView(header);
+        mFooterView = View.inflate(mContext, R.layout.myplan_list_footer, null);
+        mFooterView.setVisibility(View.GONE);
+        mDataListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position == 0){
+                    return;
+                }
+                PlanInfo info= mPlanDataList.get(position-1);
+                Intent intent = new Intent(mContext,DiscoverDetailActivity.class);
+                intent.putExtra("plan_info",info);
+                startActivity(intent);
+            }
+        });
+        loadData(true);
+
         initBanner();
         initSwipeRefresh();
     }
-    private void initSwipeRefresh(){
+
+    /**
+     * 加载数据
+     *
+     * @param isrefresh true表示刷新，false表示加载更多
+     */
+    private void loadData(final boolean isrefresh) {
+        mDataListView.addFooterView(mFooterView);
+        if(isrefresh){
+            swipeRefreshLayout.setRefreshing(true);
+        }
+        BmobQuery<PlanInfo> query = new BmobQuery<PlanInfo>();
+//查询我的
+//        query.addWhereEqualTo("uid", BmobUser.getCurrentUser(mContext, UserInfo.class).getObjectId());
+        BmobQuery<PlanInfo> eq1 = new BmobQuery<PlanInfo>();
+        eq1.addWhereEqualTo("originalPlanId", "empty");
+        BmobQuery<PlanInfo> eq2 = new BmobQuery<PlanInfo>();
+        //必须是公开的计划
+        eq2.addWhereEqualTo("ispublie", 0);
+        //分类查询
+        BmobQuery<PlanInfo> eq3 = new BmobQuery<PlanInfo>();
+        eq3.addWhereEqualTo("category", mCategory);
+        List<BmobQuery<PlanInfo>> queries = new ArrayList<BmobQuery<PlanInfo>>();
+        //排序
+        if (mOrder == 0) {  //时间最新
+            query.order("-createdAt");
+        } else if (mOrder == 1) {  //参与最多
+            query.order("-dovisition");
+        } else if (mOrder == 2) {  //执行最多
+            query.order("-hadDotimes");
+        } else if (mOrder == 3) {  //已完成
+            //分类查询
+            BmobQuery<PlanInfo> eq4 = new BmobQuery<PlanInfo>();
+            eq4.addWhereEqualTo("isDone", 1);
+            queries.add(eq4);
+        }
+
+        queries.add(eq1);
+        queries.add(eq2);
+        queries.add(eq3);
+        query.and(queries);
+
+//返回50条数据，如果不加上这条语句，默认返回10条数据
+        query.setLimit(mPageSize);
+//        query.order("-createdAt");//降序排列
+        //分页查询，这个是忽略前mPageSize*curpage条数据
+        query.setSkip(mPageSize * mCurPage);
+        //还需要将计划相关联的用户信息查询出来哟
+        UserInfo user = BmobUser.getCurrentUser(mContext, UserInfo.class);
+        query.addWhereEqualTo("author", user);    // 查询当前用户的所有帖子
+        //必须要加上这一句表明在查询时也将用户信息给查询出来
+        query.include("author");
+//执行查询方法
+        query.findObjects(mContext, new FindListener<PlanInfo>() {
+            @Override
+            public void onSuccess(List<PlanInfo> object) {
+                //如果返回的数据小于每页数据说明没有更多数据了
+                swipeRefreshLayout.setRefreshing(false);
+//                mLoadMorte.setVisibility(View.GONE);
+                mFooterView.setVisibility(View.GONE);
+                if (!isrefresh) {  //如果是刷新就不用管底部了
+                } else {
+                    //如果是刷新还需要先把之前的数据清除掉
+                    mPlanDataList.clear();
+                }
+                if (object.size() == mPageSize) {
+                    hasMore = true;
+                } else {
+                    hasMore = false;
+                    mDataListView.removeFooterView(mFooterView);
+                }
+                mPlanDataList.addAll(object);
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(int code, String msg) {
+                swipeRefreshLayout.setRefreshing(false);
+                // TODO Auto-generated method stub
+                ToastUtils.showToast(mContext, "查询失败：" + msg);
+            }
+        });
+    }
+
+    private void initSwipeRefresh() {
         swipeRefreshLayout.setColorSchemeResources(R.color.material_red_A700,
                 R.color.material_deepOrange_A700,
                 R.color.material_indigo_900,
                 R.color.material_teal_900);
-        swipeRefreshLayout.setSize(SwipeRefreshLayout.LARGE);;
-//        swipeRefreshLayout.setProgressBackgroundColor(R.color.material_white);
-//        swipeRefreshLayout.setPadding(20, 20, 20, 20);
-//        swipeRefreshLayout.setProgressViewOffset(true, 100, 200);
-//        swipeRefreshLayout.setDistanceToTriggerSync(50);
-//        swipeRefreshLayout.setProgressViewEndTarget(true, 100);
+        swipeRefreshLayout.setSize(SwipeRefreshLayout.LARGE);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                handler.sendEmptyMessageDelayed(1,5000);
+                loadData(true);
             }
         });
+
+
+        //必须处理ListView和SwSwipeRefreshView的冲突，不然每次下拉时都会刷新而不是滑到ListView的顶部才刷新
+        mDataListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem,
+                                 int visibleItemCount, int totalItemCount) {
+                boolean enable = false;
+                if (mDataListView != null && mDataListView.getChildCount() > 0) {
+                    // check if the first item of the list is visible
+                    boolean firstItemVisible = mDataListView.getFirstVisiblePosition() == 0;
+                    // check if the top of the first item is visible
+                    boolean topOfFirstItemVisible = mDataListView.getChildAt(0).getTop() == 0;
+                    // enabling or disabling the refresh layout
+                    enable = firstItemVisible && topOfFirstItemVisible;
+                }
+                swipeRefreshLayout.setEnabled(enable);
+            }
+        });
+
+
     }
-    android.os.Handler handler = new android.os.Handler(){
-        @Override
-    public void handleMessage(Message msg){
-            swipeRefreshLayout.setRefreshing(false);
-        }
-    };
     private void initBanner() {
         List<String> datas = Arrays.asList(mPictureUrls);
         mConverBanner.setPages(
@@ -153,6 +290,19 @@ public class HomeFragment extends BaseFragment {
                         //设置指示器的方向
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT);
         mConverBanner.startTurning(1500);
+    }
+
+    @Override
+    public void doLoadForCategory(String category) {
+        mCategory = category;
+        loadData(true);
+    }
+
+    @Override
+    public void doLoadForOrder(int order) {
+        mOrder = order;
+        loadData(true);
+
     }
 
     public class NetworkImageHolderView implements Holder<String> {
@@ -173,22 +323,6 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
-
-    /**
-     * 定义自己的ViewHolder，此ViewHolder需要继承实现RecycleView的ViewHolder
-     */
-    private class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView mTcontext;
-        public GridView mImagheView;
-        public ImageView mMoreIm;
-
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            mTcontext = (TextView) itemView.findViewById(R.id.list_homeplan_comment);
-            mImagheView = (GridView) itemView.findViewById(R.id.list_homeplan_img_gridview);
-            mMoreIm = (ImageView) itemView.findViewById(R.id.home_listitem_moreu);
-        }
-    }
 
     /**
      * 点击列表下拉箭头操作更多
@@ -221,7 +355,7 @@ public class HomeFragment extends BaseFragment {
     /**
      * 创建适配器
      */
-    private class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
+    private class MyAdapter extends BaseAdapter {
         List<PlanInfo> datas;
         final String TAG = "MyAdapter";
 
@@ -229,105 +363,132 @@ public class HomeFragment extends BaseFragment {
             this.datas = datas;
         }
 
-        @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            View itemView = LayoutInflater.
-                    from(viewGroup.getContext()).
-                    inflate(R.layout.list_home_plan_item, viewGroup, false);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(mContext, DiscoverDetailActivity.class);
-                    startActivity(intent);
-                }
-            });
-            Log.e(TAG, "MyViewHolder()构造器");
-            return new MyViewHolder(itemView);
+        @Override
+        public int getCount() {
+            return datas.size();
         }
 
+        @Override
+        public Object getItem(int position) {
+            return datas.get(position);
+        }
 
         @Override
-        public void onBindViewHolder(MyViewHolder myViewHolder, int i) {
-            myViewHolder.mTcontext.setText("鼓励(23)");
-            myViewHolder.mImagheView.setAdapter(new GridAdapter());
-            myViewHolder.mImagheView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent();
-                    intent.setClass(mContext, ImageShowActivity.class);
-                    intent.putExtra("img_url", mPictureUrls[position]);
-                    intent.putExtra("position", position);
-                    intent.putExtra("img_urls", mPictureUrls);
-                    startActivity(intent);
-                }
-            });
-            myViewHolder.mMoreIm.setOnClickListener(new View.OnClickListener() {
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+             HViewHolder holder;
+            if (convertView == null) {
+                holder = new HViewHolder();
+                convertView = View.inflate(mContext, R.layout.list_home_plan_item, null);
+                holder.imgGirdView = (GridView) convertView.findViewById(R.id.list_homeplan_img_gridview);
+                holder.mUserIm = (ImageView) convertView.findViewById(R.id.list_homeplan_userimg);
+                holder.mUsernameTv = (TextView) convertView.findViewById(R.id.list_homeplan_username);
+                holder.mCreateTime = (TextView) convertView.findViewById(R.id.list_homeplan_plantime);
+                holder.mContent = (TextView) convertView.findViewById(R.id.home_plan_jcioancds);
+                holder.mZan = (TextView) convertView.findViewById(R.id.list_homeplan_zan);
+                holder.mComment = (TextView) convertView.findViewById(R.id.list_homeplan_comment);
+                holder.mCanyu = (TextView) convertView.findViewById(R.id.list_homeplan_scan);
+                holder.more = convertView.findViewById(R.id.home_listitem_moreu);
+                holder.myzxtv = (TextView) convertView.findViewById(R.id.home_haddotimes);
+                convertView.setTag(holder);
+            } else {
+                holder = (HViewHolder) convertView.getTag();
+            }
+            final PlanInfo info = datas.get(position);
+            //设置图片
+            holder.imgGirdView.setAdapter(new GridAdapter(info.picLists));
+            //设置用户头像
+            DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                    .cacheInMemory(true)
+                    .cacheOnDisk(true)
+                    .build();
+            ImageLoader.getInstance().displayImage(info.author.uimg, holder.mUserIm, defaultOptions);
+            //设置用户昵称
+            holder.mUsernameTv.setText(info.author.getUsername());
+            //设置创建时间
+            String time = info.getCreatedAt();
+            Calendar cal = DateUtil.str2Calendar(time, "yyyy-MM-dd HH:mm:ss");
+            int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH);
+            int day = cal.get(Calendar.DAY_OF_MONTH);
+            holder.mCreateTime.setText(year + "-" + month + "-" + day);
+            //设置文本内容
+            holder.mContent.setText(info.content);
+            //设置点赞数
+            holder.mZan.setText(info.zanToatl + " ");
+            //设置鼓励/评论
+            holder.mComment.setText(info.commentToal+" ");
+            //设置参与总数
+            holder.mCanyu.setText(info.dovisition + " ");
+            //执行次数
+            holder.myzxtv.setText(info.hadDotimes + " ");
+            //点击更多
+            holder.more.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     showOPMoreDialog();
                 }
             });
-            Log.e(TAG, "onBindViewHolder()两个参数的");
+            final TextView temp = holder.mZan;
+            //点赞单击+1
+            holder.mZan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    info.increment("zanToatl"); // 分数递增1
+                    info.update(mContext);
+                    //已有赞数+
+                    int tota = info.zanToatl+1;
+                    temp.setText(tota+"");
+                }
+            });
+            return convertView;
         }
 
-        @Override
-        public int getItemCount() {
-            Log.e(TAG, "getItemCount()=" + datas.size());
-            return datas.size();
+        private class HViewHolder {
+            //内容图片
+            GridView imgGirdView;
+            //用户头像
+            ImageView mUserIm;
+            //用户名称
+            TextView mUsernameTv;
+            //发表时间
+            TextView mCreateTime;
+            //文本内容
+            TextView mContent;
+            //点赞数
+            TextView mZan;
+            //鼓励评论
+            TextView mComment;
+            //参与数目
+            TextView mCanyu;
+            //已执行数
+            TextView myzxtv;
+            //点击查看更多
+            View more;
+
         }
-
-        @Override
-        public void onBindViewHolder(MyViewHolder holder, int position, List<Object> payloads) {
-            super.onBindViewHolder(holder, position, payloads);
-            Log.e(TAG, "onBindViewHolder()三个参数的" + payloads.size() + "  " + payloads.toArray());
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            Log.e(TAG, "getItemViewType()");
-            return super.getItemViewType(position);
-        }
-
-        @Override
-        public void setHasStableIds(boolean hasStableIds) {
-            Log.e(TAG, "setHasStableIds()");
-            super.setHasStableIds(hasStableIds);
-
-        }
-
-        @Override
-        public long getItemId(int position) {
-            Log.e(TAG, "getItemId()");
-            return super.getItemId(position);
-        }
-
-        @Override
-        public void onViewRecycled(MyViewHolder holder) {
-            Log.e(TAG, "onViewRecycled()");
-
-            super.onViewRecycled(holder);
-        }
-
-        @Override
-        public boolean onFailedToRecycleView(MyViewHolder holder) {
-            Log.e(TAG, "onFailedToRecycleView()");
-
-            return super.onFailedToRecycleView(holder);
-        }
-
     }
 
     private class GridAdapter extends BaseAdapter {
+        private List<String> mPicdatas;
+
+        public GridAdapter(List<String> datas) {
+            this.mPicdatas = datas;
+        }
 
         @Override
         public int getCount() {
-            return mPictureUrls.length;
+            return mPicdatas.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return mPictureUrls[position];
+            return mPicdatas.get(position);
         }
 
         @Override
@@ -350,7 +511,7 @@ public class HomeFragment extends BaseFragment {
                     .cacheInMemory(true)
                     .cacheOnDisk(true)
                     .build();
-            ImageLoader.getInstance().displayImage(mPictureUrls[position], holder.mImageView, defaultOptions);
+            ImageLoader.getInstance().displayImage(mPicdatas.get(position), holder.mImageView, defaultOptions);
             return convertView;
         }
 

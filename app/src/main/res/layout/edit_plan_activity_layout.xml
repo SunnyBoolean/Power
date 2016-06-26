@@ -14,6 +14,7 @@
 
         <com.rey.material.widget.EditText
             android:layout_width="match_parent"
+            android:id="@+id/editplan_inputcontent"
             android:layout_height="120dp"
             android:layout_margin="10dp"
             android:background="@null"
@@ -23,20 +24,18 @@
             app:et_supportMode="charCounter"
             app:v_styleId="@array/edittext" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/add_camera_pic" />
-
-        <View
+        <com.geo.widget.MyExpandGridView
+            android:id="@+id/list_edithomeplan_img_select_gridview"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/material_grey_200"></View>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:horizontalSpacing="5dp"
+            android:numColumns="4"
+            android:verticalSpacing="5dp" />
 
         <LinearLayout
-            android:id="@+id/addlongplan_location_click"
+            android:id="@+id/editslongplan_location_click"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:background="@color/add_longplan_item_selec"
@@ -45,9 +44,10 @@
             android:paddingLeft="20dp">
 
             <TextView
-                android:id="@+id/addlongplan_location_tvshow"
+                android:id="@+id/editplongplan_location_tvshow"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:clickable="true"
                 android:drawableLeft="@drawable/add_longplan_location"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"

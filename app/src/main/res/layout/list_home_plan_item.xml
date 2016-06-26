@@ -7,8 +7,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:gravity="center_vertical"
         android:background="@color/material_white"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="10dp">
 
@@ -21,8 +21,8 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginLeft="8dp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
@@ -30,6 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="炭灰思学"
+                android:textColor="@color/material_black"
                 android:textSize="@dimen/textSize_normal" />
 
             <TextView
@@ -40,15 +41,17 @@
                 android:text="2016-05-20"
                 android:textSize="@dimen/textSize_small" />
         </LinearLayout>
+
         <ImageView
+            android:id="@+id/home_listitem_moreu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/home_listitem_moreu"
             android:layout_marginRight="8dp"
-            android:src="@drawable/item_more_arrowdown"/>
+            android:src="@drawable/item_more_arrowdown" />
     </LinearLayout>
     <!--内容区域-->
     <TextView
+        android:id="@+id/home_plan_list_copntehois"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/material_white"
@@ -60,26 +63,30 @@
         android:visibility="gone" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/home_plan_jcioancds"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/material_white"
         android:ellipsize="end"
+        android:lineSpacingExtra="3dp"
         android:maxLines="3"
         android:padding="10dp"
         android:text="  解决流量过大的基本方法就是使用高度压缩的通信协议，而数据压缩后流量减小带来的自然结果也就是省电：因为大数据量的传输必然需要更久的网络操作、数据序列化及反序列化操作，这些都是电量消耗过快的根源。"
+        android:textColor="@color/material_black"
+        android:textScaleX="1"
         android:textSize="@dimen/textSize_normal" />
 
     <com.geo.widget.MyExpandGridView
         android:id="@+id/list_homeplan_img_gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
         android:background="@color/material_white"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:padding="10dp"
         android:horizontalSpacing="5dp"
         android:numColumns="3"
+        android:padding="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:verticalSpacing="5dp" />
 
     <TextView
@@ -87,41 +94,79 @@
         android:layout_height="0.5dp"
         android:background="@color/material_grey_200" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:background="@color/material_white"
-        android:padding="10dp">
-
+        android:layout_height="wrap_content"
+        android:background="@color/material_white">
+        <!--已执行、评论/鼓励，参与者-->
         <TextView
-            android:id="@+id/list_homeplan_zan"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:drawableLeft="@drawable/thumbs_up"
-            android:layout_weight="1"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="(12)"
-            android:textSize="@dimen/textSize_normal" />
+            android:id="@+id/home_haddotimes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@drawable/home_plan_dotimes"
+            android:drawablePadding="5dp"
+            android:paddingLeft="10dp"
+            android:text="12" />
 
-        <TextView
-            android:id="@+id/list_homeplan_comment"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="鼓励(53)"
-            android:textSize="@dimen/textSize_normal" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:background="@color/material_white"
+            android:orientation="horizontal"
+            android:padding="10dp">
+            <!--点赞-->
+            <TextView
+                android:id="@+id/list_homeplan_zan"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:background="@color/add_longplan_item_selec"
+                android:drawableLeft="@drawable/thumbs_up"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="12"
+                android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/list_homeplan_scan"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="参与(668)"
-            android:textSize="@dimen/textSize_normal" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="0.5dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/material_grey_200" />
+            <!-- 评论-->
+            <TextView
+                android:id="@+id/list_homeplan_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:background="@color/add_longplan_item_selec"
+                android:drawableLeft="@drawable/home_item_comment"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="53"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="0.5dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/material_grey_200" />
+            <!-- 参与者-->
+            <TextView
+                android:id="@+id/list_homeplan_scan"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/add_longplan_item_selec"
+                android:drawableLeft="@drawable/home_item_canyuz"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="668"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"

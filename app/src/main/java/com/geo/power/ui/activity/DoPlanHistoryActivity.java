@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.geo.com.geo.power.bean.PlanHistoryInfo;
+import com.geo.com.geo.power.bean.PlanInfo;
 import com.geo.power.ui.fragment.DonePlanFragment;
 import com.geo.power.ui.fragment.JoinPlanFragment;
 import com.geo.power.ui.fragment.MyPlanFragment;
@@ -39,6 +40,8 @@ public class DoPlanHistoryActivity extends BaseActivity {
     private final String[] mTabTitle = {"我的动态", "参与者动态"};
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
+    private PlanInfo mPlanInfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +55,9 @@ public class DoPlanHistoryActivity extends BaseActivity {
     @Override
     protected void initCompontent() {
         super.initCompontent();
+        initData();
         mViewPager = (ViewPager) findViewById(R.id.home_plan_viewpager);
         mTabLayout = (TabLayout) findViewById(R.id.home_plan_tablayout);
-
 
         //设置Tab的模式
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
@@ -71,6 +74,10 @@ public class DoPlanHistoryActivity extends BaseActivity {
 
     }
 
+    private void initData() {
+        Intent intent = getIntent();
+        mPlanInfo = (PlanInfo) intent.getSerializableExtra("planinfo");
+    }
 
     @Override
     protected void initListener() {
@@ -110,7 +117,11 @@ public class DoPlanHistoryActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return list_fragment.get(position);
+            Fragment fm = list_fragment.get(position);
+            Bundle bundle = new Bundle();
+            bundle.putCharSequence("planinfo", mPlanInfo.getObjectId());
+            fm.setArguments(bundle);
+            return fm;
         }
 
         @Override

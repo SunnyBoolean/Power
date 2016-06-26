@@ -3,14 +3,13 @@ package com.geo.power.ui.activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -27,20 +26,27 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amap.api.services.core.PoiItem;
+import com.geo.com.geo.power.bean.PlanInfo;
+import com.geo.com.geo.power.bean.UserInfo;
 import com.geo.com.geo.power.util.BitmapUtils;
 import com.geo.com.geo.power.util.ScreenUtil;
+import com.github.lazylibrary.util.DateUtil;
 import com.rey.material.app.DatePickerDialog;
 import com.rey.material.app.DialogFragment;
 import com.rey.material.app.TimePickerDialog;
+import com.rey.material.widget.EditText;
 import com.rey.material.widget.Switch;
-import com.yongchun.library.view.ImagePreviewActivity;
 import com.yongchun.library.view.ImageSelectorActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UploadBatchListener;
 import ui.geo.com.power.R;
 
 /**
@@ -50,11 +56,17 @@ public class AddLongPlanActivity extends BaseActivity {
     private View mSelectCategory, mPlanDeadline, mPlanNotify, mPlanLocation, mPlanJieduan, mAddPicBtn;
     private TextView mSelectCategoryContent, mPlanDeadLineTv, mPlanNotifyShow, mIsPublicTV, mLocationTv;
     private ImageView mCategorySelectegIV, mPlanDeadlineIm, mPlanNotifyIm;
+    private EditText mContentInputEt;
     private Switch mIsPublicSwitch;
     private GridView mPicGridView;
     private ArrayList<String> mSelectPics = new ArrayList<String>();
     private ImageAdapter mPicAdapter;
     private final String flag = "HelloPowerWorld";
+    /**
+     * 新增计划实体类
+     */
+    private PlanInfo mAddPlanInfo = new PlanInfo();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +94,7 @@ public class AddLongPlanActivity extends BaseActivity {
         mAddPicBtn = findViewById(R.id.add_longplan_pics);
         mPicGridView = (GridView) findViewById(R.id.list_homeplan_img_select_gridview);
         mLocationTv = (TextView) findViewById(R.id.addlongplan_location_tvshow);
+        mContentInputEt = (EditText) findViewById(R.id.add_plan_content_ino);
         mSelectPics.clear();
         mSelectPics.add(flag);
         mPicAdapter = new ImageAdapter();
@@ -103,9 +116,11 @@ public class AddLongPlanActivity extends BaseActivity {
                 if (checked) {
                     mIsPublicTV.setText("公开");
                     mIsPublicTV.setTextColor(mCommonColor);
+                    mAddPlanInfo.ispublie = 0;
                 } else {
                     mIsPublicTV.setText("私有");
                     mIsPublicTV.setTextColor(Color.GRAY);
+                    mAddPlanInfo.ispublie = 1;
                 }
             }
         });
@@ -114,7 +129,7 @@ public class AddLongPlanActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String url = mSelectPics.get(mPicAdapter.getCount() - position - 1);
                 if (url.equals(flag)) {
-                    ImageSelectorActivity.start(AddLongPlanActivity.this, 12, ImageSelectorActivity.MODE_MULTIPLE, true, true, false);
+                    ImageSelectorActivity.start(AddLongPlanActivity.this, 9, ImageSelectorActivity.MODE_MULTIPLE, true, true, false);
                 } else {
 //                    ImageSelectorActivity.start(AddLongPlanActivity.this);
                 }
@@ -144,7 +159,7 @@ public class AddLongPlanActivity extends BaseActivity {
                 showPlanDeadline();
                 break;
             case R.id.add_longplan_plannotify_click:  //定时提醒
-                showPlanNotify();
+                showPlanNotiyTime();
             case R.id.add_longplan_pics:   //添加图片
 
                 break;
@@ -158,18 +173,34 @@ public class AddLongPlanActivity extends BaseActivity {
         if (resultCode == RESULT_OK && requestCode == ImageSelectorActivity.REQUEST_IMAGE) {
             ArrayList<String> images = (ArrayList<String>) data.getSerializableExtra(ImageSelectorActivity.REQUEST_OUTPUT);
             mSelectPics.addAll(images);
+            mAddPlanInfo.picLists.addAll(images);
             mPicAdapter.notifyDataSetChanged();
         } else if (resultCode == RESULT_OK && requestCode == AddLongPlanLocationActivity.REQUEST_CODE && data != null) {  //选择的位置
 //            PoiItem item = (PoiItem) data.getSerializableExtra("location");
             String addr = data.getStringExtra("address");
-            if(!TextUtils.isEmpty(addr)){
+            if (!TextUtils.isEmpty(addr)) {
                 mLocationTv.setText(addr);
                 mLocationTv.setTextColor(mCommonColor);
+                Drawable drawable = mContext.getResources().getDrawable(R.drawable.add_planlocation_on);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());//必须设置图片大小，否则不显示
+                mLocationTv.setCompoundDrawables(drawable, null, null, null);
+                mAddPlanInfo.curLongitude = data.getDoubleExtra("lon", 0.0);
+                mAddPlanInfo.curLatitude = data.getDoubleExtra("lat", 0.0);
+                mAddPlanInfo.locationArrd = addr;
+
+            } else {
+                mLocationTv.setText("不显示位置信息");
+                Drawable drawable = mContext.getResources().getDrawable(R.drawable.add_longplan_location);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());//必须设置图片大小，否则不显示
+                mLocationTv.setCompoundDrawables(drawable, null, null, null);
             }
         }
     }
 
-    private void showPlanNotify() {
+    /**
+     * 计划提醒时间
+     */
+    private void showPlanNotiyTime() {
         com.rey.material.app.Dialog.Builder builder = new TimePickerDialog.Builder(true ? R.style.Material_App_Dialog_TimePicker_Light : R.style.Material_App_Dialog_TimePicker, 24, 00) {
             @Override
             public void onPositiveActionClicked(DialogFragment fragment) {
@@ -179,6 +210,7 @@ public class AddLongPlanActivity extends BaseActivity {
                 mPlanNotifyShow.setText("每天" + time);
                 mPlanNotifyIm.setVisibility(View.VISIBLE);
                 mPlanNotifyShow.setTextColor(mCommonColor);
+                mAddPlanInfo.notifyDate = time;
                 super.onPositiveActionClicked(fragment);
             }
 
@@ -203,9 +235,11 @@ public class AddLongPlanActivity extends BaseActivity {
             public void onPositiveActionClicked(DialogFragment fragment) {
                 DatePickerDialog dialog = (DatePickerDialog) fragment.getDialog();
                 String date = dialog.getFormattedDate(SimpleDateFormat.getDateInstance());
-                mPlanDeadLineTv.setText(date);
+                String udate = date.replace("年","-").replace("月","-").replace("日","");
+                mPlanDeadLineTv.setText( date + "完成计划");
                 mPlanDeadLineTv.setTextColor(mCommonColor);
                 mPlanDeadlineIm.setVisibility(View.VISIBLE);
+                mAddPlanInfo.completeDate = udate;
 //                Toast.makeText(mContext, "Date is " + date, Toast.LENGTH_SHORT).show();
                 super.onPositiveActionClicked(fragment);
             }
@@ -249,6 +283,7 @@ public class AddLongPlanActivity extends BaseActivity {
                     mSelectCategoryContent.setText(view.getText().toString());
                     mCategorySelectegIV.setVisibility(View.VISIBLE);
                     dialog.dismiss();
+                    mAddPlanInfo.category = view.getText().toString();
                 }
             });
         }
@@ -315,11 +350,131 @@ public class AddLongPlanActivity extends BaseActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == 1) {
-                    showToast("发送");
+                    uploadPlan();
                 }
                 return false;
             }
         });
+    }
+
+    /**
+     * 必要性检查
+     *
+     * @return
+     */
+    private boolean checkUpload() {
+        String content = mContentInputEt.getText().toString().trim();
+        if (TextUtils.isEmpty(content)) {
+            showToast("内容不能为空");
+            return false;
+        } else if (TextUtils.isEmpty(mAddPlanInfo.completeDate)) {
+            showToast("计划截止时间不能为空");
+            return false;
+        } else if (TextUtils.isEmpty(mAddPlanInfo.category)) {
+            showToast("分类不能为空");
+        return false;
+        }
+        return true;
+    }
+
+    /**
+     * 上传计划
+     */
+    private void uploadPlan() {
+        //检查不通过就不上传任何数据
+        if (!checkUpload()) {
+            return;
+        }
+        showProgress();
+        mAddPlanInfo.startDate = DateUtil.getCurDateOnlyDay();
+        mAddPlanInfo.content = mContentInputEt.getText().toString();
+        mAddPlanInfo.author = BmobUser.getCurrentUser(mContext,UserInfo.class);
+        mAddPlanInfo.uid = BmobUser.getCurrentUser(mContext,UserInfo.class).getObjectId();
+        int totalDay = DateUtil.daysBetween(mAddPlanInfo.startDate,mAddPlanInfo.completeDate,"yyyy-MM-dd");
+        mAddPlanInfo.plantotalDay = totalDay;
+        //如果没有图片就直接上报内容
+        if (mAddPlanInfo.picLists.size() <= 0) {
+            mAddPlanInfo.save(mContext, new SaveListener() {
+                @Override
+                public void onSuccess() {
+                    showToast("创建成功！");
+                    finish();
+                }
+
+                @Override
+                public void onFailure(int i, String s) {
+                    showToast("创建失败！");
+                }
+            });
+        } else {
+            final String[] filePaths = new String[mAddPlanInfo.picLists.size()];
+            final String[] pics = mAddPlanInfo.picLists.toArray(filePaths);
+            BmobFile.uploadBatch(mContext, pics, new UploadBatchListener() {
+                @Override
+                public void onSuccess(List<BmobFile> files, List<String> urls) {
+                    //1、files-上传完成后的BmobFile集合，是为了方便大家对其上传后的数据进行操作，例如你可以将该文件保存到表中
+                    //2、urls-上传文件的完整url地址
+                    if (urls.size() == filePaths.length) {//如果数量相等，则代表文件全部上传完成
+                        //do something
+                        mAddPlanInfo.picLists.clear();
+                        mAddPlanInfo.picLists.addAll(urls);
+                        mAddPlanInfo.save(mContext, new SaveListener() {
+                            @Override
+                            public void onSuccess() {
+                                showToast("创建成功！");
+                                finish();
+                            }
+
+                            @Override
+                            public void onFailure(int i, String s) {
+                                showToast("创建失败！");
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onError(int statuscode, String errormsg) {
+                    showToast("上传失败" + statuscode + ",错误描述：" + errormsg);
+                }
+
+                @Override
+                public void onProgress(int curIndex, int curPercent, int total, int totalPercent) {
+                    //1、curIndex--表示当前第几个文件正在上传
+                    //2、curPercent--表示当前上传文件的进度值（百分比）
+                    //3、total--表示总的上传文件数
+                    //4、totalPercent--表示总的上传进度（百分比）
+                }
+            });
+
+        }
+
+    }
+
+    private void showProgress() {
+        com.rey.material.app.Dialog.Builder build = new com.rey.material.app.Dialog.Builder(R.style.SimpleDialogLight) {
+            @Override
+            protected void onBuildDone(com.rey.material.app.Dialog dialog) {
+            }
+
+            @Override
+            public void onPositiveActionClicked(DialogFragment fragment) {
+
+                super.onPositiveActionClicked(fragment);
+            }
+
+            @Override
+            public void onNegativeActionClicked(DialogFragment fragment) {
+                super.onNegativeActionClicked(fragment);
+            }
+        };
+//        build.title("确认删除内容：")
+//                .positiveAction("删除")
+//                .negativeAction("取消")
+//                .contentView(R.layout.delete_add_wallpaper_content_item);
+        build.contentView(R.layout.add_plan_progress);
+        DialogFragment fragment = DialogFragment.newInstance(build);
+        fragment.show(getSupportFragmentManager(), null);
     }
 
     private class ImageAdapter extends BaseAdapter {
@@ -369,6 +524,13 @@ public class AddLongPlanActivity extends BaseActivity {
         class IViewHolder {
             ImageView img;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mAddPlanInfo.picLists.clear();
+        mAddPlanInfo = null;
     }
 
 }
