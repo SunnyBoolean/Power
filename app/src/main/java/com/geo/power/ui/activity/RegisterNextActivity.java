@@ -117,7 +117,7 @@ public class RegisterNextActivity extends BaseActivity {
         query.findObjects(mContext, new FindListener<UserInfo>() {
             @Override
             public void onSuccess(List<UserInfo> object) {
-                if (object == null || object.size() <= 0) {
+                if (object != null && object.size() > 0) {
                     //账号已存在
                     showToast("账号已存在");
                     return;

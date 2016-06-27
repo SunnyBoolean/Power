@@ -54,7 +54,9 @@ import java.util.TimerTask;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UpdateListener;
 import ui.geo.com.power.R;
 
 /**
@@ -107,12 +109,14 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
         }
         return mInstance;
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         MainActivity activity = (MainActivity) context;
         activity.setmLoadCallBackListener(this);
     }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View content = View.inflate(mContext, R.layout.fragment_main_home, null);
         mDataListView = (ListView) content.findViewById(R.id.home_main_recyclerList);
@@ -139,12 +143,12 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
         mDataListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(position == 0){
+                if (position == 0) {
                     return;
                 }
-                PlanInfo info= mPlanDataList.get(position-1);
-                Intent intent = new Intent(mContext,DiscoverDetailActivity.class);
-                intent.putExtra("plan_info",info);
+                PlanInfo info = mPlanDataList.get(position - 1);
+                Intent intent = new Intent(mContext, DiscoverDetailActivity.class);
+                intent.putExtra("plan_info", info);
                 startActivity(intent);
             }
         });
@@ -161,7 +165,7 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
      */
     private void loadData(final boolean isrefresh) {
         mDataListView.addFooterView(mFooterView);
-        if(isrefresh){
+        if (isrefresh) {
             swipeRefreshLayout.setRefreshing(true);
         }
         BmobQuery<PlanInfo> query = new BmobQuery<PlanInfo>();
@@ -202,7 +206,7 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
         query.setSkip(mPageSize * mCurPage);
         //还需要将计划相关联的用户信息查询出来哟
         UserInfo user = BmobUser.getCurrentUser(mContext, UserInfo.class);
-        query.addWhereEqualTo("author", user);    // 查询当前用户的所有帖子
+//        query.addWhereEqualTo("author", user);    // 查询当前用户的所有帖子
         //必须要加上这一句表明在查询时也将用户信息给查询出来
         query.include("author");
 //执行查询方法
@@ -276,6 +280,7 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
 
 
     }
+
     private void initBanner() {
         List<String> datas = Arrays.asList(mPictureUrls);
         mConverBanner.setPages(
@@ -327,7 +332,7 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
     /**
      * 点击列表下拉箭头操作更多
      */
-    private void showOPMoreDialog() {
+    private void showOPMoreDialog(final PlanInfo info) {
         LinearLayout content = (LinearLayout) View.inflate(mContext, R.layout.home_list_item_op_more, null);
         final Dialog dialog = new Dialog(mContext);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -345,8 +350,51 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, view.getText().toString(), Toast.LENGTH_LONG).show();
                     dialog.dismiss();
+                    String content = view.getText().toString();
+                    if ("加入计划".equals(content)) {
+                        //参与者+1
+                        info.increment("dovisition", 1);
+                        //添加多对多关联，表明有一个人加入了这个计划
+
+                        BmobRelation relation = new BmobRelation();
+                        //将当前用户添加到多对多关联中
+                        relation.add(info);
+                        UserInfo user = UserInfo.getCurrentUser(mContext,UserInfo.class);
+                        //多对多关联指向`post`的`likes`字段
+                        user.mLikes = relation;
+                        user.update(mContext, new UpdateListener() {
+                            @Override
+                            public void onSuccess() {
+                                Toast.makeText(mContext,"收藏成功",Toast.LENGTH_LONG).show();
+                            }
+
+                            @Override
+                            public void onFailure(int i, String s) {
+                                Toast.makeText(mContext,"收藏失败",Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    } else if ("添加收藏".equals(content)) {
+                        //收藏数+1
+                        info.increment("favoriteToatl", 1);
+                        BmobRelation relation = new BmobRelation();
+                        //将当前用户添加到多对多关联中
+                        relation.add(info);
+                        UserInfo user = UserInfo.getCurrentUser(mContext,UserInfo.class);
+                        //多对多关联指向`post`的`likes`字段
+                        user.mFavorites = relation;
+                        user.update(mContext, new UpdateListener() {
+                            @Override
+                            public void onSuccess() {
+                                Toast.makeText(mContext,"收藏成功",Toast.LENGTH_LONG).show();
+                            }
+
+                            @Override
+                            public void onFailure(int i, String s) {
+                                Toast.makeText(mContext,"收藏失败",Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
                 }
             });
         }
@@ -381,7 +429,7 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-             HViewHolder holder;
+            HViewHolder holder;
             if (convertView == null) {
                 holder = new HViewHolder();
                 convertView = View.inflate(mContext, R.layout.list_home_plan_item, null);
@@ -422,7 +470,7 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
             //设置点赞数
             holder.mZan.setText(info.zanToatl + " ");
             //设置鼓励/评论
-            holder.mComment.setText(info.commentToal+" ");
+            holder.mComment.setText(info.commentToal + " ");
             //设置参与总数
             holder.mCanyu.setText(info.dovisition + " ");
             //执行次数
@@ -431,7 +479,7 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
             holder.more.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showOPMoreDialog();
+                    showOPMoreDialog(info);
                 }
             });
             final TextView temp = holder.mZan;
@@ -442,8 +490,8 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
                     info.increment("zanToatl"); // 分数递增1
                     info.update(mContext);
                     //已有赞数+
-                    int tota = info.zanToatl+1;
-                    temp.setText(tota+"");
+                    int tota = info.zanToatl + 1;
+                    temp.setText(tota + "");
                 }
             });
             return convertView;

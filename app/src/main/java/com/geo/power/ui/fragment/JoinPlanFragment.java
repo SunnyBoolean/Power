@@ -13,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.geo.com.geo.power.bean.PlanInfo;
 import com.geo.com.geo.power.bean.UserInfo;
@@ -27,6 +28,7 @@ import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.listener.FindListener;
 import ui.geo.com.power.R;
 
@@ -45,13 +47,6 @@ public class JoinPlanFragment extends BaseFragment {
     private boolean hasMore = false;
     private View mFooterView;
 
-    public static final String[] mPictureUrls = {
-            "http://ac-6ptjoad9.clouddn.com/3MekCrFaIezGOmrmbmvkILWjyF2dGIItve4AYXQC",
-            "http://ac-6ptjoad9.clouddn.com/aEealv8tKqUxuSn3DHhHKPUQUtkUoVdZcwqN8i9y",
-            "http://ac-6ptjoad9.clouddn.com/Itzvdzj3QZG5zR9dNMmPVAZNNviQt5tzJEsaU6jW",
-            "http://ac-6ptjoad9.clouddn.com/Itzvdzj3QZG5zR9dNMmPVAZNNviQt5tzJEsaU6jW",
-            "http://ac-6ptjoad9.clouddn.com/Q61AFSIOoOipiucsdR8NctVIvkSHimJK9RIZWlnh"
-    };
 
     public static JoinPlanFragment getInstance() {
         if (mInstance == null) {
@@ -99,6 +94,9 @@ public class JoinPlanFragment extends BaseFragment {
                     enable = firstItemVisible && topOfFirstItemVisible;
                 }
                 swipeRefreshLayout.setEnabled(enable);
+                if (mMyPlanListView.getChildCount() == 0) {
+                    swipeRefreshLayout.setEnabled(true);
+                }
             }
 
             public void onScrollStateChanged(AbsListView view,
@@ -117,10 +115,7 @@ public class JoinPlanFragment extends BaseFragment {
 
     private void initCompontent() {
         mPlanData = new ArrayList<PlanInfo>();
-        for (int i = 0; i < 10; i++) {
-            mPlanData.add(new PlanInfo());
-        }
-        mPlanAdapter = new PlanAdapter();
+        mPlanAdapter = new PlanAdapter(mPlanData);
         mMyPlanListView.setAdapter(mPlanAdapter);
         mMyPlanListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -167,12 +162,15 @@ public class JoinPlanFragment extends BaseFragment {
         mMyPlanListView.addFooterView(mFooterView);
         BmobQuery<PlanInfo> query = new BmobQuery<PlanInfo>();
 //查询我的
-        query.addWhereEqualTo("uid", BmobUser.getCurrentUser(mContext, UserInfo.class).getObjectId());
+//        query.addWhereEqualTo("uid", BmobUser.getCurrentUser(mContext, UserInfo.class).getObjectId());
 //返回50条数据，如果不加上这条语句，默认返回10条数据
         query.setLimit(mPageSize);
         query.order("-createdAt");//降序排列
         //分页查询，这个是忽略前mPageSize*curpage条数据
         query.setSkip(mPageSize * mCurPage);
+        UserInfo user = BmobUser.getCurrentUser(mContext, UserInfo.class);
+        query.addWhereRelatedTo("mLikes", new BmobPointer(user));
+        query.include("author");
 //执行查询方法
         query.findObjects(mContext, new FindListener<PlanInfo>() {
             @Override
@@ -215,16 +213,19 @@ public class JoinPlanFragment extends BaseFragment {
     }
 
     private class PlanAdapter extends BaseAdapter {
-
+        List<PlanInfo> mPDatas;
+        public PlanAdapter(List<PlanInfo> list){
+            this.mPDatas = list;
+        }
         @Override
         public int getCount() {
-            int size = mPlanData.size();
+            int size = mPDatas.size();
             return size;
         }
 
         @Override
         public Object getItem(int position) {
-            return mPlanData.get(position);
+            return mPDatas.get(position);
         }
 
         @Override
@@ -239,16 +240,60 @@ public class JoinPlanFragment extends BaseFragment {
                 holder = new ViewHolder();
                 convertView = View.inflate(mContext, R.layout.item_myplan_join_list, null);
                 holder.imageGrid = (GridView) convertView.findViewById(R.id.home_myplan_item_img_gridview);
+                holder.mUimg = (ImageView) convertView.findViewById(R.id.home_myplan_item_tag_p_wcy);
+                holder.mUname = (TextView) convertView.findViewById(R.id.home_myplan_item_sigin_wcyname);
+                holder.mCreateTime = (TextView) convertView.findViewById(R.id.home_mycan_timne);
+                holder.mJxcy = (TextView) convertView.findViewById(R.id.home_mycanyu_contim);
+                holder.mContent = (TextView) convertView.findViewById(R.id.home_mycanyu_content);
+                holder.mYzx = (TextView) convertView.findViewById(R.id.mycanyu_yzx);
+                holder.canyz = (TextView) convertView.findViewById(R.id.home_mcy_cyz);
+                holder.comment = (TextView) convertView.findViewById(R.id.home_gulis);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            holder.imageGrid.setAdapter(new GridAdapter());
+            PlanInfo info = mPDatas.get(position);
+            holder.imageGrid.setAdapter(new GridAdapter(info.picLists));
+            //设置用户头像
+            DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                    .cacheInMemory(true)
+                    .cacheOnDisk(true)
+                    .build();
+            ImageLoader.getInstance().displayImage(info.author.uimg, holder.mUimg, defaultOptions);
+            //用户名
+            holder.mUname.setText(info.author.getUsername()+" ");
+            //创建时间
+            holder.mCreateTime.setText(info.getCreatedAt());
+            //内容
+            holder.mContent.setText(info.content);
+            //已执行总数
+            holder.mYzx.setText(info.hadDotimes+" ");
+            //评论
+            holder.comment.setText(info.commentToal+" ");
+            //参与者总数
+            holder.canyz.setText(info.dovisition+" ");
             return convertView;
         }
 
         private class ViewHolder {
             GridView imageGrid;
+            //用户头像
+            ImageView mUimg;
+            //用户名称
+            TextView mUname;
+            //创建时间
+            TextView mCreateTime;
+            //点击继续参与
+            TextView mJxcy;
+            //内容
+            TextView mContent;
+            //已执行总数
+            TextView mYzx;
+            //参与者
+            TextView canyz;
+            //鼓励
+            TextView comment;
+
         }
     }
 
@@ -256,14 +301,18 @@ public class JoinPlanFragment extends BaseFragment {
      * 图片适配器
      */
     private class GridAdapter extends BaseAdapter {
+        private List<String> mPicDatas;
+        public GridAdapter(List<String> datas){
+            this.mPicDatas = datas;
+        }
         @Override
         public int getCount() {
-            return mPictureUrls.length;
+            return mPicDatas.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return mPictureUrls[position];
+            return mPicDatas.get(position);
         }
 
         @Override
@@ -286,7 +335,7 @@ public class JoinPlanFragment extends BaseFragment {
                     .cacheInMemory(true)
                     .cacheOnDisk(true)
                     .build();
-            ImageLoader.getInstance().displayImage(mPictureUrls[position], holder.mImageView, defaultOptions);
+            ImageLoader.getInstance().displayImage(mPicDatas.get(position), holder.mImageView, defaultOptions);
             return convertView;
         }
 

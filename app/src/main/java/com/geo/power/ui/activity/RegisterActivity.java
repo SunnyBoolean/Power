@@ -176,7 +176,7 @@ public class RegisterActivity extends BaseActivity {
                 //发送验证码,如果验证成功会在回调里进行跳转到NextActivity
                 SMSSDK.submitVerificationCode("86", mPhone, yzm);
                 //暂时测试用，之后删除
-                Intent intent = new Intent(mContext, ForgetPasswordActivity.class);
+                Intent intent = new Intent(mContext, RegisterNextActivity.class);
                 intent.putExtra("phoneNum", mPhone);
                 startActivity(intent);
                 break;

@@ -94,6 +94,9 @@ public class MyPlanFragment extends BaseFragment {
                     enable = firstItemVisible && topOfFirstItemVisible;
                 }
                 swipeRefreshLayout.setEnabled(enable);
+                if(mMyPlanListView.getChildCount()==0){
+                    swipeRefreshLayout.setEnabled(true);
+                }
             }
 
             public void onScrollStateChanged(AbsListView view,

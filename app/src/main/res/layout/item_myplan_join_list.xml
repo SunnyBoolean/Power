@@ -14,90 +14,101 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:orientation="vertical">
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_height="wrap_content">
+        android:background="@color/material_white"
+        android:orientation="vertical"
+        android:paddingLeft="10dp">
 
-        <ImageView
-            android:id="@+id/home_myplan_item_tag_p"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/list_homeplan_userimg" />
+            android:layout_marginTop="15dp">
+
+            <ImageView
+                android:id="@+id/home_myplan_item_tag_p_wcy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/list_homeplan_userimg" />
+
+            <TextView
+                android:id="@+id/home_myplan_item_sigin_wcyname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@id/home_myplan_item_tag_p_wcy"
+                android:text="泼墨"
+                android:textColor="@color/material_lightBlue_900" />
+
+            <TextView
+                android:id="@+id/home_mycan_timne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/home_myplan_item_tag_p_wcy"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@id/home_myplan_item_tag_p_wcy"
+                android:text="2016-05-13" />
+
+            <TextView
+                android:id="@+id/home_mycanyu_contim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@color/material_accentPink_a200"
+                android:padding="3dp"
+                android:text="继续参与"
+                android:textColor="@color/material_white"
+                android:textSize="@dimen/textSize_small" />
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/home_myplan_item_sigin"
+            android:id="@+id/home_mycanyu_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:textColor="@color/material_lightBlue_900"
-            android:layout_toRightOf="@id/home_myplan_item_tag_p"
-            android:text="泼墨" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/home_myplan_item_tag_p"
-            android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@id/home_myplan_item_tag_p"
-            android:text="2016-05-13" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@color/material_accentPink_a200"
-            android:padding="3dp"
-            android:text="生活"
-            android:textColor="@color/material_white"
-            android:textSize="@dimen/textSize_small" />
-    </RelativeLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ellipsize="end"
-        android:maxLines="3"
-        android:text="      今天很受打击啊，面个试还被嫌弃长得肥，我长得胖出的多又没吃你家饭！我决定要努力运动减肥！不瘦到150斤就一直减！" />
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="      今天很受打击啊，面个试还被嫌弃长得肥，我长得胖出的多又没吃你家饭！我决定要努力运动减肥！不瘦到150斤就一直减！" />
 
         <com.geo.widget.MyExpandGridView
             android:id="@+id/home_myplan_item_img_gridview"
             android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:horizontalSpacing="5dp"
-            android:verticalSpacing="5dp"
-            android:numColumns="3" />
+            android:numColumns="3"
+            android:verticalSpacing="5dp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="已执行（32）" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="参与者（32）" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="鼓励（123）" />
+            <TextView
+                android:id="@+id/mycanyu_yzx"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="已执行（32）" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/home_mcy_cyz"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="参与者（32）" />
+
+            <TextView
+                android:id="@+id/home_gulis"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="鼓励（123）" />
+
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
