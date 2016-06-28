@@ -21,7 +21,7 @@
             android:src="@drawable/list_homeplan_userimg" />
 
         <TextView
-            android:id="@+id/home_myplan_item_sigin"
+            android:id="@+id/myfavorid_nuam"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -36,6 +36,7 @@
             android:layout_alignParentRight="true"
             android:padding="3dp"
             android:text="2016/05/13"
+            android:id="@+id/myfavoride_ctime"
             android:textColor="@color/material_grey_500"
             android:textSize="@dimen/textSize_small" />
     </RelativeLayout>

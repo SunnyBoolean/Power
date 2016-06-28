@@ -61,7 +61,7 @@
                 android:paddingLeft="3dp"
                 android:paddingRight="3dp"
                 android:background="@color/material_accentPink_a200"
-                android:text="继续执行"
+                android:text="继续执行|一结束（发起人已关闭此计划）"
                 android:textColor="@color/material_white"
                 android:textSize="@dimen/textSize_small" />
         </RelativeLayout>

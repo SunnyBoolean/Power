@@ -15,11 +15,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.geo.com.geo.power.bean.PlanInfo;
+import com.geo.com.geo.power.bean.UserInfo;
 import com.geo.com.geo.power.util.ScreenUtil;
+import com.github.lazylibrary.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobPointer;
+import cn.bmob.v3.listener.FindListener;
 import ui.geo.com.power.R;
 
 /**
@@ -52,11 +58,33 @@ public class MyFavoriteActivity extends BaseActivity {
         }
         mAdapter = new FAdapter(mDatas);
         mListView.setAdapter(mAdapter);
+        loadPlan();
+    }
 
-        for(int i=0;i<20;i++){
-            mDatas.add(new PlanInfo());
-        }
-        mAdapter.notifyDataSetChanged();
+    private void loadPlan() {
+        BmobQuery<PlanInfo> query = new BmobQuery<PlanInfo>();
+//查询我的
+//        query.addWhereEqualTo("uid", BmobUser.getCurrentUser(mContext, UserInfo.class).getObjectId());
+//返回50条数据，如果不加上这条语句，默认返回10条数据
+        query.order("-createdAt");//降序排列
+        UserInfo user = BmobUser.getCurrentUser(mContext, UserInfo.class);
+        query.addWhereRelatedTo("mLikes", new BmobPointer(user));
+        query.include("author");
+//执行查询方法
+        query.findObjects(mContext, new FindListener<PlanInfo>() {
+            @Override
+            public void onSuccess(List<PlanInfo> object) {
+                mDatas.clear();
+                mDatas.addAll(object);
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(int code, String msg) {
+                // TODO Auto-generated method stub
+                ToastUtils.showToast(mContext, "查询失败：" + msg);
+            }
+        });
     }
 
     @Override
@@ -72,11 +100,12 @@ public class MyFavoriteActivity extends BaseActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(mContext,DiscoverDetailActivity.class);
+                Intent intent = new Intent(mContext, DiscoverDetailActivity.class);
                 startActivity(intent);
             }
         });
     }
+
     private void showOPMoreDialog() {
         LinearLayout content = (LinearLayout) View.inflate(mContext, R.layout.myfavorite_item_op_more, null);
         final Dialog dialog = new Dialog(mContext);
@@ -104,9 +133,11 @@ public class MyFavoriteActivity extends BaseActivity {
 
     private class FAdapter extends BaseAdapter {
         private List<PlanInfo> mData;
-        public FAdapter(List<PlanInfo> datas){
+
+        public FAdapter(List<PlanInfo> datas) {
             this.mData = datas;
         }
+
         @Override
         public int getCount() {
             return mData.size();
@@ -124,8 +155,21 @@ public class MyFavoriteActivity extends BaseActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = View.inflate(mContext,R.layout.item_myfavorite_list,null);
+            VViewHolder holder;
+            if (convertView == null) {
+                convertView = View.inflate(mContext, R.layout.item_myfavorite_list, null);
+                holder = new VViewHolder();
+                holder.muname = (TextView) convertView.findViewById(R.id.myfavorid_nuam);
+                holder.ncriime = (TextView) convertView.findViewById(R.id.myfavoride_ctime);
+            }
             return convertView;
+        }
+
+        class VViewHolder {
+            //计划发起人
+            TextView muname;
+            //计划收藏时间
+            TextView ncriime;
         }
     }
 

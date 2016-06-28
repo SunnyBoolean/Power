@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.geo.com.geo.power.bean.PlanInfo;
 import com.geo.com.geo.power.bean.UserInfo;
+import com.geo.power.ui.activity.DiscoverDetailActivity;
+import com.geo.power.ui.activity.EditPlanActivity;
 import com.geo.power.ui.activity.MyPlanActivity;
 import com.geo.power.ui.activity.MyPlanDetailActivity;
 import com.github.lazylibrary.util.ToastUtils;
@@ -106,7 +108,9 @@ public class JoinPlanFragment extends BaseFragment {
         mMyPlanListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(mContext, MyPlanDetailActivity.class);
+                PlanInfo info = (PlanInfo) mPlanAdapter.getItem(position);
+                Intent intent = new Intent(mContext, DiscoverDetailActivity.class);
+                intent.putExtra("plan_info", info);
                 startActivity(intent);
             }
         });
@@ -214,9 +218,11 @@ public class JoinPlanFragment extends BaseFragment {
 
     private class PlanAdapter extends BaseAdapter {
         List<PlanInfo> mPDatas;
-        public PlanAdapter(List<PlanInfo> list){
+
+        public PlanAdapter(List<PlanInfo> list) {
             this.mPDatas = list;
         }
+
         @Override
         public int getCount() {
             int size = mPDatas.size();
@@ -252,7 +258,7 @@ public class JoinPlanFragment extends BaseFragment {
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            PlanInfo info = mPDatas.get(position);
+            final PlanInfo info = mPDatas.get(position);
             holder.imageGrid.setAdapter(new GridAdapter(info.picLists));
             //设置用户头像
             DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
@@ -261,17 +267,26 @@ public class JoinPlanFragment extends BaseFragment {
                     .build();
             ImageLoader.getInstance().displayImage(info.author.uimg, holder.mUimg, defaultOptions);
             //用户名
-            holder.mUname.setText(info.author.getUsername()+" ");
+            holder.mUname.setText(info.author.getUsername() + " ");
             //创建时间
             holder.mCreateTime.setText(info.getCreatedAt());
             //内容
             holder.mContent.setText(info.content);
             //已执行总数
-            holder.mYzx.setText(info.hadDotimes+" ");
+            holder.mYzx.setText(info.hadDotimes + " ");
             //评论
-            holder.comment.setText(info.commentToal+" ");
+            holder.comment.setText(info.commentToal + " ");
             //参与者总数
-            holder.canyz.setText(info.dovisition+" ");
+            holder.canyz.setText(info.dovisition + " ");
+            //点击继续参与
+            holder.mJxcy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, EditPlanActivity.class);
+                    intent.putExtra("plan_info", info);
+                    startActivity(intent);
+                }
+            });
             return convertView;
         }
 
@@ -302,9 +317,11 @@ public class JoinPlanFragment extends BaseFragment {
      */
     private class GridAdapter extends BaseAdapter {
         private List<String> mPicDatas;
-        public GridAdapter(List<String> datas){
+
+        public GridAdapter(List<String> datas) {
             this.mPicDatas = datas;
         }
+
         @Override
         public int getCount() {
             return mPicDatas.size();
