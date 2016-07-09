@@ -22,7 +22,7 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
-
+//    D:\AndroidStudioWorkplace\Power\lazylibrary
 }
 ext{
     libSupportVersion = '23.1.1'

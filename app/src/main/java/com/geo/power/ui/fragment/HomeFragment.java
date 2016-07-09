@@ -33,6 +33,7 @@ import android.widget.Toast;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
+import com.geo.com.geo.power.Constants;
 import com.geo.com.geo.power.bean.PlanInfo;
 import com.geo.com.geo.power.bean.UserInfo;
 import com.geo.com.geo.power.util.ScreenUtil;
@@ -41,6 +42,7 @@ import com.geo.power.ui.activity.ImageShowActivity;
 import com.geo.power.ui.activity.MainActivity;
 import com.geo.widget.HeaderDecoration;
 import com.github.lazylibrary.util.DateUtil;
+import com.github.lazylibrary.util.SerializeUtils;
 import com.github.lazylibrary.util.ToastUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -152,8 +154,13 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
                 startActivity(intent);
             }
         });
-        loadData(true);
-
+        //首先回去从缓存读取首页数据，如果缓存没有找到就去加载
+        List<PlanInfo> mInfos = (List<PlanInfo>) SerializeUtils.deserialization(mContext, Constants.CACHE_HOME_DATA_FILENAME);
+        if(mInfos!=null){
+            mPlanDataList.addAll(mInfos);
+        }else{
+            loadData(true);
+        }
         initBanner();
         initSwipeRefresh();
     }
@@ -228,6 +235,8 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
                     hasMore = false;
                     mDataListView.removeFooterView(mFooterView);
                 }
+
+                SerializeUtils.serialization(mContext,Constants.CACHE_HOME_DATA_FILENAME,object);
                 mPlanDataList.addAll(object);
                 mAdapter.notifyDataSetChanged();
             }

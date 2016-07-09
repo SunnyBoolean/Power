@@ -1,6 +1,8 @@
 package com.geo.power.ui.activity;
 
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -40,7 +42,7 @@ import com.yongchun.library.view.ImageSelectorActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Calendar;
 import java.util.List;
 
 import cn.bmob.v3.BmobUser;
@@ -62,6 +64,7 @@ public class AddLongPlanActivity extends BaseActivity {
     private ArrayList<String> mSelectPics = new ArrayList<String>();
     private ImageAdapter mPicAdapter;
     private final String flag = "HelloPowerWorld";
+    private int mHourdo,mMuildo;
     /**
      * 新增计划实体类
      */
@@ -208,6 +211,8 @@ public class AddLongPlanActivity extends BaseActivity {
 //                Toast.makeText(mContext, "Time is " + dialog.getFormattedTime(SimpleDateFormat.getTimeInstance()), Toast.LENGTH_SHORT).show();
                 String time = dialog.getFormattedTime(SimpleDateFormat.getTimeInstance());
                 mPlanNotifyShow.setText("每天" + time);
+                mHourdo = dialog.getHour();
+                mMuildo = dialog.getMinute();
                 mPlanNotifyIm.setVisibility(View.VISIBLE);
                 mPlanNotifyShow.setTextColor(mCommonColor);
                 mAddPlanInfo.notifyDate = time;
@@ -235,8 +240,8 @@ public class AddLongPlanActivity extends BaseActivity {
             public void onPositiveActionClicked(DialogFragment fragment) {
                 DatePickerDialog dialog = (DatePickerDialog) fragment.getDialog();
                 String date = dialog.getFormattedDate(SimpleDateFormat.getDateInstance());
-                String udate = date.replace("年","-").replace("月","-").replace("日","");
-                mPlanDeadLineTv.setText( date + "完成计划");
+                String udate = date.replace("年", "-").replace("月", "-").replace("日", "");
+                mPlanDeadLineTv.setText(date + "完成计划");
                 mPlanDeadLineTv.setTextColor(mCommonColor);
                 mPlanDeadlineIm.setVisibility(View.VISIBLE);
                 mAddPlanInfo.completeDate = udate;
@@ -372,11 +377,26 @@ public class AddLongPlanActivity extends BaseActivity {
             return false;
         } else if (TextUtils.isEmpty(mAddPlanInfo.category)) {
             showToast("分类不能为空");
-        return false;
+            return false;
         }
         return true;
     }
+public void setAlarm(){
+    //操作：发送一个广播，广播接收后Toast提示定时操作完成
+    Intent intent =new Intent(mContext, PlanAlarmActivity.class);
+    intent.setAction("short");
+    PendingIntent sender=
+            PendingIntent.getBroadcast(mContext, 0, intent, 0);
 
+//设定一个五秒后的时间
+    Calendar calendar=Calendar.getInstance();
+    calendar.set(Calendar.HOUR_OF_DAY, mHourdo);
+    calendar.set(Calendar.MINUTE, mMuildo);
+    calendar.setTimeInMillis(System.currentTimeMillis());
+
+    AlarmManager alarm=(AlarmManager)getSystemService(ALARM_SERVICE);
+    alarm.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+}
     /**
      * 上传计划
      */
@@ -388,16 +408,18 @@ public class AddLongPlanActivity extends BaseActivity {
         showProgress();
         mAddPlanInfo.startDate = DateUtil.getCurDateOnlyDay();
         mAddPlanInfo.content = mContentInputEt.getText().toString();
-        mAddPlanInfo.author = BmobUser.getCurrentUser(mContext,UserInfo.class);
-        mAddPlanInfo.uid = BmobUser.getCurrentUser(mContext,UserInfo.class).getObjectId();
-        int totalDay = DateUtil.daysBetween(mAddPlanInfo.startDate,mAddPlanInfo.completeDate,"yyyy-MM-dd");
+        mAddPlanInfo.author = BmobUser.getCurrentUser(mContext, UserInfo.class);
+        mAddPlanInfo.uid = BmobUser.getCurrentUser(mContext, UserInfo.class).getObjectId();
+        int totalDay = DateUtil.daysBetween(mAddPlanInfo.startDate, mAddPlanInfo.completeDate, "yyyy-MM-dd");
         mAddPlanInfo.plantotalDay = totalDay;
         //如果没有图片就直接上报内容
         if (mAddPlanInfo.picLists.size() <= 0) {
             mAddPlanInfo.save(mContext, new SaveListener() {
                 @Override
                 public void onSuccess() {
+                    setAlarm();
                     showToast("创建成功！");
+
                     finish();
                 }
 

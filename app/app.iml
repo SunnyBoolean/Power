@@ -102,9 +102,9 @@
     <orderEntry type="library" exported="" name="picasso-2.5.0" level="project" />
     <orderEntry type="library" exported="" name="bmob-sdk-3.4.7-aar" level="project" />
     <orderEntry type="library" exported="" name="AMap_Search_V3.2.1_20160308" level="project" />
-    <orderEntry type="library" exported="" name="bmob-push-0.8" level="project" />
-    <orderEntry type="library" exported="" name="http-legacy-1.0" level="project" />
     <orderEntry type="library" exported="" name="MobCommons-2016.0303.1229" level="project" />
+    <orderEntry type="library" exported="" name="http-legacy-1.0" level="project" />
+    <orderEntry type="library" exported="" name="bmob-push-0.8" level="project" />
     <orderEntry type="library" exported="" name="MobTools-2016.0303.1229" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.1.1" level="project" />
     <orderEntry type="library" exported="" name="AMap_3DMap_V3.3.2_20160525" level="project" />
