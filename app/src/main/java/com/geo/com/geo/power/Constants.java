@@ -20,5 +20,5 @@ public final class Constants {
     /** 是否登录成功*/
     public static final String SP_KEY_ISLOGINEd = "sp_islogined";
     /** 首页缓存的数据文件名*/
-    public static final String CACHE_HOME_DATA_FILENAME = "1596324569ax.powe";
+    public static final String CACHE_HOME_DATA_FILENAME = "homedata.cache";
 }
