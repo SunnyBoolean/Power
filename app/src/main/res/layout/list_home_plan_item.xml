@@ -76,18 +76,14 @@
         android:textScaleX="1"
         android:textSize="@dimen/textSize_normal" />
 
-    <com.geo.widget.MyExpandGridView
+    <ImageView
         android:id="@+id/list_homeplan_img_gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
         android:background="@color/material_white"
-        android:horizontalSpacing="5dp"
-        android:numColumns="3"
-        android:padding="10dp"
         android:paddingBottom="10dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:verticalSpacing="5dp" />
+        />
 
     <TextView
         android:layout_width="match_parent"

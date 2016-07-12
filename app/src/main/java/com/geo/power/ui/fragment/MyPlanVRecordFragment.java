@@ -12,6 +12,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.geo.com.geo.power.bean.PlanHistoryInfo;
 import com.geo.com.geo.power.bean.PlanInfo;
@@ -68,7 +69,6 @@ public class MyPlanVRecordFragment extends BaseFragment {
         BmobQuery<PlanInfo> eq4 = new BmobQuery<PlanInfo>();
         eq4.addWhereNotEqualTo("uid", BmobUser.getCurrentUser(mContext, UserInfo.class).getObjectId());
         BmobQuery<PlanInfo> eq5 = new BmobQuery<PlanInfo>();
-        eq5.addWhereNotEqualTo("uid", "empty");
         List<BmobQuery<PlanInfo>> queries = new ArrayList<BmobQuery<PlanInfo>>();
         queries.add(eq3);
         queries.add(eq4);
@@ -94,6 +94,8 @@ public class MyPlanVRecordFragment extends BaseFragment {
 
             @Override
             public void onError(int code, String msg) {
+                String error = msg;
+                Toast.makeText(mContext,"错误："+code+"  "+msg,Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -115,7 +117,6 @@ public class MyPlanVRecordFragment extends BaseFragment {
         }
         mAdapter = new HistoryAdapter(mData);
         mHistoryListView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
         loadPlan();
     }
 

@@ -9,11 +9,11 @@
         android:id="@+id/home_plan_tablayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/material_white"
-        app:tabIndicatorColor="@color/material_cyan_A700"
-        app:tabIndicatorHeight="2dp"
+        android:background="@color/main_theme_color"
+        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorHeight="4dp"
         app:tabSelectedTextColor="@color/material_cyan_A700"
-        app:tabTextColor="@color/material_blueGrey_800" />
+        app:tabTextColor="@color/white" />
 
     <include layout="@layout/divier"></include>
 

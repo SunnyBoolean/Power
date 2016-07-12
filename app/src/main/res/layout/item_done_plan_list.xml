@@ -19,7 +19,7 @@
             android:src="@drawable/plan_done_icon" />
 
         <TextView
-            android:id="@+id/home_myplan_item_sigin"
+            android:id="@+id/done_plamn_ytoime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -30,6 +30,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/item_doneplkan_spand"
             android:layout_alignBottom="@id/home_myplan_item_tag_p"
             android:layout_marginLeft="8dp"
             android:layout_toRightOf="@id/home_myplan_item_tag_p"
@@ -47,10 +48,11 @@
     </RelativeLayout>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/material_white"
         android:paddingTop="8dp"
+        android:id="@+id/done_plan_contema"
         android:ellipsize="end"
         android:maxLines="2"
         android:padding="16dp"

@@ -68,7 +68,7 @@ public class MyFavoriteActivity extends BaseActivity {
 //返回50条数据，如果不加上这条语句，默认返回10条数据
         query.order("-createdAt");//降序排列
         UserInfo user = BmobUser.getCurrentUser(mContext, UserInfo.class);
-        query.addWhereRelatedTo("mLikes", new BmobPointer(user));
+        query.addWhereRelatedTo("mFavorites", new BmobPointer(user));
         query.include("author");
 //执行查询方法
         query.findObjects(mContext, new FindListener<PlanInfo>() {
@@ -161,7 +161,15 @@ public class MyFavoriteActivity extends BaseActivity {
                 holder = new VViewHolder();
                 holder.muname = (TextView) convertView.findViewById(R.id.myfavorid_nuam);
                 holder.ncriime = (TextView) convertView.findViewById(R.id.myfavoride_ctime);
+                holder.content = (TextView) convertView.findViewById(R.id.favoirite_cxonten);
+           convertView.setTag(holder);
+            }else{
+                holder = (VViewHolder) convertView.getTag();
             }
+            PlanInfo info = mData.get(position);
+            holder.muname.setText(info.author.getUsername());
+            holder.ncriime.setText(info.getCreatedAt());
+            holder.content.setText(info.content);
             return convertView;
         }
 
@@ -170,6 +178,8 @@ public class MyFavoriteActivity extends BaseActivity {
             TextView muname;
             //计划收藏时间
             TextView ncriime;
+            //计划内容
+            TextView content;
         }
     }
 

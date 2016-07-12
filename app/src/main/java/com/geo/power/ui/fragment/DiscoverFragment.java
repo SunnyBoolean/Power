@@ -64,23 +64,42 @@ public class DiscoverFragment extends BaseFragment {
         PlanFragmentAdapter adapter = new PlanFragmentAdapter(fm, list, mTabTitle);
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setOffscreenPageLimit(3);
     }
 
     private class PlanFragmentAdapter extends FragmentPagerAdapter {
 
         private List<Fragment> list_fragment;                         //fragment列表
         private String[] list_Title;                              //tab名的列表
-
+        private FragmentManager mFragmentManager;
 
         public PlanFragmentAdapter(FragmentManager fm, List<Fragment> list_fragment, String[] list_Title) {
             super(fm);
+            mFragmentManager = fm;
             this.list_fragment = list_fragment;
             this.list_Title = list_Title;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return list_fragment.get(position);
+            Fragment fm = list_fragment.get(position);
+//            if(position==0){  //我的额计划
+//                mFragmentManager
+//            }else if(position == 1){  //我参与的
+//
+//            }else if(position == 2){ //已完成
+//
+//            }
+//            HomeFragment homeFragment = (HomeFragment) fm
+//                    .findFragmentByTag("home_fragment");
+//            if (homeFragment == null) {
+//                homeFragment = HomeFragment.getInstance();
+//                ft.add(R.id.main_fragment_container, homeFragment, "home_fragment");
+//            }
+//            ft.show(homeFragment);
+
+
+            return fm;
         }
 
         @Override

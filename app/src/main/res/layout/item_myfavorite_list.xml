@@ -57,6 +57,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:id="@+id/favoirite_cxonten"
             android:layout_alignBottom="@id/home_myplan_item_tag_p"
             android:layout_toRightOf="@id/home_myplan_item_tag_p"
             android:layout_weight="1"
