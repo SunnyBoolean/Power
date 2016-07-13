@@ -183,11 +183,6 @@ public class MyPlanDetailActivity extends BaseActivity {
         ListView msgListview = (ListView) content.findViewById(R.id.msg_listview);
         msgListview.setAdapter(mMsgAdapter);
         int size[] = ScreenUtil.getScreenSize(mContext);
-//        ViewUtil.setBackground(v, new ThemeDrawable(R.array.bg_window));
-//                mBottomSheetDialog.heightParam(ViewGroup.LayoutParams.MATCH_PARENT);
-//        Button bt_wrap = (Button)v.findViewById(R.id.sheet_bt_wrap);
-//                mBottomSheetDialog.heightParam(ViewGroup.LayoutParams.WRAP_CONTENT);
-//        });
         mBottomSheetDialog.heightParam(size[1] * 2 / 3);
         mBottomSheetDialog.contentView(content)
                 .show();
@@ -301,7 +296,7 @@ public class MyPlanDetailActivity extends BaseActivity {
                 holder.contentTv = (TextView) convertView.findViewById(R.id.msg_plan_item_content);
                 holder.createtimeTv = (TextView) convertView.findViewById(R.id.msg_plan_item_createtime);
                 holder.usernameTv = (TextView) convertView.findViewById(R.id.msg_plan_item_uname);
-                holder.uImg = (ImageView) convertView.findViewById(R.id.msg_plan_item_uimg);
+                holder.uImg = (ImageView) convertView.findViewById(R.id.dis_comment_plan_item_uimg);
 
                 convertView.setTag(holder);
             } else {

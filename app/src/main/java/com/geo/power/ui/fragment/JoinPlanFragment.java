@@ -245,7 +245,7 @@ public class JoinPlanFragment extends BaseFragment {
             if (convertView == null) {
                 holder = new ViewHolder();
                 convertView = View.inflate(mContext, R.layout.item_myplan_join_list, null);
-                holder.imageGrid = (GridView) convertView.findViewById(R.id.home_myplan_item_img_gridview);
+                holder.mContentImg = (ImageView) convertView.findViewById(R.id.home_myjoinplan_item_img_gridview);
                 holder.mUimg = (ImageView) convertView.findViewById(R.id.home_myplan_item_tag_p_wcy);
                 holder.mUname = (TextView) convertView.findViewById(R.id.home_myplan_item_sigin_wcyname);
                 holder.mCreateTime = (TextView) convertView.findViewById(R.id.home_mycan_timne);
@@ -259,13 +259,20 @@ public class JoinPlanFragment extends BaseFragment {
                 holder = (ViewHolder) convertView.getTag();
             }
             final PlanInfo info = mPDatas.get(position);
-            holder.imageGrid.setAdapter(new GridAdapter(info.picLists));
+//            holder.imageGrid.setAdapter(new GridAdapter(info.picLists));
+
             //设置用户头像
             DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                     .cacheInMemory(true)
                     .cacheOnDisk(true)
                     .build();
             ImageLoader.getInstance().displayImage(info.author.uimg, holder.mUimg, defaultOptions);
+            //图片内容
+            if(info.picLists!=null&&info.picLists.size()>0){
+                ImageLoader.getInstance().displayImage(info.picLists.get(0), holder.mContentImg, defaultOptions);
+            }else{
+                holder.mContentImg.setVisibility(View.GONE);
+            }
             //用户名
             holder.mUname.setText(info.author.getUsername() + " ");
             //创建时间
@@ -292,6 +299,8 @@ public class JoinPlanFragment extends BaseFragment {
 
         private class ViewHolder {
             GridView imageGrid;
+            //内容图片
+            ImageView mContentImg;
             //用户头像
             ImageView mUimg;
             //用户名称

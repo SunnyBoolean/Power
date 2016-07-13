@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <android.support.design.widget.TabLayout
-        android:id="@+id/home_plan_tablayout"
+        android:id="@+id/plan_history_tablayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/material_white"
@@ -18,7 +18,7 @@
     <include layout="@layout/divier"></include>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/home_plan_viewpager"
+        android:id="@+id/plan_history_viewpager"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />

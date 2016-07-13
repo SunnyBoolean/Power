@@ -155,12 +155,12 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
             }
         });
         //首先回去从缓存读取首页数据，如果缓存没有找到就去加载
-//        List<PlanInfo> mInfos = (List<PlanInfo>) SerializeUtils.deserialization(mContext, Constants.CACHE_HOME_DATA_FILENAME);
-//        if(mInfos!=null){
-//            mPlanDataList.addAll(mInfos);
-//        }else{
+        List<PlanInfo> mInfos = (List<PlanInfo>) SerializeUtils.deserialization(mContext, Constants.CACHE_HOME_DATA_FILENAME);
+        if(mInfos!=null){
+            mPlanDataList.addAll(mInfos);
+        }else{
             loadData(true);
-//        }
+        }
         initBanner();
         initSwipeRefresh();
     }
@@ -236,7 +236,7 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
                     mDataListView.removeFooterView(mFooterView);
                 }
 
-//                SerializeUtils.serialization(mContext,Constants.CACHE_HOME_DATA_FILENAME,object);
+                SerializeUtils.serialization(mContext,Constants.CACHE_HOME_DATA_FILENAME,object);
                 mPlanDataList.addAll(object);
                 mAdapter.notifyDataSetChanged();
             }
@@ -375,12 +375,12 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
                         user.update(mContext, new UpdateListener() {
                             @Override
                             public void onSuccess() {
-                                Toast.makeText(mContext,"添加成功",Toast.LENGTH_LONG).show();
+                                Toast.makeText(mContext,"收藏成功",Toast.LENGTH_LONG).show();
                             }
 
                             @Override
                             public void onFailure(int i, String s) {
-                                Toast.makeText(mContext,"添加失败",Toast.LENGTH_LONG).show();
+                                Toast.makeText(mContext,"收藏失败",Toast.LENGTH_LONG).show();
                             }
                         });
                     } else if ("添加收藏".equals(content)) {
@@ -442,7 +442,7 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
             if (convertView == null) {
                 holder = new HViewHolder();
                 convertView = View.inflate(mContext, R.layout.list_home_plan_item, null);
-                holder.imgGirdView = (ImageView) convertView.findViewById(R.id.list_homeplan_img_gridview);
+                holder.imgGirdView = (GridView) convertView.findViewById(R.id.list_homeplan_img_gridview);
                 holder.mUserIm = (ImageView) convertView.findViewById(R.id.list_homeplan_userimg);
                 holder.mUsernameTv = (TextView) convertView.findViewById(R.id.list_homeplan_username);
                 holder.mCreateTime = (TextView) convertView.findViewById(R.id.list_homeplan_plantime);
@@ -458,17 +458,13 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
             }
             final PlanInfo info = datas.get(position);
             //设置图片
-//            holder.imgGirdView.setAdapter(new GridAdapter(info.picLists));
+            holder.imgGirdView.setAdapter(new GridAdapter(info.picLists));
             //设置用户头像
             DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                     .cacheInMemory(true)
                     .cacheOnDisk(true)
                     .build();
             ImageLoader.getInstance().displayImage(info.author.uimg, holder.mUserIm, defaultOptions);
-            if(info.picLists!=null && info.picLists.size()>0){
-                ImageLoader.getInstance().displayImage(info.picLists.get(0), holder.imgGirdView, defaultOptions);
-            }
-
             //设置用户昵称
             holder.mUsernameTv.setText(info.author.getUsername());
             //设置创建时间
@@ -512,7 +508,7 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
 
         private class HViewHolder {
             //内容图片
-            ImageView imgGirdView;
+            GridView imgGirdView;
             //用户头像
             ImageView mUserIm;
             //用户名称

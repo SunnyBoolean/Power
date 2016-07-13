@@ -56,8 +56,8 @@ public class DoPlanHistoryActivity extends BaseActivity {
     protected void initCompontent() {
         super.initCompontent();
         initData();
-        mViewPager = (ViewPager) findViewById(R.id.home_plan_viewpager);
-        mTabLayout = (TabLayout) findViewById(R.id.home_plan_tablayout);
+        mViewPager = (ViewPager) findViewById(R.id.plan_history_viewpager);
+        mTabLayout = (TabLayout) findViewById(R.id.plan_history_tablayout);
 
         //设置Tab的模式
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);

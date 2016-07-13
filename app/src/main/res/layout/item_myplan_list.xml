@@ -14,8 +14,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:background="@color/material_white"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
         android:paddingTop="8dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -23,6 +21,8 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:layout_marginTop="15dp">
 
             <ImageView
@@ -61,7 +61,7 @@
                 android:paddingLeft="3dp"
                 android:paddingRight="3dp"
                 android:background="@color/material_accentPink_a200"
-                android:text="继续执行|一结束（发起人已关闭此计划）"
+                android:text="继续执行"
                 android:textColor="@color/material_white"
                 android:textSize="@dimen/textSize_small" />
         </RelativeLayout>
@@ -69,6 +69,8 @@
         <TextView
             android:id="@+id/home_myplan_content_tvu"
             android:layout_width="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:lineSpacingExtra="3dp"
             android:textScaleX="1"
             android:textColor="@color/material_black"
@@ -79,17 +81,13 @@
             android:maxLines="3"
             android:text="      今天很受打击啊，面个试还被嫌弃长得肥，我长得胖出的多又没吃你家饭！我决定要努力运动减肥！不瘦到150斤就一直减！" />
 
-        <com.geo.widget.MyExpandGridView
+        <ImageView
             android:id="@+id/home_myplan_item_img_gridview"
             android:layout_width="match_parent"
+            android:scaleType="centerCrop"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
-            android:horizontalSpacing="5dp"
-            android:numColumns="3"
-            android:verticalSpacing="5dp" />
+            />
 
         <LinearLayout
             android:layout_width="match_parent"

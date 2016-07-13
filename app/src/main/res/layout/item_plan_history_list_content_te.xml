@@ -48,7 +48,7 @@
             android:lineSpacingExtra="3dp" />
 
         <com.geo.widget.MyExpandGridView
-            android:id="@+id/plan_history_item_img_gridview"
+            android:id="@+id/plan_history_item_img_gridview_myplanre"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"

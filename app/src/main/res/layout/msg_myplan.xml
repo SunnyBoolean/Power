@@ -5,25 +5,41 @@
     android:background="@color/material_grey_200"
     android:orientation="vertical">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/material_white"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:text="收到鼓励"
-        android:textColor="@color/et_divider_focused"
-        android:textSize="@dimen/textSize_large" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/material_white"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="评论"
+            android:textColor="@color/et_divider_focused"
+            android:textSize="@dimen/textSize_large" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/discover_plandetail_closecomment"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:src="@drawable/selector_home_add_close" />
+    </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@color/material_cyan_A700" />
+
     <ListView
         android:id="@+id/msg_listview"
         android:layout_width="match_parent"
-        android:background="@color/material_white"
         android:layout_height="wrap_content"
+        android:background="@color/material_white"
         android:divider="@null"
         android:scrollbars="none" />
 </LinearLayout>

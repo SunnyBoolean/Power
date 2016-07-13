@@ -15,7 +15,7 @@ import cn.bmob.v3.datatype.BmobRelation;
  */
 public class PlanInfo extends BmobObject {
     /** 用户id*/
-    public String uid;
+    public String uid="";
     /** 计划标题*/
     public String title = "";
     /** 目标所属分类:生活、学习、健康、工作*/
@@ -27,13 +27,13 @@ public class PlanInfo extends BmobObject {
     /** 图片地址*/
     public List<String> picLists = new ArrayList<String>();
     /** 目标完成日期*/
-    public String completeDate;
+    public String completeDate="";
     /** 目标开始日期*/
-    public String startDate;
+    public String startDate="";
     /** 每天提醒的时间*/
-    public String notifyDate;
+    public String notifyDate="";
     /** 发表计划的位置名称*/
-    public String locationArrd;
+    public String locationArrd="";
     /** 发表计划的位置的经度*/
      public double curLongitude;
     /** 发表计划的位置的纬度*/
