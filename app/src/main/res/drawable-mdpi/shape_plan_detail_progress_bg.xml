@@ -4,10 +4,10 @@
     android:useLevel="false">
 
     <!-- 背景颜色渐变 -->
-    <solid android:color="@color/material_white" />
+    <solid android:color="#d3d9d9" />
     <stroke
         android:width="1dp"
-        android:color="@color/material_grey_300" />
+        android:color="#d3d9d9" />
     <size
         android:width="20dp"
         android:height="20dp" />
