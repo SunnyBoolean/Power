@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.geo.com.geo.power.util.BitmapUtils;
 import com.geo.com.geo.power.util.DensityUtil;
 import com.geo.com.geo.power.util.ScreenUtil;
 import com.geo.widget.colorpicker.ColorPicker;
@@ -32,8 +33,10 @@ import com.rey.material.app.DialogFragment;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.EditText;
 import com.rey.material.widget.Slider;
+import com.yongchun.library.view.ImageSelectorActivity;
 
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 
 import ui.geo.com.power.R;
 
@@ -93,8 +96,9 @@ public class AddWallpaperActivity extends BaseActivity {
         super.handlOnClickListener(v);
         switch (v.getId()) {
             case R.id.add_wallpaper_bg_w:  //选择背景图片
-                Intent intent = new Intent(mContext, WallPaperSelectActivity.class);
-                startActivityForResult(intent, 1);
+//                Intent intent = new Intent(mContext, WallPaperSelectActivity.class);
+//                startActivityForResult(intent, 1);
+                ImageSelectorActivity.start(AddWallpaperActivity.this, 1, ImageSelectorActivity.MODE_SINGLE, true, true, false);
                 break;
             case R.id.add_wallpaper_content_s: //添加文本
                 showDialogForTextContent();
@@ -247,13 +251,17 @@ public class AddWallpaperActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == 12 && data != null) {
-            String url = data.getStringExtra("wallpaper_url");
-            ImageLoader loader = ImageLoader.getInstance();
-            mBgBitmap = loader.loadImageSync(url);
-            Drawable drawable = new BitmapDrawable(mBgBitmap);
-            mInputContentContainer.setBackground(drawable);
-        }
+
+       if (resultCode == RESULT_OK && requestCode == ImageSelectorActivity.REQUEST_IMAGE) {
+           ArrayList<String> images = (ArrayList<String>) data.getSerializableExtra(ImageSelectorActivity.REQUEST_OUTPUT);
+          if(images!=null && images.size()>0){
+             String url = images.get(0);
+              mBgBitmap = BitmapUtils.getBitmap(AddWallpaperActivity.this,url);
+              Drawable drawable = new BitmapDrawable(mBgBitmap);
+              mInputContentContainer.setBackground(drawable);
+          }
+
+       }
     }
 
     @Override

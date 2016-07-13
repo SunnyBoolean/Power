@@ -50,7 +50,7 @@ public class MyPlanVRecordFragment extends BaseFragment {
     private final int mPageSize = 10;
     private int mCurPage = 0;
     private boolean hasMore = false;
-    private View mFooterView;
+    private View mFooterView,mEmptyView;
 
     public static MyPlanVRecordFragment getInstance() {
         if (mInstance == null) {
@@ -61,6 +61,7 @@ public class MyPlanVRecordFragment extends BaseFragment {
 
     private void loadPlan() {
         mHistoryListView.addFooterView(mFooterView);
+        mHistoryListView.setEmptyView(mEmptyView);
         BmobQuery<PlanInfo> query = new BmobQuery<PlanInfo>();
 //查询playerName叫“比目”的数据
         BmobQuery<PlanInfo> eq3 = new BmobQuery<PlanInfo>();
@@ -103,6 +104,9 @@ public class MyPlanVRecordFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View content = inflater.inflate(R.layout.doplan_history_layout, null);
         mHistoryListView = (ListView) content.findViewById(R.id.history_doplan_list);
+        mFooterView = View.inflate(mContext, R.layout.myplan_list_footer, null);
+        mEmptyView = View.inflate(mContext,R.layout.history_empty,null);
+        mFooterView.setVisibility(View.GONE);
         initData();
         return content;
     }
@@ -154,7 +158,7 @@ public class MyPlanVRecordFragment extends BaseFragment {
                 convertView = View.inflate(mContext, R.layout.item_plan_historyvs_list_content_te, null);
                 holder.contentTv = (TextView) convertView.findViewById(R.id.plan_historyvis_itrem_content);
                 holder.timeTv = (TextView) convertView.findViewById(R.id.plan_historyvisad_item_ctime);
-                holder.imgGridView = (GridView) convertView.findViewById(R.id.plan_historyasxz_item_img_gridview);
+                holder.imgGridView = (GridView) convertView.findViewById(R.id.plan_history_item_img_gridview_myplanre);
                 holder.mUserimg = (ImageView) convertView.findViewById(R.id.home_myoasdkansmyplan_item_tag_p);
                 holder.location = (TextView) convertView.findViewById(R.id.haddonhistyao_dream_location);
                 convertView.setTag(holder);

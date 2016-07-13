@@ -94,7 +94,7 @@ public class MyPlanFragment extends BaseFragment {
                     enable = firstItemVisible && topOfFirstItemVisible;
                 }
                 swipeRefreshLayout.setEnabled(enable);
-                if(mMyPlanListView.getChildCount()==0){
+                if (mMyPlanListView.getChildCount() == 0) {
                     swipeRefreshLayout.setEnabled(true);
                 }
             }
@@ -132,11 +132,6 @@ public class MyPlanFragment extends BaseFragment {
                 R.color.material_indigo_900,
                 R.color.material_teal_900);
         swipeRefreshLayout.setSize(SwipeRefreshLayout.LARGE);
-//        swipeRefreshLayout.setProgressBackgroundColor(R.color.material_white);
-//        swipeRefreshLayout.setPadding(20, 20, 20, 20);
-//        swipeRefreshLayout.setProgressViewOffset(true, 100, 200);
-//        swipeRefreshLayout.setDistanceToTriggerSync(50);
-//        swipeRefreshLayout.setProgressViewEndTarget(true, 100);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -238,7 +233,7 @@ public class MyPlanFragment extends BaseFragment {
             if (convertView == null) {
                 holder = new ViewHolder();
                 convertView = View.inflate(mContext, R.layout.item_myplan_list, null);
-                holder.imageGrid = (GridView) convertView.findViewById(R.id.home_myplan_item_img_gridview);
+                holder.contentImg = (ImageView) convertView.findViewById(R.id.home_myplan_item_img_gridview);
                 holder.hadDonePer = (TextView) convertView.findViewById(R.id.home_myplan_item_ywc);
                 holder.daojishi = (TextView) convertView.findViewById(R.id.home_myplan_daojis);
                 holder.category = (TextView) convertView.findViewById(R.id.home_myplan_categosy);
@@ -251,6 +246,17 @@ public class MyPlanFragment extends BaseFragment {
                 holder = (ViewHolder) convertView.getTag();
             }
             final PlanInfo info = mPlanData.get(position);
+            if (info.picLists != null && info.picLists.size() > 0) {
+
+                DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                        .cacheInMemory(true)
+                        .cacheOnDisk(true)
+                        .build();
+                ImageLoader.getInstance().displayImage(info.picLists.get(0), holder.contentImg, defaultOptions);
+            }else{
+                holder.contentImg.setVisibility(View.GONE);
+            }
+
             //计算已经执行了多少天
             int djs = DateUtil.countDays(info.startDate, "yyyy-MM-dd") + 1;
             //计算剩余多少天
@@ -263,17 +269,19 @@ public class MyPlanFragment extends BaseFragment {
             int dad;
             if (!TextUtils.isEmpty(info.completeDate)) {
                 dad = DateUtil.daysBetween(info.completeDate, DateUtil.getCurDateOnlyDay(), "yyyy-MM-dd");
-                holder.daojishi.setText("倒计时：" + dad);
+                holder.daojishi.setText("倒计时：" + syday+"天");
             } else {
                 holder.daojishi.setText("倒计时：未知日期");
             }
+
+
             holder.hadDonePer.setText("已完成:" + bfb + "%");
             //  holder.category.setText(info.category);
             holder.content.setText(info.content);
             holder.haddonetimes.setText("已执行(" + info.hadDotimes + ")");
             holder.canyuz.setText("参与者(" + info.dovisition + ")");
             holder.guli.setText("鼓励(" + info.commentToal + ")");
-            holder.imageGrid.setAdapter(new GridAdapter(info.picLists));
+           // holder.imageGrid.setAdapter(new GridAdapter(info.picLists));
             //点击快速执行计划
             holder.category.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -289,6 +297,8 @@ public class MyPlanFragment extends BaseFragment {
 
         private class ViewHolder {
             GridView imageGrid;
+            //内容图片
+            ImageView contentImg;
             /**
              * 已完成百分比
              */

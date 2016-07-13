@@ -363,7 +363,7 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
                     String content = view.getText().toString();
                     if ("加入计划".equals(content)) {
                         //参与者+1
-                        info.increment("dovisition", 1);
+                        info.increment("dovisition");
                         //添加多对多关联，表明有一个人加入了这个计划
 
                         BmobRelation relation = new BmobRelation();
@@ -375,17 +375,18 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
                         user.update(mContext, new UpdateListener() {
                             @Override
                             public void onSuccess() {
-                                Toast.makeText(mContext,"收藏成功",Toast.LENGTH_LONG).show();
+                                info.update(mContext);
+                                Toast.makeText(mContext,"加入计划成功",Toast.LENGTH_LONG).show();
                             }
 
                             @Override
                             public void onFailure(int i, String s) {
-                                Toast.makeText(mContext,"收藏失败",Toast.LENGTH_LONG).show();
+                                Toast.makeText(mContext,"加入计划失败",Toast.LENGTH_LONG).show();
                             }
                         });
                     } else if ("添加收藏".equals(content)) {
                         //收藏数+1
-                        info.increment("favoriteToatl", 1);
+                        info.increment("favoriteToatl");
                         BmobRelation relation = new BmobRelation();
                         //将当前用户添加到多对多关联中
                         relation.add(info);
@@ -395,6 +396,7 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
                         user.update(mContext, new UpdateListener() {
                             @Override
                             public void onSuccess() {
+                                info.update(mContext);
                                 Toast.makeText(mContext,"收藏成功",Toast.LENGTH_LONG).show();
                             }
 

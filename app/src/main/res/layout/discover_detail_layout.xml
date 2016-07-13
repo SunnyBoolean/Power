@@ -28,7 +28,7 @@
                 android:paddingTop="10dp">
 
                 <TextView
-                    android:id="@+id/discover_plan_uname"
+                    android:id="@+id/discover_plan_detail_uname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -38,6 +38,7 @@
 
                 <TextView
                     android:layout_width="wrap_content"
+                    android:id="@+id/discover_plan_detail_location"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:drawableLeft="@drawable/dreamdone_locationicon"
@@ -50,18 +51,20 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/discover_plan_detail_content"
                     android:layout_marginTop="10dp"
                     android:background="@color/material_white"
                     android:padding="10dp"
                     android:text="        这就是所谓的那个莎莎也iom，我并不知道UI怎么设计，但是一样会尽全力把他做出来"
                     android:textSize="@dimen/textSize_normal" />
 
-                <com.bigkoo.convenientbanner.ConvenientBanner
+                <ImageView
                     android:id="@+id/home_convenientBanner"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
                     android:layout_marginTop="10dp"
-                    app:canLoop="true" />
+                     />
 
                 <View
                     android:layout_width="match_parent"
@@ -78,6 +81,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:clickable="true"
+                        android:id="@+id/discover_plan_detail_historytotal"
                         android:background="@color/add_longplan_item_selec"
                         android:layout_weight="1"
                         android:gravity="center"
@@ -91,6 +95,7 @@
 
                     <TextView
                         android:layout_width="0dp"
+                        android:id="@+id/discover_plan_detail_visitortotal"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:clickable="true"
@@ -107,11 +112,12 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:id="@+id/discover_plan_detail_commenttotal"
                         android:layout_weight="1"
                         android:clickable="true"
                         android:background="@color/add_longplan_item_selec"
                         android:gravity="center"
-                        android:text="鼓励 (56)" />
+                        android:text="评论 (56)" />
 
                     <View
                         android:layout_width="0.55dp"
@@ -146,6 +152,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:layout_marginLeft="8dp"
+                    android:id="@+id/discover_plan_detail_createtime"
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
                     android:text="创建时间：2016-05-31"
@@ -162,6 +169,7 @@
                     android:layout_marginLeft="8dp"
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
+                    android:id="@+id/discover_plan_detail_deadlinetime"
                     android:text="截止时间：2016-10-31"
                     android:textSize="@dimen/textSize_normal" />
 
@@ -173,6 +181,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
+                    android:id="@+id/discover_plan_detail_process"
                     android:layout_marginLeft="8dp"
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
@@ -192,6 +201,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:id="@+id/discover_detailplan_cconteims"
         android:background="@color/material_grey_200"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -202,6 +212,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginRight="8dp"
+            android:id="@+id/discover_plandetail_commentet"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:background="@color/material_white"
@@ -211,6 +222,7 @@
         <Button
             android:layout_width="65dp"
             android:layout_height="60dp"
+            android:id="@+id/discover_plandetail_sendbtn"
             android:text="发送" />
     </LinearLayout>
 

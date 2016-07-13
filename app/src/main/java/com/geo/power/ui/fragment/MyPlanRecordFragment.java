@@ -46,7 +46,7 @@ public class MyPlanRecordFragment extends BaseFragment {
     private final int mPageSize = 10;
     private int mCurPage = 0;
     private boolean hasMore = false;
-    private View mFooterView;
+    private View mFooterView,mEmptyView;
 
     public static MyPlanRecordFragment getInstance() {
         if (mInstance == null) {
@@ -61,6 +61,7 @@ public class MyPlanRecordFragment extends BaseFragment {
         View content = inflater.inflate(R.layout.doplan_history_layout, null);
         mHistoryListView = (ListView) content.findViewById(R.id.history_doplan_list);
         mFooterView = View.inflate(mContext, R.layout.myplan_list_footer, null);
+        mEmptyView = View.inflate(mContext,R.layout.history_empty,null);
         mFooterView.setVisibility(View.GONE);
         initData();
         initListener();
@@ -80,6 +81,7 @@ public class MyPlanRecordFragment extends BaseFragment {
 
     private void loadHistory() {
         mHistoryListView.addFooterView(mFooterView);
+        mHistoryListView.setEmptyView(mEmptyView);
         BmobQuery<PlanInfo> query = new BmobQuery<PlanInfo>();
 //查询playerName叫“比目”的数据
         BmobQuery<PlanInfo> eq3 = new BmobQuery<PlanInfo>();
@@ -98,6 +100,9 @@ public class MyPlanRecordFragment extends BaseFragment {
             @Override
             public void onSuccess(List<PlanInfo> object) {
                 // TODO Auto-generated method stub
+                if(object==null){
+                    return;
+                }
                 //如果还有更多数据
                 if (object.size() == mPageSize) {
                     hasMore = true;
@@ -193,7 +198,7 @@ public class MyPlanRecordFragment extends BaseFragment {
                 convertView = View.inflate(mContext, R.layout.item_plan_history_list_content_te, null);
                 holder.contentTv = (TextView) convertView.findViewById(R.id.plan_history_itrem_content);
                 holder.timeTv = (TextView) convertView.findViewById(R.id.plan_history_item_ctime);
-                holder.imgGridView = (GridView) convertView.findViewById(R.id.plan_history_item_img_gridview);
+                holder.imgGridView = (GridView) convertView.findViewById(R.id.plan_history_item_img_gridview_myplanre);
                 convertView.setTag(holder);
             } else {
                 holder = (PViewHolder) convertView.getTag();

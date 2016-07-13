@@ -1,96 +1,296 @@
 package com.geo.power.ui.activity;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.bigkoo.convenientbanner.ConvenientBanner;
-import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
-import com.bigkoo.convenientbanner.holder.Holder;
+import com.geo.com.geo.power.bean.CommentInfo;
+import com.geo.com.geo.power.bean.LeaveMsgInfo;
+import com.geo.com.geo.power.bean.PlanInfo;
+import com.geo.com.geo.power.bean.UserInfo;
+import com.geo.com.geo.power.util.ScreenUtil;
+import com.github.lazylibrary.util.DateUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.rey.material.app.BottomSheetDialog;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
-import app.geo.com.viewflow.CircleFlowIndicator;
-import app.geo.com.viewflow.ViewFlow;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobPointer;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
 import ui.geo.com.power.R;
 
 /**
  * Created by 李伟 on 2016/6/11.
  */
 public class DiscoverDetailActivity extends BaseActivity {
-    private ConvenientBanner mConverBanner;
-    public static final String[] mPictureUrls = {
-            "http://ac-6ptjoad9.clouddn.com/3MekCrFaIezGOmrmbmvkILWjyF2dGIItve4AYXQC",
-            "http://ac-6ptjoad9.clouddn.com/aEealv8tKqUxuSn3DHhHKPUQUtkUoVdZcwqN8i9y",
-            "http://ac-6ptjoad9.clouddn.com/Itzvdzj3QZG5zR9dNMmPVAZNNviQt5tzJEsaU6jW",
-            "http://ac-6ptjoad9.clouddn.com/Q61AFSIOoOipiucsdR8NctVIvkSHimJK9RIZWlnh",
-            "http://ac-6ptjoad9.clouddn.com/9JUZAO5WitlZWbKydQSbNxArhR9miKLc5zY9dE6o",
-            "http://ac-6ptjoad9.clouddn.com/Akz36NdJjN2oXkXQYe5GqaE9AA2aocsWYQyzTgfq",
-            "http://ac-6ptjoad9.clouddn.com/exVLcXBmU4zxOcBtESLtVJ8IMwLXzUZb8rC4aP1H",
-            "http://ac-6ptjoad9.clouddn.com/djAnPc8BxGT7dDh3UAK06OOlG0En3OnLFCTC54cv",
-            "http://ac-6ptjoad9.clouddn.com/JHMQOVBhqcQ204ERMBarbYbpT1noqSSiASU4MunW",
-            "http://ac-6ptjoad9.clouddn.com/MwGpKcdKiEWPG1yl20TcWuVvf9SCe5VQ6gIPwfNi"
-    };
+    private ImageView mConverBanner;
+    private PlanInfo mPlanInfo;
+    private TextView mUsernameTv, mLocationTv, mContentTv, mHistoryTotalTv, mVisitorTv, mCommentTv, mCreatetimeTv, mDeadLineTv, mProcessTv;
+    private BottomSheetDialog mBottomSheetDialog;
+    private CommentAdapter mAdapter;
+    private List<CommentInfo> mCommentDatas = new ArrayList<CommentInfo>();
+    private View mCommentContainer;
+    private EditText mCommentEt;
+    private Button mSendBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.discover_detail_layout,false);
+        setContentView(R.layout.discover_detail_layout, false);
     }
 
 
     @Override
     protected void initCompontent() {
         super.initCompontent();
-        mConverBanner = (ConvenientBanner) findViewById(R.id.home_convenientBanner);
-        //初始化广告栏滚动
-        initBanner();
+        initData();
+        mConverBanner = (ImageView) findViewById(R.id.home_convenientBanner);
+        mLocationTv = (TextView) findViewById(R.id.discover_plan_detail_location);
+        mContentTv = (TextView) findViewById(R.id.discover_plan_detail_content);
+        mHistoryTotalTv = (TextView) findViewById(R.id.discover_plan_detail_historytotal);
+        mVisitorTv = (TextView) findViewById(R.id.discover_plan_detail_visitortotal);
+        mCommentTv = (TextView) findViewById(R.id.discover_plan_detail_commenttotal);
+        mCreatetimeTv = (TextView) findViewById(R.id.discover_plan_detail_createtime);
+        mDeadLineTv = (TextView) findViewById(R.id.discover_plan_detail_deadlinetime);
+        mProcessTv = (TextView) findViewById(R.id.discover_plan_detail_process);
+        mCommentContainer = findViewById(R.id.discover_detailplan_cconteims);
+        mCommentEt = (EditText) findViewById(R.id.discover_plandetail_commentet);
+        mSendBtn = (Button) findViewById(R.id.discover_plandetail_sendbtn);
+        UserInfo userinfo = BmobUser.getCurrentUser(mContext, UserInfo.class);
+        if (userinfo.getObjectId().equals(mPlanInfo.uid)) {
+            mCommentContainer.setVisibility(View.GONE);
+        }
+        if (mPlanInfo.picLists != null && mPlanInfo.picLists.size() > 0) {
+            //设置用户头像
+            DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                    .cacheInMemory(true)
+                    .cacheOnDisk(true)
+                    .build();
+            ImageLoader.getInstance().displayImage(mPlanInfo.picLists.get(0), mConverBanner, defaultOptions);
+        }
+        if (TextUtils.isEmpty(mPlanInfo.locationArrd)) {
+            mLocationTv.setText("无位置信息");
+        } else {
+            mLocationTv.setText(mPlanInfo.locationArrd + "");
+        }
+        mContentTv.setText(mPlanInfo.content);
+        mHistoryTotalTv.setText("动态(" + mPlanInfo.hadDotimes + ")");
+        mVisitorTv.setText("参与者(" + mPlanInfo.dovisition + ")");
+        mCommentTv.setText("鼓励(" + mPlanInfo.commentToal + ")");
+        mCreatetimeTv.setText("创建时间：" + mPlanInfo.startDate);
+        mDeadLineTv.setText("截止时间：" + mPlanInfo.completeDate);
+
+        //计算已经执行了多少天
+        int djs = DateUtil.countDays(mPlanInfo.startDate, "yyyy-MM-dd") + 1;
+        //计算百分比
+        int bfb = 0;
+        if (mPlanInfo.plantotalDay != 0) {
+            bfb = djs / mPlanInfo.plantotalDay;
+        }
+        mProcessTv.setText("完成进度：" + bfb + "%");
+        mAdapter = new CommentAdapter(mCommentDatas);
+        loadCOmmentData();
     }
 
-    private void initBanner() {
-        List<String> datas = Arrays.asList(mPictureUrls);
-        mConverBanner.setPages(
-                new CBViewHolderCreator<NetworkImageHolderView>() {
-                    @Override
-                    public NetworkImageHolderView createHolder() {
-                        return new NetworkImageHolderView();
-                    }
-                }, datas)
-                //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
-                .setPageIndicator(new int[]{R.drawable.dot_normal, R.drawable.dot_focus})
-                        //设置指示器的方向
-                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT);
-        mConverBanner.startTurning(3000);
+    @Override
+    protected void initListener() {
+        super.initListener();
+        mHistoryTotalTv.setOnClickListener(this);
+        mVisitorTv.setOnClickListener(this);
+        mCommentTv.setOnClickListener(this);
+        mSendBtn.setOnClickListener(this);
     }
 
-    public class NetworkImageHolderView implements Holder<String> {
-        private ImageView imageView;
+    /**
+     * 初始化留言板数据
+     */
+    private void loadCOmmentData() {
+        BmobQuery<CommentInfo> query = new BmobQuery<CommentInfo>();
+        query.addWhereEqualTo("mPlanInfo", new BmobPointer(mPlanInfo));
+//希望同时查询该评论的发布者的信息，以及该帖子的作者的信息，这里用到上面`include`的并列对象查询和内嵌对象的查询
+        query.include("mUserInfo");
+        query.findObjects(mContext, new FindListener<CommentInfo>() {
+            @Override
+            public void onSuccess(List<CommentInfo> list) {
+                if (list != null) {
+                    mCommentDatas.addAll(list);
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
 
-        @Override
-        public View createView(Context context) {
-            //你可以通过layout文件来创建，也可以像我一样用代码创建，不一定是Image，任何控件都可以进行翻页
-            imageView = new ImageView(context);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            return imageView;
+            @Override
+            public void onError(int i, String s) {
+
+            }
+        });
+    }
+
+    /**
+     * 所有的单击事件在这里处理
+     *
+     * @param v
+     */
+    @Override
+    public void handlOnClickListener(View v) {
+        super.handlOnClickListener(v);
+        switch (v.getId()) {
+            case R.id.discover_plan_detail_historytotal:  //历史记录
+                Intent intent = new Intent();
+                intent.setClass(mContext, DoPlanHistoryActivity.class);
+                intent.putExtra("planinfo", mPlanInfo);
+                startActivity(intent);
+                break;
+            case R.id.discover_plan_detail_visitortotal://参与者
+                break;
+            case R.id.discover_plan_detail_commenttotal: //评论
+                if (mCommentDatas.size() == 0) {
+                    showToast("还没有评论");
+                } else {
+                    showBottomSheetForMsg();
+                }
+                break;
+            case R.id.discover_plandetail_sendbtn: //发送评论
+                String comment = mCommentEt.getText().toString();
+                if(TextUtils.isEmpty(comment)){
+                    showToast("评论内容不能为空");
+                }else{
+                    sendComment();
+                }
+                break;
         }
 
-        @Override
-        public void UpdateUI(Context context, int position, String data) {
-            imageView.setImageResource(R.drawable.message_creategroup_image_named);
-            ImageLoader.getInstance().displayImage(data, imageView);
-        }
     }
+
+    private void sendComment() {
+        UserInfo user = BmobUser.getCurrentUser(this, UserInfo.class);
+        CommentInfo comment = new CommentInfo();
+        comment.commentContent = mCommentEt.getText().toString();
+        comment.commentTime = DateUtil.getCurDateStr();
+        comment.uid=user.getObjectId();
+
+        comment.mPlanInfo = mPlanInfo;
+        comment.mUserInfo = user;
+        comment.save(mContext, new SaveListener() {
+            @Override
+            public void onSuccess() {
+
+                Toast.makeText(mContext,"评论发表成功",Toast.LENGTH_LONG).show();
+                mPlanInfo.increment("commentToal");  //评论总数+1
+                mPlanInfo.update(mContext);
+                mCommentEt.setText("");
+            }
+
+            @Override
+            public void onFailure(int i, String s) {
+                    showToast("评论失败："+s);
+            }
+        });
+    }
+
+    private void initData() {
+        Intent intent = getIntent();
+        mPlanInfo = (PlanInfo) intent.getSerializableExtra("plan_info");
+    }
+
+    /**
+     * 显示新增计划菜单
+     */
+    private void showBottomSheetForMsg() {
+        mBottomSheetDialog = new BottomSheetDialog(mContext, R.style.Material_App_BottomSheetDialog);
+        View content = LayoutInflater.from(mContext).inflate(R.layout.msg_myplan, null);
+        ListView msgListview = (ListView) content.findViewById(R.id.msg_listview);
+        ImageButton imClose = (ImageButton) content.findViewById(R.id.discover_plandetail_closecomment);
+        msgListview.setAdapter(mAdapter);
+        int size[] = ScreenUtil.getScreenSize(mContext);
+        mBottomSheetDialog.heightParam(size[1] * 2 / 3);
+        mBottomSheetDialog.contentView(content)
+                .show();
+        imClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetDialog.dismiss();
+            }
+        });
+    }
+
     @Override
     protected void initToolBar() {
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         super.initToolBar();
+    }
+
+    private class CommentAdapter extends BaseAdapter {
+        private List<CommentInfo> msgDatas;
+
+        public CommentAdapter(List<CommentInfo> data) {
+            this.msgDatas = data;
+        }
+
+        @Override
+        public int getCount() {
+            return msgDatas.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return msgDatas.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            MsgViewHolder holder = null;
+            if (convertView == null) {
+                holder = new MsgViewHolder();
+                convertView = View.inflate(mContext, R.layout.msg_plan_list_item, null);
+                holder.contentTv = (TextView) convertView.findViewById(R.id.msg_plan_item_content);
+                holder.createtimeTv = (TextView) convertView.findViewById(R.id.msg_plan_item_createtime);
+                holder.usernameTv = (TextView) convertView.findViewById(R.id.msg_plan_item_uname);
+                holder.uImg = (ImageView) convertView.findViewById(R.id.dis_comment_plan_item_uimg);
+
+                convertView.setTag(holder);
+            } else {
+                holder = (MsgViewHolder) convertView.getTag();
+            }
+            CommentInfo info = msgDatas.get(position);
+            holder.contentTv.setText(info.commentContent);
+            holder.createtimeTv.setText(info.commentTime);
+            holder.usernameTv.setText(info.mUserInfo.getUsername());
+
+            //设置用户头像
+            DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                    .cacheInMemory(true)
+                    .cacheOnDisk(true)
+                    .build();
+            ImageLoader.getInstance().displayImage(info.mUserInfo.uimg, holder.uImg, defaultOptions);
+
+            return convertView;
+        }
+
+        class MsgViewHolder {
+            TextView contentTv, createtimeTv, usernameTv;
+            ImageView uImg;
+        }
     }
 }
