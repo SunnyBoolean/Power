@@ -362,31 +362,33 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
                     dialog.dismiss();
                     String content = view.getText().toString();
                     if ("加入计划".equals(content)) {
+                        //添加多对多关联，表明有一个人加入了这个计划
+                        BmobRelation relation = new BmobRelation();
+                        final BmobRelation relation1 = new BmobRelation();
+                        //将当前用户添加到多对多关联中
+                        final UserInfo user = UserInfo.getCurrentUser(mContext, UserInfo.class);
+                        relation.add(user);
+                        relation1.add(info);
+                        //多对多关联指向`post`的`likes`字段
+                        info.mLikes = relation;
                         //参与者+1
                         info.increment("dovisition");
-                        //添加多对多关联，表明有一个人加入了这个计划
-
-                        BmobRelation relation = new BmobRelation();
-                        //将当前用户添加到多对多关联中
-                        relation.add(info);
-                        UserInfo user = UserInfo.getCurrentUser(mContext, UserInfo.class);
-                        //多对多关联指向`post`的`likes`字段
-                        user.mLikes = relation;
-                        user.update(mContext, new UpdateListener() {
+                        info.update(mContext, new UpdateListener() {
                             @Override
                             public void onSuccess() {
-                                info.update(mContext, new UpdateListener() {
+                                user.mLikes = relation1;
+                                user.update(mContext, new UpdateListener() {
                                     @Override
                                     public void onSuccess() {
-                                        Toast.makeText(mContext, "更新成功", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(mContext, "加入计划成功", Toast.LENGTH_LONG).show();
                                     }
 
                                     @Override
                                     public void onFailure(int i, String s) {
-                                        Toast.makeText(mContext, "更新失败" + s, Toast.LENGTH_LONG).show();
+                                        Toast.makeText(mContext, "加入计划失败", Toast.LENGTH_LONG).show();
                                     }
                                 });
-                                Toast.makeText(mContext, "加入计划成功", Toast.LENGTH_LONG).show();
+
                             }
 
                             @Override
@@ -395,17 +397,17 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
                             }
                         });
                     } else if ("添加收藏".equals(content)) {
-                        //收藏数+1
-                        info.increment("favoriteToatl");
                         BmobRelation relation = new BmobRelation();
                         //将当前用户添加到多对多关联中
-                        relation.add(info);
                         UserInfo user = UserInfo.getCurrentUser(mContext, UserInfo.class);
+                        relation.add(user);
                         //多对多关联指向`post`的`likes`字段
-                        user.mFavorites = relation;
-                        user.update(mContext, new UpdateListener() {
+                        info.mFavorite = relation;
+                        info.update(mContext, new UpdateListener() {
                             @Override
                             public void onSuccess() {
+                                //收藏数+1
+                                info.increment("favoriteToatl");
                                 info.update(mContext);
                                 Toast.makeText(mContext, "收藏成功", Toast.LENGTH_LONG).show();
                             }

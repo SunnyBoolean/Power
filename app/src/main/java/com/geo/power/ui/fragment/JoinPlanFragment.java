@@ -174,6 +174,7 @@ public class JoinPlanFragment extends BaseFragment {
         query.setSkip(mPageSize * mCurPage);
         UserInfo user = BmobUser.getCurrentUser(mContext, UserInfo.class);
         query.addWhereRelatedTo("mLikes", new BmobPointer(user));
+//        query.addWhereEqualTo("uid",user.getObjectId());
         query.include("author");
 //执行查询方法
         query.findObjects(mContext, new FindListener<PlanInfo>() {

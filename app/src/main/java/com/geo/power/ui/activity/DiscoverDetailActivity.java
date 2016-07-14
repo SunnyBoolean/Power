@@ -66,6 +66,7 @@ public class DiscoverDetailActivity extends BaseActivity {
         initData();
         mConverBanner = (ImageView) findViewById(R.id.home_convenientBanner);
         mLocationTv = (TextView) findViewById(R.id.discover_plan_detail_location);
+        mUsernameTv = (TextView) findViewById(R.id.discover_plan_detail_uname);
         mContentTv = (TextView) findViewById(R.id.discover_plan_detail_content);
         mHistoryTotalTv = (TextView) findViewById(R.id.discover_plan_detail_historytotal);
         mVisitorTv = (TextView) findViewById(R.id.discover_plan_detail_visitortotal);
@@ -93,6 +94,7 @@ public class DiscoverDetailActivity extends BaseActivity {
         } else {
             mLocationTv.setText(mPlanInfo.locationArrd + "");
         }
+        mUsernameTv.setText(mPlanInfo.author.getUsername()+"");
         mContentTv.setText(mPlanInfo.content);
         mHistoryTotalTv.setText("动态(" + mPlanInfo.hadDotimes + ")");
         mVisitorTv.setText("参与者(" + mPlanInfo.dovisition + ")");
@@ -155,9 +157,10 @@ public class DiscoverDetailActivity extends BaseActivity {
         query.findObjects(mContext, new FindListener<UserInfo>() {
             @Override
             public void onSuccess(List<UserInfo> list) {
-                if (list != null)
+                if (list != null){
                     mVisitorDatas.addAll(list);
-                mVisitorAdapter.notifyDataSetChanged();
+                    mVisitorAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -270,7 +273,7 @@ public class DiscoverDetailActivity extends BaseActivity {
         View content = LayoutInflater.from(mContext).inflate(R.layout.discover_plan_visitor, null);
         ListView msgListview = (ListView) content.findViewById(R.id.discover_plan_visitor_listview);
         ImageButton imClose = (ImageButton) content.findViewById(R.id.discover_plandetail_closejoin);
-        msgListview.setAdapter(mCommentAdapter);
+        msgListview.setAdapter(mVisitorAdapter);
         int size[] = ScreenUtil.getScreenSize(mContext);
         mBottomSheetDialog.heightParam(size[1] * 2 / 3);
         mBottomSheetDialog.contentView(content)
