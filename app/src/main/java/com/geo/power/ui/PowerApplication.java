@@ -1,5 +1,6 @@
 package com.geo.power.ui;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentCallbacks;
 
@@ -14,6 +15,8 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.bmob.sms.BmobSMS;
 import cn.bmob.v3.Bmob;
@@ -23,15 +26,7 @@ import cn.smssdk.SMSSDK;
  * Created by Administrator on 2016/5/18.
  */
 public class PowerApplication extends Application {
-    /**
-     * Called when the application is starting, before any activity, service,
-     * or receiver objects (excluding content providers) have been created.
-     * Implementations should be as quick as possible (for example using
-     * lazy initialization of state) since the time spent in this function
-     * directly impacts the performance of starting the first activity,
-     * service, or receiver in a process.
-     * If you override this method, be sure to call super.onCreate().
-     */
+     public static List<Activity> mActivis = new ArrayList<Activity>();
     @Override
     public void onCreate() {
         super.onCreate();

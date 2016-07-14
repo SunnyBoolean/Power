@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.geo.com.geo.power.Constants;
 import com.geo.com.geo.power.util.ImmersedStatusbarUtils;
 import com.geo.com.geo.power.util.SystemBarTintManager;
+import com.geo.power.ui.PowerApplication;
 import com.geo.power.ui.fragment.BaseFragment;
 import com.github.lazylibrary.util.DateUtil;
 
@@ -59,6 +60,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PowerApplication.mActivis.add(this);
         PLog(P_TAG,"父类onCreate()");
         mContext = this;
         if (mToolBar != null) {

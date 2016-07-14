@@ -132,7 +132,7 @@ public class AddLongPlanActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String url = mSelectPics.get(mPicAdapter.getCount() - position - 1);
                 if (url.equals(flag)) {
-                    ImageSelectorActivity.start(AddLongPlanActivity.this, 9, ImageSelectorActivity.MODE_MULTIPLE, true, true, false);
+                    ImageSelectorActivity.start(AddLongPlanActivity.this, 1, ImageSelectorActivity.MODE_SINGLE, true, true, false);
                 } else {
 //                    ImageSelectorActivity.start(AddLongPlanActivity.this);
                 }

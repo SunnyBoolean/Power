@@ -20,13 +20,19 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
+
+import com.geo.com.geo.power.Constants;
+import com.geo.com.geo.power.bean.UserInfo;
+import com.geo.power.ui.PowerApplication;
 
 
 /**
@@ -46,5 +52,18 @@ public class AppManager {
 			e.printStackTrace();
 		}
 		return info;
+	}
+
+	/**
+	 * 退出应用
+	 * @param context
+	 */
+	public static void exitApp(Context context){
+		for(Activity activity: PowerApplication.mActivis){
+			activity.finish();
+		}
+		SharedPreferences mSharedPreference= context.getSharedPreferences(Constants.SP_NAME,
+				Activity.MODE_PRIVATE);
+		mSharedPreference.edit().putBoolean(Constants.SP_KEY_ISFIRSTUSE,false).commit();
 	}
 }

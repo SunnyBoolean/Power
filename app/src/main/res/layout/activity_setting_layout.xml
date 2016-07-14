@@ -2,8 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<TextView
-    android:layout_width="match_parent"
-    android:text="设置"
-    android:layout_height="wrap_content"></TextView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:id="@+id/setting_exit_app"
+        android:padding="10dp"
+        android:text="退出应用"></Button>
 </LinearLayout>

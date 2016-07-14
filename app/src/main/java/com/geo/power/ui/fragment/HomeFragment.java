@@ -156,9 +156,9 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
         });
         //首先回去从缓存读取首页数据，如果缓存没有找到就去加载
         List<PlanInfo> mInfos = (List<PlanInfo>) SerializeUtils.deserialization(mContext, Constants.CACHE_HOME_DATA_FILENAME);
-        if(mInfos!=null){
+        if (mInfos != null) {
             mPlanDataList.addAll(mInfos);
-        }else{
+        } else {
             loadData(true);
         }
         initBanner();
@@ -236,7 +236,7 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
                     mDataListView.removeFooterView(mFooterView);
                 }
 
-                SerializeUtils.serialization(mContext,Constants.CACHE_HOME_DATA_FILENAME,object);
+                SerializeUtils.serialization(mContext, Constants.CACHE_HOME_DATA_FILENAME, object);
                 mPlanDataList.addAll(object);
                 mAdapter.notifyDataSetChanged();
             }
@@ -363,44 +363,56 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
                     String content = view.getText().toString();
                     if ("加入计划".equals(content)) {
                         //参与者+1
-                        info.increment("dovisition", 1);
+                        info.increment("dovisition");
                         //添加多对多关联，表明有一个人加入了这个计划
 
                         BmobRelation relation = new BmobRelation();
                         //将当前用户添加到多对多关联中
                         relation.add(info);
-                        UserInfo user = UserInfo.getCurrentUser(mContext,UserInfo.class);
+                        UserInfo user = UserInfo.getCurrentUser(mContext, UserInfo.class);
                         //多对多关联指向`post`的`likes`字段
                         user.mLikes = relation;
                         user.update(mContext, new UpdateListener() {
                             @Override
                             public void onSuccess() {
-                                Toast.makeText(mContext,"收藏成功",Toast.LENGTH_LONG).show();
+                                info.update(mContext, new UpdateListener() {
+                                    @Override
+                                    public void onSuccess() {
+                                        Toast.makeText(mContext, "更新成功", Toast.LENGTH_LONG).show();
+                                    }
+
+                                    @Override
+                                    public void onFailure(int i, String s) {
+                                        Toast.makeText(mContext, "更新失败" + s, Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                                Toast.makeText(mContext, "加入计划成功", Toast.LENGTH_LONG).show();
                             }
 
                             @Override
                             public void onFailure(int i, String s) {
-                                Toast.makeText(mContext,"收藏失败",Toast.LENGTH_LONG).show();
+                                Toast.makeText(mContext, "加入计划失败", Toast.LENGTH_LONG).show();
                             }
                         });
                     } else if ("添加收藏".equals(content)) {
                         //收藏数+1
-                        info.increment("favoriteToatl", 1);
+                        info.increment("favoriteToatl");
                         BmobRelation relation = new BmobRelation();
                         //将当前用户添加到多对多关联中
                         relation.add(info);
-                        UserInfo user = UserInfo.getCurrentUser(mContext,UserInfo.class);
+                        UserInfo user = UserInfo.getCurrentUser(mContext, UserInfo.class);
                         //多对多关联指向`post`的`likes`字段
                         user.mFavorites = relation;
                         user.update(mContext, new UpdateListener() {
                             @Override
                             public void onSuccess() {
-                                Toast.makeText(mContext,"收藏成功",Toast.LENGTH_LONG).show();
+                                info.update(mContext);
+                                Toast.makeText(mContext, "收藏成功", Toast.LENGTH_LONG).show();
                             }
 
                             @Override
                             public void onFailure(int i, String s) {
-                                Toast.makeText(mContext,"收藏失败",Toast.LENGTH_LONG).show();
+                                Toast.makeText(mContext, "收藏失败", Toast.LENGTH_LONG).show();
                             }
                         });
                     }
@@ -442,7 +454,7 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
             if (convertView == null) {
                 holder = new HViewHolder();
                 convertView = View.inflate(mContext, R.layout.list_home_plan_item, null);
-                holder.imgGirdView = (GridView) convertView.findViewById(R.id.list_homeplan_img_gridview);
+                holder.contentImg = (ImageView) convertView.findViewById(R.id.list_homeplan_img_gridview);
                 holder.mUserIm = (ImageView) convertView.findViewById(R.id.list_homeplan_userimg);
                 holder.mUsernameTv = (TextView) convertView.findViewById(R.id.list_homeplan_username);
                 holder.mCreateTime = (TextView) convertView.findViewById(R.id.list_homeplan_plantime);
@@ -458,13 +470,15 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
             }
             final PlanInfo info = datas.get(position);
             //设置图片
-            holder.imgGirdView.setAdapter(new GridAdapter(info.picLists));
+//            holder.imgGirdView.setAdapter(new GridAdapter(info.picLists));
             //设置用户头像
             DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                     .cacheInMemory(true)
                     .cacheOnDisk(true)
                     .build();
             ImageLoader.getInstance().displayImage(info.author.uimg, holder.mUserIm, defaultOptions);
+            if (info.picLists != null && info.picLists.size() > 0)
+                ImageLoader.getInstance().displayImage(info.picLists.get(0), holder.contentImg, defaultOptions);
             //设置用户昵称
             holder.mUsernameTv.setText(info.author.getUsername());
             //设置创建时间
@@ -484,29 +498,35 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
             holder.mCanyu.setText(info.dovisition + " ");
             //执行次数
             holder.myzxtv.setText(info.hadDotimes + " ");
+            UserInfo user = UserInfo.getCurrentUser(mContext, UserInfo.class);
+            if (info.uid.equals(user.getObjectId())) {
+                holder.more.setVisibility(View.GONE);
+            }
             //点击更多
             holder.more.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     showOPMoreDialog(info);
                 }
             });
             final TextView temp = holder.mZan;
             //点赞单击+1
-            holder.mZan.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    info.increment("zanToatl"); // 分数递增1
-                    info.update(mContext);
-                    //已有赞数+
-                    int tota = info.zanToatl + 1;
-                    temp.setText(tota + "");
-                }
-            });
+//            holder.mZan.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    info.increment("zanToatl"); // 分数递增1
+//                    info.update(mContext);
+//                    //已有赞数+
+//                    int tota = info.zanToatl + 1;
+//                    temp.setText(tota + "");
+//                }
+//            });
             return convertView;
         }
 
         private class HViewHolder {
+            ImageView contentImg;
             //内容图片
             GridView imgGirdView;
             //用户头像
