@@ -176,6 +176,7 @@ public class DiscoverDetailActivity extends BaseActivity {
     @Override
     public void handlOnClickListener(View v) {
         super.handlOnClickListener(v);
+
         switch (v.getId()) {
             case R.id.discover_plan_detail_historytotal:  //历史记录
                 Intent intent = new Intent();
