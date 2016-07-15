@@ -25,7 +25,6 @@ public class DiscoverFragment extends BaseFragment {
     private final String[] mTabTitle = {"我的计划(12)", "我参与的(8)", "已完成(6)"};
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private FMCallback mFragmentManagerCallback;
 
     public static DiscoverFragment getInstance() {
         if (mInstance == null) {
@@ -56,9 +55,6 @@ public class DiscoverFragment extends BaseFragment {
         list.add(MyPlanFragment.getInstance());
         list.add(JoinPlanFragment.getInstance());
         list.add(DonePlanFragment.getInstance());
-        if (mFragmentManagerCallback == null) {
-            return;
-        }
         FragmentManager fm = getChildFragmentManager();
 //        FragmentManager fm = mFragmentManagerCallback.getFragmentM();
         PlanFragmentAdapter adapter = new PlanFragmentAdapter(fm, list, mTabTitle);
@@ -83,20 +79,6 @@ public class DiscoverFragment extends BaseFragment {
         @Override
         public Fragment getItem(int position) {
             Fragment fm = list_fragment.get(position);
-//            if(position==0){  //我的额计划
-//                mFragmentManager
-//            }else if(position == 1){  //我参与的
-//
-//            }else if(position == 2){ //已完成
-//
-//            }
-//            HomeFragment homeFragment = (HomeFragment) fm
-//                    .findFragmentByTag("home_fragment");
-//            if (homeFragment == null) {
-//                homeFragment = HomeFragment.getInstance();
-//                ft.add(R.id.main_fragment_container, homeFragment, "home_fragment");
-//            }
-//            ft.show(homeFragment);
 
 
             return fm;
@@ -115,16 +97,4 @@ public class DiscoverFragment extends BaseFragment {
         }
     }
 
-    /**
-     * 为了在Fragment中嵌套Fragment获取FragmentManager的回调接口
-     *
-     * @param fm
-     */
-    public void setFMCallback(FMCallback fm) {
-        this.mFragmentManagerCallback = fm;
-    }
-
-    public interface FMCallback {
-        public FragmentManager getFragmentM();
-    }
 }

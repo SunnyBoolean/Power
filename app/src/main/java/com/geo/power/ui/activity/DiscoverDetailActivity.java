@@ -44,6 +44,7 @@ public class DiscoverDetailActivity extends BaseActivity {
     private ImageView mConverBanner;
     private PlanInfo mPlanInfo;
     private TextView mUsernameTv, mLocationTv, mContentTv, mHistoryTotalTv, mVisitorTv, mCommentTv, mCreatetimeTv, mDeadLineTv, mProcessTv;
+    private ImageView mUserImgIm;
     private BottomSheetDialog mBottomSheetDialog;
     private CommentAdapter mCommentAdapter;
     private VisitorAdapter mVisitorAdapter;
@@ -69,6 +70,7 @@ public class DiscoverDetailActivity extends BaseActivity {
         mUsernameTv = (TextView) findViewById(R.id.discover_plan_detail_uname);
         mContentTv = (TextView) findViewById(R.id.discover_plan_detail_content);
         mHistoryTotalTv = (TextView) findViewById(R.id.discover_plan_detail_historytotal);
+        mUserImgIm = (ImageView) findViewById(R.id.detailplan_uimg);
         mVisitorTv = (TextView) findViewById(R.id.discover_plan_detail_visitortotal);
         mCommentTv = (TextView) findViewById(R.id.discover_plan_detail_commenttotal);
         mCreatetimeTv = (TextView) findViewById(R.id.discover_plan_detail_createtime);
@@ -81,8 +83,16 @@ public class DiscoverDetailActivity extends BaseActivity {
         if (userinfo.getObjectId().equals(mPlanInfo.uid)) {
             mCommentContainer.setVisibility(View.GONE);
         }
+        //用户头像
+        if(!TextUtils.isEmpty(mPlanInfo.author.uimg)){
+            DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                    .cacheInMemory(true)
+                    .cacheOnDisk(true)
+                    .build();
+            ImageLoader.getInstance().displayImage(mPlanInfo.author.uimg, mUserImgIm, defaultOptions);
+        }
+        //内容图片
         if (mPlanInfo.picLists != null && mPlanInfo.picLists.size() > 0) {
-            //设置用户头像
             DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                     .cacheInMemory(true)
                     .cacheOnDisk(true)
@@ -98,7 +108,7 @@ public class DiscoverDetailActivity extends BaseActivity {
         mContentTv.setText(mPlanInfo.content);
         mHistoryTotalTv.setText("动态(" + mPlanInfo.hadDotimes + ")");
         mVisitorTv.setText("参与者(" + mPlanInfo.dovisition + ")");
-        mCommentTv.setText("鼓励(" + mPlanInfo.commentToal + ")");
+        mCommentTv.setText("评论(" + mPlanInfo.commentToal + ")");
         mCreatetimeTv.setText("创建时间：" + mPlanInfo.startDate);
         mDeadLineTv.setText("截止时间：" + mPlanInfo.completeDate);
 
@@ -189,14 +199,14 @@ public class DiscoverDetailActivity extends BaseActivity {
                 break;
             case R.id.discover_plan_detail_visitortotal://参与者
                 if(mVisitorDatas.size()==0){
-                    showToast("还没有人参与此计划");
+                    showSnackBar("还没有人参与此计划！");
                 }else{
                     showBottomSheetForVisitor();
                 }
                 break;
             case R.id.discover_plan_detail_commenttotal: //评论
                 if (mCommentDatas.size() == 0) {
-                    showToast("还没有评论");
+                    showSnackBar("还没有人评论！");
                 } else {
                     showBottomSheetForComment();
                 }
@@ -204,7 +214,7 @@ public class DiscoverDetailActivity extends BaseActivity {
             case R.id.discover_plandetail_sendbtn: //发送评论
                 String comment = mCommentEt.getText().toString();
                 if (TextUtils.isEmpty(comment)) {
-                    showToast("评论内容不能为空");
+                    showSnackBar("评论内容不能为空！");
                 } else {
                     sendComment();
                 }
@@ -235,6 +245,7 @@ public class DiscoverDetailActivity extends BaseActivity {
             @Override
             public void onFailure(int i, String s) {
                 showToast("评论失败：" + s);
+                showSnackBar("评论失败！稍后重试"+s);
             }
         });
     }
@@ -245,7 +256,7 @@ public class DiscoverDetailActivity extends BaseActivity {
     }
 
     /**
-     * 显示新增计划菜单
+     * 显示评论列表
      */
     private void showBottomSheetForComment() {
         mBottomSheetDialog = new BottomSheetDialog(mContext, R.style.Material_App_BottomSheetDialog);
@@ -266,7 +277,7 @@ public class DiscoverDetailActivity extends BaseActivity {
     }
 
     /**
-     * 显示参与者
+     * 显示参与者列表
      */
     private void showBottomSheetForVisitor() {
         mBottomSheetDialog = new BottomSheetDialog(mContext, R.style.Material_App_BottomSheetDialog);

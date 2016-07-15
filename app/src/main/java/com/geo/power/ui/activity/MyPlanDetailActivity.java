@@ -2,10 +2,6 @@ package com.geo.power.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,13 +15,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.geo.com.geo.power.bean.LeaveMsgInfo;
-import com.geo.com.geo.power.bean.PlanHistoryInfo;
+import com.geo.com.geo.power.bean.CommentInfo;
 import com.geo.com.geo.power.bean.PlanInfo;
+import com.geo.com.geo.power.bean.UserInfo;
 import com.geo.com.geo.power.util.ScreenUtil;
-import com.geo.power.ui.fragment.MyPlanCommonOnFragment;
-import com.geo.power.ui.fragment.MyPlanDoingFragment;
-import com.geo.power.ui.fragment.MyPlanVisitorFragment;
 import com.github.lazylibrary.util.DateUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -35,7 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.listener.CountListener;
+import cn.bmob.v3.listener.FindListener;
 import ui.geo.com.power.R;
 
 /**
@@ -44,12 +39,16 @@ import ui.geo.com.power.R;
  */
 public class MyPlanDetailActivity extends BaseActivity {
     private GridView mPicGridView;
-    private View mHistoryBtn, mLeaveMsgBtn;
+    private ImageView mContentImg;
+    private View mHistoryBtn, mCommentBtn, mVisitorBtn;
     private BottomSheetDialog mBottomSheetDialog;
-    private List<LeaveMsgInfo> mMsgData;
-    private MsgAdapter mMsgAdapter;
+    private List<CommentInfo> mCommentDatas = new ArrayList<CommentInfo>();
+    ;
+    private List<UserInfo> mVisitorDatas = new ArrayList<UserInfo>();
+    private CommentAdapter mCommentAdapter;
     private PlanInfo mPlanInfo;
-    private TextView mHistoryTotalTv, mWcjdTv, mDeatlineTv, mCreateTime, mDetailContentTv;
+    private TextView mHistoryTotalTv, mWcjdTv, mDeatlineTv, mCreateTime, mDetailContentTv, mCommentTotalTv, mVisitorTotalTv;
+    private VisitorAdapter mVisitorAdapter;
     private int mHistoryTotal;
     /**
      * 计划是否完成，0表示已完成，1表示未完成，正在进行
@@ -68,22 +67,29 @@ public class MyPlanDetailActivity extends BaseActivity {
     @Override
     protected void initCompontent() {
         super.initCompontent();
-        mPicGridView = (GridView) findViewById(R.id.home_myplan_detail_img_gridview);
+        mContentImg = (ImageView) findViewById(R.id.home_myplan_detail_img_gridview);
         mHistoryBtn = findViewById(R.id.edit_plan_history_click);
-        mLeaveMsgBtn = findViewById(R.id.myplan_detail_mycurrage_item_click);
+        mCommentBtn = findViewById(R.id.myplan_detail_mycurrage_item_click);
         mHistoryTotalTv = (TextView) findViewById(R.id.plan_detail_histori);
         mWcjdTv = (TextView) findViewById(R.id.plan_detail_wcjd);
         mDeatlineTv = (TextView) findViewById(R.id.plan_detail_deadftime);
         mCreateTime = (TextView) findViewById(R.id.plan_detail_createtime);
         mDetailContentTv = (TextView) findViewById(R.id.myplan_detail_contaihsd);
+        mCommentTotalTv = (TextView) findViewById(R.id.myplan_detail_mycurrage_item_comtotal);
+        mVisitorTotalTv = (TextView) findViewById(R.id.myplan_detail_mycurrage_item_cisitor_total);
+        mVisitorBtn = findViewById(R.id.myplan_detail_mycurrage_item_cisitor_vis_click);
         initData();
+        mCommentAdapter = new CommentAdapter(mCommentDatas);
+        mVisitorAdapter = new VisitorAdapter(mVisitorDatas);
+
     }
 
     @Override
     protected void initListener() {
         super.initListener();
         mHistoryBtn.setOnClickListener(this);
-        mLeaveMsgBtn.setOnClickListener(this);
+        mCommentBtn.setOnClickListener(this);
+        mVisitorBtn.setOnClickListener(this);
     }
 
     /**
@@ -98,11 +104,22 @@ public class MyPlanDetailActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.edit_plan_history_click:   //计划执行的历史记录
                 intent.setClass(mContext, DoPlanHistoryActivity.class);
-                intent.putExtra("planinfo",mPlanInfo);
+                intent.putExtra("planinfo", mPlanInfo);
                 startActivity(intent);
                 break;
             case R.id.myplan_detail_mycurrage_item_click:  //我收到的鼓励
-                showBottomSheetForMsg();
+                if (mCommentDatas.size() != 0) {
+                    showBottomSheetForComment();
+                } else {
+                    showSnackBar("还没有评论");
+                }
+                break;
+            case R.id.myplan_detail_mycurrage_item_cisitor_vis_click:
+                if (mVisitorDatas.size() != 0) {
+                    showBottomSheetForVisitor();
+                } else {
+                    showSnackBar("还没有参与者");
+                }
                 break;
         }
     }
@@ -113,16 +130,25 @@ public class MyPlanDetailActivity extends BaseActivity {
         mIsDone = intent.getIntExtra("isDone", 1);
         mPlanInfo = (PlanInfo) intent.getSerializableExtra("plan_info");
         //计划图片适配器
-        mPicGridView.setAdapter(new GridAdapter(mPlanInfo.picLists));
+//        mPicGridView.setAdapter(new GridAdapter(mPlanInfo.picLists));
+        loadPlanInfo();
+        loadVisitor();
         initOthers();
         //加载历史动态总数
-        loadhistory();
+        loadTotalCount();
         //加载鼓励评论的消息
-        initMsgData();
+        loadCommentData();
+        if (mPlanInfo.picLists != null && mPlanInfo.picLists.size() > 0) {
+            DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                    .cacheInMemory(true)
+                    .cacheOnDisk(true)
+                    .build();
+            ImageLoader.getInstance().displayImage(mPlanInfo.picLists.get(0), mContentImg, defaultOptions);
+        }
     }
 
     private void initOthers() {
-        mDetailContentTv.setText("   "+mPlanInfo.content);
+        mDetailContentTv.setText("   " + mPlanInfo.content);
         mCreateTime.setText("创建时间：" + mPlanInfo.startDate);
         mDeatlineTv.setText("截止时间：" + mPlanInfo.completeDate);
         //计算已经执行了多少天
@@ -138,23 +164,68 @@ public class MyPlanDetailActivity extends BaseActivity {
     /**
      * 初始化留言板数据
      */
-    private void initMsgData() {
-        if (mMsgData == null) {
-            mMsgData = new ArrayList<LeaveMsgInfo>();
-        } else {
-            mMsgData.clear();
-        }
-        mMsgAdapter = new MsgAdapter(mMsgData);
-        for (int i = 0; i < 20; i++) {
-            LeaveMsgInfo info = new LeaveMsgInfo();
-            info.content = "你都坚持减肥那么久了，有效果吗？";
-            info.createtime = "2016-06-14";
-            info.name = "泼墨";
-            mMsgData.add(info);
-        }
+    private void loadCommentData() {
+
+        BmobQuery<CommentInfo> query = new BmobQuery<CommentInfo>();
+        query.addWhereEqualTo("mPlanInfo", new BmobPointer(mPlanInfo));
+//希望同时查询该评论的发布者的信息，以及该帖子的作者的信息，这里用到上面`include`的并列对象查询和内嵌对象的查询
+        query.include("mUserInfo");
+        query.findObjects(mContext, new FindListener<CommentInfo>() {
+            @Override
+            public void onSuccess(List<CommentInfo> list) {
+                if (list != null) {
+                    mCommentDatas.addAll(list);
+                    mCommentAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onError(int i, String s) {
+
+            }
+        });
     }
 
-    private void loadhistory() {
+    /**
+     * 查询计划信息
+     */
+    private void loadPlanInfo() {
+        //查询评论总数
+        BmobQuery<PlanInfo> query = new BmobQuery<PlanInfo>();
+        query.addWhereEqualTo("objectId", mPlanInfo.getObjectId());
+        query.findObjects(mContext, new FindListener<PlanInfo>() {
+            @Override
+            public void onSuccess(List<PlanInfo> list) {
+                if (list != null && list.size() > 0) {
+                    PlanInfo info = list.get(0);
+                    mCommentTotalTv.setText(info.commentToal + " ");
+                    mDetailContentTv.setText("" + info.content);
+                    mVisitorTotalTv.setText("" + info.dovisition);
+                    mCreateTime.setText("创建时间：" + info.startDate);
+                    mDeatlineTv.setText("截止时间：" + info.completeDate);
+                    //计算已经执行了多少天
+                    int djs = DateUtil.countDays(info.startDate, "yyyy-MM-dd") + 1;
+                    //计算百分比
+                    int bfb = 0;
+                    if (info.plantotalDay != 0) {
+                        bfb = djs / info.plantotalDay;
+                    }
+                    mWcjdTv.setText("完成进度：" + bfb + "%");
+                }
+            }
+
+            @Override
+            public void onError(int i, String s) {
+
+            }
+        });
+    }
+
+    /**
+     * 加载历史动态数、评论数、参与者总数
+     */
+    private void loadTotalCount() {
+        //============加载评论数目
         BmobQuery<PlanInfo> query = new BmobQuery<PlanInfo>();
         query.addWhereEqualTo("originalPlanId", mPlanInfo.getObjectId());
         query.count(this, PlanInfo.class, new CountListener() {
@@ -162,30 +233,78 @@ public class MyPlanDetailActivity extends BaseActivity {
             public void onSuccess(int count) {
                 mHistoryTotal = count;
                 mHistoryTotalTv.setText("" + count + " ");
-                // TODO Auto-generated method stub
 
             }
 
             @Override
             public void onFailure(int code, String msg) {
-                // TODO Auto-generated method stub
                 showToast("count failure：" + msg);
             }
         });
     }
 
+    private void loadVisitor() {
+        // 查询喜欢这个帖子的所有用户，因此查询的是用户表
+        BmobQuery<UserInfo> query = new BmobQuery<UserInfo>();
+//likes是Post表中的字段，用来存储所有喜欢该帖子的用户
+        query.addWhereRelatedTo("mLikes", new BmobPointer(mPlanInfo));
+        query.findObjects(mContext, new FindListener<UserInfo>() {
+            @Override
+            public void onSuccess(List<UserInfo> list) {
+                if (list != null) {
+                    mVisitorDatas.addAll(list);
+                    mVisitorAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onError(int i, String s) {
+
+            }
+        });
+
+    }
+
     /**
-     * 显示新增计划菜单
+     * 显示评论列表
      */
-    private void showBottomSheetForMsg() {
+    private void showBottomSheetForComment() {
         mBottomSheetDialog = new BottomSheetDialog(mContext, R.style.Material_App_BottomSheetDialog);
         View content = LayoutInflater.from(mContext).inflate(R.layout.msg_myplan, null);
         ListView msgListview = (ListView) content.findViewById(R.id.msg_listview);
-        msgListview.setAdapter(mMsgAdapter);
+        ImageButton imClose = (ImageButton) content.findViewById(R.id.discover_plandetail_closecomment);
+        msgListview.setAdapter(mCommentAdapter);
         int size[] = ScreenUtil.getScreenSize(mContext);
         mBottomSheetDialog.heightParam(size[1] * 2 / 3);
         mBottomSheetDialog.contentView(content)
                 .show();
+        imClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetDialog.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 显示参与者列表
+     */
+    private void showBottomSheetForVisitor() {
+        mBottomSheetDialog = new BottomSheetDialog(mContext, R.style.Material_App_BottomSheetDialog);
+        View content = LayoutInflater.from(mContext).inflate(R.layout.discover_plan_visitor, null);
+        ListView msgListview = (ListView) content.findViewById(R.id.discover_plan_visitor_listview);
+        ImageButton imClose = (ImageButton) content.findViewById(R.id.discover_plandetail_closejoin);
+        msgListview.setAdapter(mVisitorAdapter);
+        int size[] = ScreenUtil.getScreenSize(mContext);
+        mBottomSheetDialog.heightParam(size[1] * 2 / 3);
+        mBottomSheetDialog.contentView(content)
+                .show();
+        imClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetDialog.dismiss();
+            }
+        });
     }
 
     /**
@@ -265,10 +384,13 @@ public class MyPlanDetailActivity extends BaseActivity {
         }
     }
 
-    private class MsgAdapter extends BaseAdapter {
-        private List<LeaveMsgInfo> msgDatas;
+    /**
+     * 评论适配器
+     */
+    private class CommentAdapter extends BaseAdapter {
+        private List<CommentInfo> msgDatas;
 
-        public MsgAdapter(List<LeaveMsgInfo> data) {
+        public CommentAdapter(List<CommentInfo> data) {
             this.msgDatas = data;
         }
 
@@ -302,16 +424,81 @@ public class MyPlanDetailActivity extends BaseActivity {
             } else {
                 holder = (MsgViewHolder) convertView.getTag();
             }
-            LeaveMsgInfo info = msgDatas.get(position);
+            CommentInfo info = msgDatas.get(position);
+            holder.contentTv.setText(info.commentContent);
+            holder.createtimeTv.setText(info.commentTime);
+            holder.usernameTv.setText(info.mUserInfo.getUsername());
 
-            holder.contentTv.setText(info.content);
-            holder.createtimeTv.setText(info.createtime);
-            holder.usernameTv.setText(info.name);
+            //设置用户头像
+            DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                    .cacheInMemory(true)
+                    .cacheOnDisk(true)
+                    .build();
+            ImageLoader.getInstance().displayImage(info.mUserInfo.uimg, holder.uImg, defaultOptions);
+
             return convertView;
         }
 
         class MsgViewHolder {
             TextView contentTv, createtimeTv, usernameTv;
+            ImageView uImg;
+        }
+    }
+
+    /**
+     * 参与者适配器
+     */
+    private class VisitorAdapter extends BaseAdapter {
+        private List<UserInfo> msgDatas;
+
+        public VisitorAdapter(List<UserInfo> data) {
+            this.msgDatas = data;
+        }
+
+        @Override
+        public int getCount() {
+            return msgDatas.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return msgDatas.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            MsgViewHolder holder = null;
+            if (convertView == null) {
+                holder = new MsgViewHolder();
+                convertView = View.inflate(mContext, R.layout.discoverplan_visitor_list_item, null);
+                holder.sexTv = (TextView) convertView.findViewById(R.id.discoverplan_visitor_item_sex);
+                holder.usernameTv = (TextView) convertView.findViewById(R.id.discoverplan_visitor_item_uname);
+                holder.uImg = (ImageView) convertView.findViewById(R.id.discoverplan_visitor_item_uimg);
+                convertView.setTag(holder);
+            } else {
+                holder = (MsgViewHolder) convertView.getTag();
+            }
+            UserInfo info = msgDatas.get(position);
+            holder.sexTv.setText("女");
+            holder.usernameTv.setText(info.getUsername());
+
+            //设置用户头像
+            DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                    .cacheInMemory(true)
+                    .cacheOnDisk(true)
+                    .build();
+            ImageLoader.getInstance().displayImage(info.uimg, holder.uImg, defaultOptions);
+
+            return convertView;
+        }
+
+        class MsgViewHolder {
+            TextView sexTv, usernameTv;
             ImageView uImg;
         }
     }

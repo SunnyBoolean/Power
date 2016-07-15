@@ -33,10 +33,12 @@ import com.geo.com.geo.power.bean.UserInfo;
 import com.geo.com.geo.power.util.BitmapUtils;
 import com.geo.com.geo.power.util.ScreenUtil;
 import com.github.lazylibrary.util.DateUtil;
+import com.github.lazylibrary.util.InputMethodUtils;
 import com.rey.material.app.DatePickerDialog;
 import com.rey.material.app.DialogFragment;
 import com.rey.material.app.TimePickerDialog;
 import com.rey.material.widget.EditText;
+import com.rey.material.widget.ProgressView;
 import com.rey.material.widget.Switch;
 import com.yongchun.library.view.ImageSelectorActivity;
 
@@ -208,7 +210,6 @@ public class AddLongPlanActivity extends BaseActivity {
             @Override
             public void onPositiveActionClicked(DialogFragment fragment) {
                 TimePickerDialog dialog = (TimePickerDialog) fragment.getDialog();
-//                Toast.makeText(mContext, "Time is " + dialog.getFormattedTime(SimpleDateFormat.getTimeInstance()), Toast.LENGTH_SHORT).show();
                 String time = dialog.getFormattedTime(SimpleDateFormat.getTimeInstance());
                 mPlanNotifyShow.setText("每天" + time);
                 mHourdo = dialog.getHour();
@@ -221,7 +222,7 @@ public class AddLongPlanActivity extends BaseActivity {
 
             @Override
             public void onNegativeActionClicked(DialogFragment fragment) {
-                Toast.makeText(mContext, "Cancelled", Toast.LENGTH_SHORT).show();
+
                 super.onNegativeActionClicked(fragment);
             }
         };
@@ -245,13 +246,11 @@ public class AddLongPlanActivity extends BaseActivity {
                 mPlanDeadLineTv.setTextColor(mCommonColor);
                 mPlanDeadlineIm.setVisibility(View.VISIBLE);
                 mAddPlanInfo.completeDate = udate;
-//                Toast.makeText(mContext, "Date is " + date, Toast.LENGTH_SHORT).show();
                 super.onPositiveActionClicked(fragment);
             }
 
             @Override
             public void onNegativeActionClicked(DialogFragment fragment) {
-//                Toast.makeText(mContext, "Cancelled", Toast.LENGTH_SHORT).show();
                 super.onNegativeActionClicked(fragment);
             }
         };
@@ -355,6 +354,7 @@ public class AddLongPlanActivity extends BaseActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == 1) {
+                    InputMethodUtils.closeSoftKeyboard(AddLongPlanActivity.this);
                     uploadPlan();
                 }
                 return false;
@@ -370,13 +370,16 @@ public class AddLongPlanActivity extends BaseActivity {
     private boolean checkUpload() {
         String content = mContentInputEt.getText().toString().trim();
         if (TextUtils.isEmpty(content)) {
-            showToast("内容不能为空");
+//            showToast("内容不能为空");
+            showSnackBar("计划内容不能为空");
             return false;
         } else if (TextUtils.isEmpty(mAddPlanInfo.completeDate)) {
-            showToast("计划截止时间不能为空");
+//            showToast("计划截止时间不能为空");
+            showSnackBar("计划截止时间不能为空");
             return false;
         } else if (TextUtils.isEmpty(mAddPlanInfo.category)) {
-            showToast("分类不能为空");
+//            showToast("分类不能为空");
+            showSnackBar("计划分类不能为空");
             return false;
         }
         return true;
@@ -418,8 +421,8 @@ public void setAlarm(){
                 @Override
                 public void onSuccess() {
                     setAlarm();
-                    showToast("创建成功！");
-
+//                    showToast("创建成功！");
+                    showSnackBar("计划创建成功");
                     finish();
                 }
 
@@ -443,7 +446,7 @@ public void setAlarm(){
                         mAddPlanInfo.save(mContext, new SaveListener() {
                             @Override
                             public void onSuccess() {
-                                showToast("创建成功！");
+                                showSnackBar("计划创建成功");
                                 finish();
                             }
 
@@ -457,7 +460,7 @@ public void setAlarm(){
 
                 @Override
                 public void onError(int statuscode, String errormsg) {
-                    showToast("上传失败" + statuscode + ",错误描述：" + errormsg);
+                    showSnackBar("计划创建失败" + errormsg);
                 }
 
                 @Override
@@ -494,9 +497,14 @@ public void setAlarm(){
 //                .positiveAction("删除")
 //                .negativeAction("取消")
 //                .contentView(R.layout.delete_add_wallpaper_content_item);
+//        View dialogview = View.inflate()
+        View view = getProcessView();
+        ProgressView progress = (ProgressView) view.findViewById(R.id.progress_pv_circular);
         build.contentView(R.layout.add_plan_progress);
         DialogFragment fragment = DialogFragment.newInstance(build);
+        progress.start();
         fragment.show(getSupportFragmentManager(), null);
+        fragment.setCancelable(false);
     }
 
     private class ImageAdapter extends BaseAdapter {

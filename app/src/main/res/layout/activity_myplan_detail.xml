@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:background="@color/material_white"
             android:orientation="vertical"
-            android:padding="10dp">
+            >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -25,6 +25,7 @@
                 android:layout_alignParentRight="true"
                 android:drawableLeft="@drawable/lit_dot"
                 android:drawablePadding="5dp"
+                android:padding="10dp"
                 android:text="目标"
                 android:textColor="@color/et_divider_focused"
                 android:textSize="@dimen/textSize_large"
@@ -42,24 +43,19 @@
                 android:id="@+id/myplan_detail_contaihsd"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:padding="10dp"
                 android:lineSpacingExtra="3dp"
                 android:textScaleX="1"
                 android:textColor="@color/material_black"
                 android:textSize="@dimen/textSize_normal"
-                android:text="      今天很受打击啊，面个试还被嫌弃长得肥，我长得胖出的多又没吃你家饭！我决定要努力运动减肥！不瘦到150斤就一直减！" />
+                android:text="" />
             <!-- 计划图片-->
-            <com.geo.widget.MyExpandGridView
+            <ImageView
                 android:id="@+id/home_myplan_detail_img_gridview"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
-                android:horizontalSpacing="5dp"
-                android:numColumns="3"
-                android:verticalSpacing="5dp" />
+                android:scaleType="centerCrop"/>
         </LinearLayout>
 
         <View
@@ -129,7 +125,7 @@
                     android:drawablePadding="8dp"
                     android:drawableRight="@drawable/item_arrow_right"
                     android:gravity="center"
-                    android:text="65" />
+                    android:text="0" />
             </RelativeLayout>
 
             <View
@@ -150,7 +146,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
-                    android:text="收到鼓励"
+                    android:text="评论"
                     android:textSize="@dimen/textSize_normal" />
 
                 <TextView
@@ -166,13 +162,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:id="@+id/myplan_detail_mycurrage_item_comtotal"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="8dp"
                     android:background="@null"
                     android:drawablePadding="8dp"
                     android:drawableRight="@drawable/item_arrow_right"
                     android:gravity="center"
-                    android:text="86" />
+                    android:text="0" />
             </RelativeLayout>
 
             <View
@@ -184,6 +181,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@color/add_longplan_item_selec"
+                android:id="@+id/myplan_detail_mycurrage_item_cisitor_vis_click"
                 android:clickable="true"
                 android:padding="10dp">
 
@@ -208,13 +206,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:id="@+id/myplan_detail_mycurrage_item_cisitor_total"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="8dp"
                     android:background="@null"
                     android:drawablePadding="8dp"
                     android:drawableRight="@drawable/item_arrow_right"
                     android:gravity="center"
-                    android:text="16" />
+                    android:text="0" />
             </RelativeLayout>
 
             <View
@@ -256,7 +255,7 @@
                     android:layout_marginLeft="8dp"
                     android:drawableLeft="@drawable/myplan_createtime"
                     android:id="@+id/plan_detail_createtime"
-                    android:drawablePadding="5dp"
+                    android:drawablePadding="8dp"
                     android:gravity="center_vertical"
                     android:text="创建时间：2016-05-31"
                     android:textSize="@dimen/textSize_normal" />
@@ -271,7 +270,7 @@
                     android:layout_height="45dp"
                     android:layout_marginLeft="8dp"
                     android:drawableLeft="@drawable/myplan_endtime"
-                    android:drawablePadding="5dp"
+                    android:drawablePadding="8dp"
                     android:id="@+id/plan_detail_deadftime"
                     android:gravity="center_vertical"
                     android:text="截止时间：2016-10-31"
@@ -288,9 +287,9 @@
                     android:layout_marginLeft="8dp"
                     android:drawableLeft="@drawable/myplan_process"
                     android:id="@+id/plan_detail_wcjd"
-                    android:drawablePadding="5dp"
+                    android:drawablePadding="8dp"
                     android:gravity="center_vertical"
-                    android:text="完成进度：90%"
+                    android:text="完成进度：0%"
                     android:textSize="@dimen/textSize_normal" />
 
             </LinearLayout>

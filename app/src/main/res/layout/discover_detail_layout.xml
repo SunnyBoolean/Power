@@ -16,130 +16,142 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <include layout="@layout/tool_bar"></include>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/material_white"
-                android:orientation="vertical"
-                android:paddingTop="10dp">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:layout_height="wrap_content">
+
+                <com.geo.widget.RoundImageView
+                    android:id="@+id/detailplan_uimg"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/list_homeplan_userimg" />
 
                 <TextView
                     android:id="@+id/discover_plan_detail_uname"
                     android:layout_width="match_parent"
+                    android:layout_alignParentTop="true"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/detailplan_uimg"
                     android:gravity="center_vertical"
-                    android:paddingLeft="10dp"
                     android:text="炭灰思学Sunny"
                     android:textSize="@dimen/textSize_normal" />
 
                 <TextView
-                    android:layout_width="wrap_content"
                     android:id="@+id/discover_plan_detail_location"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@id/detailplan_uimg"
                     android:drawableLeft="@drawable/dreamdone_locationicon"
                     android:drawablePadding="3dp"
                     android:gravity="center_vertical"
-                    android:paddingLeft="10dp"
                     android:text="湖北武汉光谷新天地"
                     android:textSize="10sp" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/discover_plan_detail_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/material_white"
+                android:padding="10dp"
+                android:text="        这就是所谓的那个莎莎也iom，我并不知道UI怎么设计，但是一样会尽全力把他做出来"
+                android:textSize="@dimen/textSize_normal" />
+
+            <ImageView
+                android:id="@+id/home_convenientBanner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:scaleType="centerCrop" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/material_grey_200" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/material_white"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/discover_plan_detail_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/material_white"
-                    android:padding="10dp"
-                    android:text="        这就是所谓的那个莎莎也iom，我并不知道UI怎么设计，但是一样会尽全力把他做出来"
-                    android:textSize="@dimen/textSize_normal" />
-
-                <ImageView
-                    android:id="@+id/home_convenientBanner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scaleType="centerCrop"
-                    android:layout_marginTop="10dp"
-                     />
+                    android:id="@+id/discover_plan_detail_historytotal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/add_longplan_item_selec"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="动态 (0)" />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_width="0.55dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
                     android:background="@color/material_grey_200" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:background="@color/material_white"
-                    android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/discover_plan_detail_visitortotal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/add_longplan_item_selec"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="参与者 (0)" />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:clickable="true"
-                        android:id="@+id/discover_plan_detail_historytotal"
-                        android:background="@color/add_longplan_item_selec"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="动态 (30)" />
+                <View
+                    android:layout_width="0.55dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/material_grey_200" />
 
-                    <View
-                        android:layout_width="0.55dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:background="@color/material_grey_200" />
+                <TextView
+                    android:id="@+id/discover_plan_detail_commenttotal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/add_longplan_item_selec"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="评论 (0)" />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:id="@+id/discover_plan_detail_visitortotal"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:background="@color/add_longplan_item_selec"
-                        android:gravity="center"
-                        android:text="参与者 (286)" />
+                <View
+                    android:layout_width="0.55dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/material_grey_200" />
 
-                    <View
-                        android:layout_width="0.55dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:background="@color/material_grey_200" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:id="@+id/discover_plan_detail_commenttotal"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:background="@color/add_longplan_item_selec"
-                        android:gravity="center"
-                        android:text="评论 (56)" />
-
-                    <View
-                        android:layout_width="0.55dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:background="@color/material_grey_200" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:background="@color/add_longplan_item_selec"
-                        android:gravity="center"
-                        android:text="我要参与" />
-                </LinearLayout>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/add_longplan_item_selec"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="我要参与" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/material_grey_200" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -149,11 +161,12 @@
                 android:padding="10dp">
 
                 <TextView
+                    android:id="@+id/discover_plan_detail_createtime"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
+                    android:drawableLeft="@drawable/myplan_createtime"
                     android:layout_marginLeft="8dp"
-                    android:id="@+id/discover_plan_detail_createtime"
-                    android:drawablePadding="5dp"
+                    android:drawablePadding="8dp"
                     android:gravity="center_vertical"
                     android:text="创建时间：2016-05-31"
                     android:textSize="@dimen/textSize_normal" />
@@ -164,12 +177,13 @@
                     android:background="@color/material_grey_200" />
 
                 <TextView
+                    android:id="@+id/discover_plan_detail_deadlinetime"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:layout_marginLeft="8dp"
-                    android:drawablePadding="5dp"
+                    android:drawableLeft="@drawable/myplan_endtime"
+                    android:drawablePadding="8dp"
                     android:gravity="center_vertical"
-                    android:id="@+id/discover_plan_detail_deadlinetime"
                     android:text="截止时间：2016-10-31"
                     android:textSize="@dimen/textSize_normal" />
 
@@ -179,13 +193,14 @@
                     android:background="@color/material_grey_200" />
 
                 <TextView
+                    android:id="@+id/discover_plan_detail_process"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
-                    android:id="@+id/discover_plan_detail_process"
                     android:layout_marginLeft="8dp"
-                    android:drawablePadding="5dp"
+                    android:drawableLeft="@drawable/myplan_process"
+                    android:drawablePadding="8dp"
                     android:gravity="center_vertical"
-                    android:text="完成进度：90%"
+                    android:text="完成进度：0%"
                     android:textSize="@dimen/textSize_normal" />
 
             </LinearLayout>
@@ -199,30 +214,30 @@
         android:background="@color/material_grey_200" />
 
     <LinearLayout
+        android:id="@+id/discover_detailplan_cconteims"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:id="@+id/discover_detailplan_cconteims"
+        android:layout_marginBottom="5dp"
         android:background="@color/material_grey_200"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginBottom="5dp"
         android:padding="10dp">
 
         <EditText
+            android:id="@+id/discover_plandetail_commentet"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginRight="8dp"
-            android:id="@+id/discover_plandetail_commentet"
-            android:layout_weight="1"
             android:layout_gravity="center_vertical"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
             android:background="@color/material_white"
             android:hint="来了就鼓励下他呗..."
             android:paddingLeft="5dp" />
 
         <Button
+            android:id="@+id/discover_plandetail_sendbtn"
             android:layout_width="65dp"
             android:layout_height="60dp"
-            android:id="@+id/discover_plandetail_sendbtn"
             android:text="发送" />
     </LinearLayout>
 

@@ -21,4 +21,13 @@ public final class Constants {
     public static final String SP_KEY_ISLOGINEd = "sp_islogined";
     /** 首页缓存的数据文件名*/
     public static final String CACHE_HOME_DATA_FILENAME = "homedata.cache";
+
+
+    /**
+     * 错误码
+     */
+    public final static  class ErrorCode{
+        //注册时，手机号已经被注册，会返回此错误
+        public final static int PHONENUMBER_EXIT = 209;
+    }
 }

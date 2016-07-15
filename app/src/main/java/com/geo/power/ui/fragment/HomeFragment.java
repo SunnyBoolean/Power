@@ -38,9 +38,7 @@ import com.geo.com.geo.power.bean.PlanInfo;
 import com.geo.com.geo.power.bean.UserInfo;
 import com.geo.com.geo.power.util.ScreenUtil;
 import com.geo.power.ui.activity.DiscoverDetailActivity;
-import com.geo.power.ui.activity.ImageShowActivity;
 import com.geo.power.ui.activity.MainActivity;
-import com.geo.widget.HeaderDecoration;
 import com.github.lazylibrary.util.DateUtil;
 import com.github.lazylibrary.util.SerializeUtils;
 import com.github.lazylibrary.util.ToastUtils;
@@ -51,8 +49,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
@@ -76,6 +72,7 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
     private final int mPageSize = 10;
     private int mCurPage = 0;
     private View mFooterView;
+    private View mRootView;
     /**
      * 默认分类是生活
      */
@@ -120,13 +117,13 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View content = View.inflate(mContext, R.layout.fragment_main_home, null);
-        mDataListView = (ListView) content.findViewById(R.id.home_main_recyclerList);
-        swipeRefreshLayout = (SwipeRefreshLayout) content.findViewById(R.id.home_swipeLayout);
+        mRootView =View.inflate(mContext, R.layout.fragment_main_home, null);
+        mDataListView = (ListView) mRootView.findViewById(R.id.home_main_recyclerList);
+        swipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.home_swipeLayout);
 
         initCompontent();
 
-        return content;
+        return mRootView;
     }
 
     private void initCompontent() {
@@ -161,8 +158,8 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
         } else {
             loadData(true);
         }
-        initBanner();
         initSwipeRefresh();
+        initBanner();
     }
 
     /**
@@ -244,8 +241,7 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
             @Override
             public void onError(int code, String msg) {
                 swipeRefreshLayout.setRefreshing(false);
-                // TODO Auto-generated method stub
-                ToastUtils.showToast(mContext, "查询失败：" + msg);
+                showSnackBar(mRootView, "网络连接失败，请检查网络是开启" + msg);
             }
         });
     }
@@ -380,12 +376,14 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
                                 user.update(mContext, new UpdateListener() {
                                     @Override
                                     public void onSuccess() {
-                                        Toast.makeText(mContext, "加入计划成功", Toast.LENGTH_LONG).show();
+//                                        Toast.makeText(mContext, "加入计划成功", Toast.LENGTH_LONG).show();
+                                        showSnackBar(mRootView,"参与计划成功！");
                                     }
 
                                     @Override
                                     public void onFailure(int i, String s) {
-                                        Toast.makeText(mContext, "加入计划失败", Toast.LENGTH_LONG).show();
+                                        showSnackBar(mRootView, "参与计划失败！" + s);
+//                                        Toast.makeText(mContext, "加入计划失败", Toast.LENGTH_LONG).show();
                                     }
                                 });
 
@@ -393,7 +391,8 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
 
                             @Override
                             public void onFailure(int i, String s) {
-                                Toast.makeText(mContext, "加入计划失败", Toast.LENGTH_LONG).show();
+//                                Toast.makeText(mContext, "加入计划失败", Toast.LENGTH_LONG).show();
+                                showSnackBar(mRootView, "参与计划失败！");
                             }
                         });
                     } else if ("添加收藏".equals(content)) {
@@ -409,12 +408,15 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
                                 //收藏数+1
                                 info.increment("favoriteToatl");
                                 info.update(mContext);
-                                Toast.makeText(mContext, "收藏成功", Toast.LENGTH_LONG).show();
+//                                Toast.makeText(mContext, "收藏成功", Toast.LENGTH_LONG).show();
+                                showSnackBar(mRootView, "收藏成功！");
                             }
 
                             @Override
                             public void onFailure(int i, String s) {
-                                Toast.makeText(mContext, "收藏失败", Toast.LENGTH_LONG).show();
+//                                Toast.makeText(mContext, "收藏失败", Toast.LENGTH_LONG).show();
+                                showSnackBar(mRootView, "收藏失败！");
+
                             }
                         });
                     }

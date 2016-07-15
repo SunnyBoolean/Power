@@ -278,9 +278,9 @@ public class MyPlanFragment extends BaseFragment {
             holder.hadDonePer.setText("已完成:" + bfb + "%");
             //  holder.category.setText(info.category);
             holder.content.setText(info.content);
-            holder.haddonetimes.setText("已执行(" + info.hadDotimes + ")");
-            holder.canyuz.setText("参与者(" + info.dovisition + ")");
-            holder.guli.setText("鼓励(" + info.commentToal + ")");
+            holder.haddonetimes.setText( info.hadDotimes + "");
+            holder.canyuz.setText(info.dovisition + "");
+            holder.guli.setText(info.commentToal + "");
            // holder.imageGrid.setAdapter(new GridAdapter(info.picLists));
             //点击快速执行计划
             holder.category.setOnClickListener(new View.OnClickListener() {

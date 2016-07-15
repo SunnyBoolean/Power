@@ -48,7 +48,7 @@ import java.util.List;
 import cn.bmob.v3.BmobUser;
 import ui.geo.com.power.R;
 
-public class MainActivity extends HomeBaseActivity implements DiscoverFragment.FMCallback {
+public class MainActivity extends HomeBaseActivity {
     private RadioButton mHomeBtn, mDiscoverBtn, mPersonerCenterBtn, mDongtaiBtn;
     private TextView mSettingBtn, mAboutBtn;
     private DrawerLayout mDrawerLayout;
@@ -357,7 +357,6 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
                     ft.add(R.id.main_fragment_container, questionFragment,
                             "discover_fragment");
                 }
-                questionFragment.setFMCallback(this);
                 ft.show(questionFragment);
                 break;
 
@@ -451,13 +450,6 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
                 startActivity(intent);
             }
         });
-
-//        ViewUtil.setBackground(v, new ThemeDrawable(R.array.bg_window));
-//                mBottomSheetDialog.heightParam(ViewGroup.LayoutParams.MATCH_PARENT);
-//        Button bt_wrap = (Button)v.findViewById(R.id.sheet_bt_wrap);
-//                mBottomSheetDialog.heightParam(ViewGroup.LayoutParams.WRAP_CONTENT);
-//        });
-
         mBottomSheetDialog.contentView(content)
                 .show();
     }
@@ -486,11 +478,6 @@ public class MainActivity extends HomeBaseActivity implements DiscoverFragment.F
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public FragmentManager getFragmentM() {
-        return getFragmentManagerHelp();
     }
      public void setmLoadCallBackListener(LoadCallback listener){
          this.mLoadCallBack = listener;

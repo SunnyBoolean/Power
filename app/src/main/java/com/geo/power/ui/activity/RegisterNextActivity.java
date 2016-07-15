@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.geo.com.geo.power.Constants;
 import com.geo.com.geo.power.bean.UserInfo;
 import com.geo.com.geo.power.util.BitmapUtils;
 import com.rey.material.widget.EditText;
@@ -149,7 +150,9 @@ public class RegisterNextActivity extends BaseActivity {
 
                             @Override
                             public void onFailure(int code, String msg) {
-                                showToast("注册失败");
+                               if(Constants.ErrorCode.PHONENUMBER_EXIT==code){
+                                   showToast("改手机号已被注册");
+                               }
                                 // TODO Auto-generated method stub
                             }
                         });

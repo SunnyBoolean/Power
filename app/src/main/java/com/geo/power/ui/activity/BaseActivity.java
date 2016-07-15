@@ -47,7 +47,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public Handler mHandler;
     public Executor mExecutor;
     private SystemBarTintManager mTintManager;
-    private ViewGroup mContent;
+    private View mContent;
     public final static String P_TAG = "Power";
     public int mCommonColor = Color.parseColor("#004d40");
     public SimpleDateFormat mDateFormat = new SimpleDateFormat("MM-dd HH:mm");
@@ -61,7 +61,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PowerApplication.mActivis.add(this);
-        PLog(P_TAG,"父类onCreate()");
+        PLog(P_TAG, "父类onCreate()");
         mContext = this;
         if (mToolBar != null) {
             init();
@@ -77,12 +77,12 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     final public void setContentView(int layoutResID) {
         //如果不需要添加Toolbar就直接调用父类方法完成布局填充
         if (!mIsAddToolbar) {
-            super.setContentView(layoutResID);
+            mContent = View.inflate(this,layoutResID,null);
+            super.setContentView(mContent);
             init();
             return;
         }
         ViewGroup viewGroup = (ViewGroup) findViewById(android.R.id.content);
-        mContent = viewGroup;
         viewGroup.removeAllViews();
         LinearLayout parentLinearLayout = new LinearLayout(this);
         parentLinearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -91,6 +91,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         ViewGroup toolBarRoot = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.tool_bar, parentLinearLayout, true);
         //然后将内容界面添加到以Toolbar为根布局的界面
         View content = View.inflate(this, layoutResID, toolBarRoot);
+        mContent =  content;
         mToolBar = (Toolbar) toolBarRoot.findViewById(R.id.toolbar);
         super.setContentView(content);
 
@@ -101,7 +102,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
-        }else{
+        } else {
 //            ImmersedStatusbarUtils.initAfterSetContentView(this, mContent);
 //            return;
         }
@@ -111,9 +112,11 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         mTintManager.setNavigationBarTintEnabled(false);
         mTintManager.setStatusBarTintResource(R.color.material_teal_800);
     }
-    public void setStatubarColor(int color){
+
+    public void setStatubarColor(int color) {
         mTintManager.setStatusBarTintResource(color);
     }
+
     @TargetApi(19)
     private void setTranslucentStatus(boolean on) {
         Window win = getWindow();
@@ -126,6 +129,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         }
         win.setAttributes(winParams);
     }
+
     /**
      * @param layoutResID
      * @param isAddToolbar
@@ -153,7 +157,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
      * 开始布局前的初始化
      */
     private void init() {
-        mSharedPreference= getSharedPreferences(Constants.SP_NAME,
+        mSharedPreference = getSharedPreferences(Constants.SP_NAME,
                 Activity.MODE_PRIVATE);
         //实现沉浸式状态栏
         initTint();
@@ -187,7 +191,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
      * @param v The view that was clicked.
      */
     @Override
-     public void onClick(View v) {
+    public void onClick(View v) {
         handlOnClickListener(v);
     }
 
@@ -196,7 +200,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
      * 关于Toolbar的操作均在此完成
      */
     protected void initToolBar() {
-        if(mToolBar == null){
+        if (mToolBar == null) {
             return;
         }
         mToolBar.setNavigationIcon(R.drawable.back); //设置导航按钮，典型的就是返回箭头
@@ -245,6 +249,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     final public void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -259,7 +264,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         return mDateFormat.format(new Date(time));
     }
 
-    public void showSnackBar(String content){
+    public void showSnackBar(String content) {
         Snackbar.make(mContent, content, Snackbar.LENGTH_LONG)
                 .setAction("关闭", new View.OnClickListener() {
                     @Override
@@ -270,5 +275,12 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 .show();
     }
 
+    /**
+     * 获取Dialog进度条
+     * @return
+     */
+    final View getProcessView() {
+        return View.inflate(mContext, R.layout.add_plan_progress, null);
+    }
 }
 

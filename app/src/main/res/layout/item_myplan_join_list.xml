@@ -83,35 +83,42 @@
             android:scaleType="centerCrop"
              />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
+            android:layout_height="50dp">
 
             <TextView
                 android:id="@+id/mycanyu_yzx"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:drawableLeft="@drawable/home_plan_dotimes"
+                android:drawablePadding="8dp"
                 android:gravity="center"
-                android:text="已执行（32）" />
+                android:text="0" />
 
             <TextView
                 android:id="@+id/home_mcy_cyz"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:drawableLeft="@drawable/home_item_comment"
+                android:drawablePadding="8dp"
+                android:layout_centerInParent="true"
                 android:gravity="center"
-                android:text="参与者（32）" />
+                android:text="0" />
 
             <TextView
                 android:id="@+id/home_gulis"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:drawableLeft="@drawable/home_item_canyuz"
+                android:drawablePadding="8dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
                 android:gravity="center"
-                android:text="鼓励（123）" />
+                android:text="0" />
 
-        </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
