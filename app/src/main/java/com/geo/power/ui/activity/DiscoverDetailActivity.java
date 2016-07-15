@@ -31,9 +31,11 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobPointer;
+import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 import ui.geo.com.power.R;
 
 /**
@@ -398,14 +400,50 @@ public class DiscoverDetailActivity extends BaseActivity {
                 holder.sexTv = (TextView) convertView.findViewById(R.id.discoverplan_visitor_item_sex);
                 holder.usernameTv = (TextView) convertView.findViewById(R.id.discoverplan_visitor_item_uname);
                 holder.uImg = (ImageView) convertView.findViewById(R.id.discoverplan_visitor_item_uimg);
+                holder.addFavorite = (ImageButton) convertView.findViewById(R.id.discoverplan_detile_adduser);
                 convertView.setTag(holder);
             } else {
                 holder = (MsgViewHolder) convertView.getTag();
             }
-            UserInfo info = msgDatas.get(position);
+            final UserInfo info = msgDatas.get(position);
             holder.sexTv.setText("女");
             holder.usernameTv.setText(info.getUsername());
+            //添加关注
+            holder.addFavorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                 final UserInfo user = UserInfo.getCurrentUser(mContext,UserInfo.class);
+                    BmobRelation rel1 = new BmobRelation();
+                    rel1.add(user);
+                    info.mAttention = rel1;
+                    info.update(mContext, new UpdateListener() {
+                        @Override
+                        public void onSuccess() {
+                            BmobRelation rel2 = new BmobRelation();
+                            rel2.add(info);
+                            user.mAttentionEd = rel2;
+                            user.update(mContext, new UpdateListener() {
+                                @Override
+                                public void onSuccess() {
+                                    showSnackBar("关注成功");
+                                }
 
+                                @Override
+                                public void onFailure(int i, String s) {
+                                    showSnackBar("关注失败"+s);
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFailure(int i, String s) {
+                            showSnackBar("关注失败"+s);
+                        }
+                    });
+
+
+                }
+            });
             //设置用户头像
             DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                     .cacheInMemory(true)
@@ -419,6 +457,7 @@ public class DiscoverDetailActivity extends BaseActivity {
         class MsgViewHolder {
             TextView sexTv, usernameTv;
             ImageView uImg;
+            ImageButton addFavorite;
         }
     }
 }

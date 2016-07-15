@@ -22,4 +22,8 @@ public class UserInfo extends BmobUser{
     public BmobRelation mLikes;
     /** 收藏计划，关联到计划表*/
     public BmobRelation mFavorites;
+    /** 我关注的用户*/
+    public BmobRelation mAttention;
+    /** 关注我的用户*/
+    public BmobRelation mAttentionEd;
 }
