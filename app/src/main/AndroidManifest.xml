@@ -25,7 +25,8 @@
     <!-- 接收短信-->
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
-
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     //地图包、搜索包需要的基础权限
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -161,6 +162,8 @@
             android:label="用户引导页" />
         <activity android:name="com.geo.power.ui.activity.PlanAlarmActivity"
             android:label="计划任务提醒"></activity>
+        <activity android:name="com.geo.power.ui.activity.UserProfileActivity"
+            android:label="用户名片"/>
         <!-- 选择图片-->
         <activity android:name="com.yongchun.library.view.ImageSelectorActivity"></activity>
         <activity android:name="com.yongchun.library.view.ImagePreviewActivity"></activity>

@@ -39,6 +39,7 @@ import com.geo.com.geo.power.bean.UserInfo;
 import com.geo.com.geo.power.util.ScreenUtil;
 import com.geo.power.ui.activity.DiscoverDetailActivity;
 import com.geo.power.ui.activity.MainActivity;
+import com.geo.power.ui.activity.UserProfileActivity;
 import com.github.lazylibrary.util.DateUtil;
 import com.github.lazylibrary.util.SerializeUtils;
 import com.github.lazylibrary.util.ToastUtils;
@@ -155,6 +156,7 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
         List<PlanInfo> mInfos = (List<PlanInfo>) SerializeUtils.deserialization(mContext, Constants.CACHE_HOME_DATA_FILENAME);
         if (mInfos != null) {
             mPlanDataList.addAll(mInfos);
+            mAdapter.notifyDataSetChanged();
         } else {
             loadData(true);
         }
@@ -512,6 +514,15 @@ public class HomeFragment extends BaseFragment implements MainActivity.LoadCallb
                 public void onClick(View v) {
 
                     showOPMoreDialog(info);
+                }
+            });
+            holder.mUserIm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    intent.setClass(mContext, UserProfileActivity.class);
+                    intent.putExtra("user",info.author);
+                    startActivity(intent);
                 }
             });
             final TextView temp = holder.mZan;

@@ -5,14 +5,12 @@
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/material_teal_800"
-            android:fitsSystemWindows="true"
-            android:theme="@style/ToolBarStyle"
-            app:titleMargins="-2dp">
-
-        </android.support.v7.widget.Toolbar>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/material_teal_800"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ToolBarStyle"
+        app:titleMargins="-2dp"></android.support.v7.widget.Toolbar>
 </android.support.design.widget.CoordinatorLayout>

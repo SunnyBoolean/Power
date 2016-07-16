@@ -409,10 +409,11 @@ public void setAlarm(){
             return;
         }
         showProgress();
+        UserInfo  user= BmobUser.getCurrentUser(mContext, UserInfo.class);
         mAddPlanInfo.startDate = DateUtil.getCurDateOnlyDay();
         mAddPlanInfo.content = mContentInputEt.getText().toString();
-        mAddPlanInfo.author = BmobUser.getCurrentUser(mContext, UserInfo.class);
-        mAddPlanInfo.uid = BmobUser.getCurrentUser(mContext, UserInfo.class).getObjectId();
+        mAddPlanInfo.author = user;
+        mAddPlanInfo.uid = user.getObjectId();
         int totalDay = DateUtil.daysBetween(mAddPlanInfo.startDate, mAddPlanInfo.completeDate, "yyyy-MM-dd");
         mAddPlanInfo.plantotalDay = totalDay;
         //如果没有图片就直接上报内容

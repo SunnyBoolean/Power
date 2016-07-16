@@ -412,32 +412,20 @@ public class DiscoverDetailActivity extends BaseActivity {
             holder.addFavorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                 final UserInfo user = UserInfo.getCurrentUser(mContext,UserInfo.class);
+                    mBottomSheetDialog.dismiss();
+                    final UserInfo user = UserInfo.getCurrentUser(mContext, UserInfo.class);
                     BmobRelation rel1 = new BmobRelation();
-                    rel1.add(user);
-                    info.mAttention = rel1;
-                    info.update(mContext, new UpdateListener() {
+                    rel1.add(info);
+                    user.mAttention = rel1;
+                    user.update(mContext, new UpdateListener() {
                         @Override
                         public void onSuccess() {
-                            BmobRelation rel2 = new BmobRelation();
-                            rel2.add(info);
-                            user.mAttentionEd = rel2;
-                            user.update(mContext, new UpdateListener() {
-                                @Override
-                                public void onSuccess() {
-                                    showSnackBar("关注成功");
-                                }
-
-                                @Override
-                                public void onFailure(int i, String s) {
-                                    showSnackBar("关注失败"+s);
-                                }
-                            });
+                            showSnackBar("关注成功");
                         }
 
                         @Override
                         public void onFailure(int i, String s) {
-                            showSnackBar("关注失败"+s);
+                            showSnackBar("关注失败" + s);
                         }
                     });
 
