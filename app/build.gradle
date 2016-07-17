@@ -38,8 +38,6 @@ dependencies {
     //以下是ButterKnife注入依赖库需要
     //Bmob SDK
     //compile 'cn.bmob.android:bmob-sdk:3.4.7-aar'
-    //bmob-push：Bmob的推送包
-    compile 'cn.bmob.android:bmob-push:0.8'
     //bmob-im：Bmob的即时通讯包，注意每个版本的im依赖特定版本的bmob-sdk，具体的依赖关系可查看下面注释[2]
     compile 'cn.bmob.android:bmob-im:2.0.5@aar'
     compile 'cn.bmob.android:bmob-sdk:3.4.7-aar'
@@ -68,4 +66,6 @@ dependencies {
     compile files('libs/MobTools-2016.0303.1229.jar')
     compile project(':SMSSDK')
     compile project(':lazylibrary')
+    compile files('libs/Bmob_Push_V1.0.0beta_20160627.jar')
+    compile files('libs/gson-2.3.1.jar')
 }

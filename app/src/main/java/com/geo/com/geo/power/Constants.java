@@ -30,4 +30,19 @@ public final class Constants {
         //注册时，手机号已经被注册，会返回此错误
         public final static int PHONENUMBER_EXIT = 209;
     }
+
+    /**
+     * 收到推送时的code
+     */
+    public final static class PushCode{
+        /**计划被赞之后会收到此通知的code*/
+        public final static int PUSH_CODE_ZAN = 101;
+        /**计划被评论后收到通知的code*/
+        public final static int PUSH_CODE_COMMENT=102;
+        /**计划被别人加入时会收到此code*/
+        public final static int PUSH_CODE_JOINPLAN=103;
+        /**有人帮你实现了心愿时的codecode*/
+        public final static int PUSH_CODE_DREAMCOMPL=104;
+
+    }
 }

@@ -40,11 +40,13 @@ public class UserProfileActivity extends BaseActivity {
         mToolBar = (Toolbar) findViewById(R.id.user_profiletoolbar);
         if(mUserInfo!=null){
             mCollapsingToolbarLayout.setTitle(mUserInfo.getUsername());
+            mCollapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
+            mCollapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);
         }
         setSupportActionBar(mToolBar);
 //        mToolBar.setNavigationIcon(R.drawable.back); //设置导航按钮，典型的就是返回箭头
-//        int color = Color.parseColor("#FFFFFF");
-//        mToolBar.setTitleTextColor(getResources().getColor(R.color.material_white));  //设置标题字体颜色
+        int color = Color.parseColor("#FFFFFF");
+        mToolBar.setTitleTextColor(getResources().getColor(R.color.material_white));  //设置标题字体颜色
 //        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

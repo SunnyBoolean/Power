@@ -16,8 +16,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.geo.com.geo.power.Constants;
 import com.geo.com.geo.power.bean.CommentInfo;
+import com.geo.com.geo.power.bean.DevicesInstallation;
 import com.geo.com.geo.power.bean.PlanInfo;
+import com.geo.com.geo.power.bean.PushInfo;
 import com.geo.com.geo.power.bean.UserInfo;
 import com.geo.com.geo.power.util.ScreenUtil;
 import com.github.lazylibrary.util.DateUtil;
@@ -28,6 +31,7 @@ import com.rey.material.app.BottomSheetDialog;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.BmobPushManager;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobPointer;
@@ -86,7 +90,7 @@ public class DiscoverDetailActivity extends BaseActivity {
             mCommentContainer.setVisibility(View.GONE);
         }
         //用户头像
-        if(!TextUtils.isEmpty(mPlanInfo.author.uimg)){
+        if (!TextUtils.isEmpty(mPlanInfo.author.uimg)) {
             DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                     .cacheInMemory(true)
                     .cacheOnDisk(true)
@@ -106,7 +110,7 @@ public class DiscoverDetailActivity extends BaseActivity {
         } else {
             mLocationTv.setText(mPlanInfo.locationArrd + "");
         }
-        mUsernameTv.setText(mPlanInfo.author.getUsername()+"");
+        mUsernameTv.setText(mPlanInfo.author.getUsername() + "");
         mContentTv.setText(mPlanInfo.content);
         mHistoryTotalTv.setText("动态(" + mPlanInfo.hadDotimes + ")");
         mVisitorTv.setText("参与者(" + mPlanInfo.dovisition + ")");
@@ -169,7 +173,7 @@ public class DiscoverDetailActivity extends BaseActivity {
         query.findObjects(mContext, new FindListener<UserInfo>() {
             @Override
             public void onSuccess(List<UserInfo> list) {
-                if (list != null){
+                if (list != null) {
                     mVisitorDatas.addAll(list);
                     mVisitorAdapter.notifyDataSetChanged();
                 }
@@ -200,9 +204,9 @@ public class DiscoverDetailActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.discover_plan_detail_visitortotal://参与者
-                if(mVisitorDatas.size()==0){
+                if (mVisitorDatas.size() == 0) {
                     showSnackBar("还没有人参与此计划！");
-                }else{
+                } else {
                     showBottomSheetForVisitor();
                 }
                 break;
@@ -226,7 +230,7 @@ public class DiscoverDetailActivity extends BaseActivity {
     }
 
     private void sendComment() {
-        UserInfo user = BmobUser.getCurrentUser(this, UserInfo.class);
+        final UserInfo user = BmobUser.getCurrentUser(this, UserInfo.class);
         CommentInfo comment = new CommentInfo();
         comment.commentContent = mCommentEt.getText().toString();
         comment.commentTime = DateUtil.getCurDateStr();
@@ -242,14 +246,25 @@ public class DiscoverDetailActivity extends BaseActivity {
                 mPlanInfo.increment("commentToal");  //评论总数+1
                 mPlanInfo.update(mContext);
                 mCommentEt.setText("");
+                PushInfo push = new PushInfo();
+                String pmsg = PushInfo.beanToJson(mContext, Constants.PushCode.PUSH_CODE_COMMENT, mPlanInfo.author.getUsername() + "评论了您");
+                pushComment(pmsg, mPlanInfo.author.getObjectId());
             }
 
             @Override
             public void onFailure(int i, String s) {
                 showToast("评论失败：" + s);
-                showSnackBar("评论失败！稍后重试"+s);
+                showSnackBar("评论失败！稍后重试" + s);
             }
         });
+    }
+
+    public void pushComment(String json, String uid) {
+        BmobPushManager bmobPush = new BmobPushManager(this);
+        BmobQuery<DevicesInstallation> query = DevicesInstallation.getQuery();
+        query.addWhereEqualTo("uid", uid);
+        bmobPush.setQuery(query);
+        bmobPush.pushMessage(json);
     }
 
     private void initData() {

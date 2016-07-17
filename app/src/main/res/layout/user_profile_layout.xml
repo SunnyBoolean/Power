@@ -9,6 +9,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
+        android:id="@+id/userprofile_appbar"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
@@ -35,7 +36,7 @@
                 android:fitsSystemWindows="true"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+                android:theme="@style/ToolBarStyle" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -67,9 +68,11 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabBtn"
+        app:layout_anchor="@id/userprofile_appbar"
+        app:layout_anchorGravity="bottom|right|end"
         android:layout_width="wrap_content"
+        android:clickable="true"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
         android:src="@drawable/ic_plus"

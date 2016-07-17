@@ -36,6 +36,7 @@ import com.geo.power.ui.fragment.DiscoverFragment;
 import com.geo.power.ui.fragment.HomeDongtaiFragment;
 import com.geo.power.ui.fragment.HomeFragment;
 import com.geo.power.ui.fragment.PersonalCenterFragment;
+import com.geo.power.ui.service.CommonService;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rey.material.app.BottomSheetDialog;
@@ -65,6 +66,10 @@ public class MainActivity extends HomeBaseActivity {
         super.onCreate(savedInstanceState);
         PLog(P_TAG, "子类类onCreate()");
         setContentView(R.layout.activity_main, false);
+
+        Intent intent = new Intent();
+        intent.setClass(this, CommonService.class);
+        startService(intent);
 //        setContentView(R.layout.activity_main);
 
     }
