@@ -13,7 +13,7 @@ public final class Constants {
     public static final String MOB_APP_SECRET = "deb251cfb33d859fd0eab0a8ee8163ba";
 
 
-    /** SharedPreference存储的文件名称*/
+        /** SharedPreference存储的文件名称*/
     public static final String SP_NAME = "power_sp";
     /** 是否是第一次使用，如果是第一次使用需要引导页面*/
     public static final String SP_KEY_ISFIRSTUSE = "sp_isfirst_use";
@@ -21,6 +21,10 @@ public final class Constants {
     public static final String SP_KEY_ISLOGINEd = "sp_islogined";
     /** 首页缓存的数据文件名*/
     public static final String CACHE_HOME_DATA_FILENAME = "homedata.cache";
+    /** 我的计划缓存数据*/
+    public static final String CACHE_MYPLAN_DATA_FILENAME="myplandata.cache";
+    /**我参与的计划缓存数据*/
+    public static final String CACHE_MYJOINPLAN_DATA_FILENAME="myjoinplandata.cache";
 
 
     /**

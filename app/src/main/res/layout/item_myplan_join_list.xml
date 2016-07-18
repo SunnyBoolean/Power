@@ -71,9 +71,10 @@
             android:layout_marginTop="10dp"
             android:paddingLeft="10dp"
             android:ellipsize="end"
+            android:textColor="@color/material_black"
             android:textSize="@dimen/textSize_normal"
             android:maxLines="3"
-            android:text="      今天很受打击啊，面个试还被嫌弃长得肥，我长得胖出的多又没吃你家饭！我决定要努力运动减肥！不瘦到150斤就一直减！" />
+            android:text="" />
 
         <ImageView
             android:id="@+id/home_myjoinplan_item_img_gridview"

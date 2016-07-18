@@ -51,7 +51,7 @@
         android:drawablePadding="15dp"
         android:gravity="center_vertical"
         android:paddingLeft="15dp"
-        android:text="习惯壁纸"
+        android:text="桌面提醒"
         android:textSize="@dimen/textSize_normal" />
 
 
@@ -67,6 +67,7 @@
         android:layout_height="66dp"
         android:background="@color/add_longplan_item_selec"
         android:drawableLeft="@drawable/home_addplanlong_note"
+        android:visibility="gone"
         android:drawablePadding="15dp"
         android:gravity="center_vertical"
         android:paddingLeft="15dp"

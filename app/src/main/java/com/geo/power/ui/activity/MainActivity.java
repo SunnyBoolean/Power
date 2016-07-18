@@ -253,6 +253,7 @@ public class MainActivity extends HomeBaseActivity {
         mSettingBtn.setOnClickListener(this);
         mAboutBtn.setOnClickListener(this);
         mDongtaiBtn.setOnClickListener(this);
+        mUserImage.setOnClickListener(this);
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -319,6 +320,13 @@ public class MainActivity extends HomeBaseActivity {
                 break;
             case R.id.home_addplan:  //添加计划:
                 showBottomSheet();
+                break;
+            case R.id.homemain_uimgs:  //点击图像跳转到资料设置界面
+                intent.setClass(mContext, UserProfileActivity.class);
+                //是否是自己，因为和别的用户点击查看用户资料的界面是公用的
+                intent.putExtra("isSelfe",true);
+                intent.putExtra("user",UserInfo.getCurrentUser(mContext,UserInfo.class));
+                startActivity(intent);
                 break;
         }
     }
@@ -445,16 +453,7 @@ public class MainActivity extends HomeBaseActivity {
                 startActivity(intent);
             }
         });
-        //随想笔记
-        View sxbj = content.findViewById(R.id.home_addplan_sxbj);
-        sxbj.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBottomSheetDialog.dismiss();
-                Intent intent = new Intent(mContext, AddNoteActivity.class);
-                startActivity(intent);
-            }
-        });
+
         mBottomSheetDialog.contentView(content)
                 .show();
     }

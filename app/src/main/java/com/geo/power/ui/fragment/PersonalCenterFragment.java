@@ -12,7 +12,6 @@ import com.geo.com.geo.power.util.DensityUtil;
 import com.geo.power.ui.activity.DreamListActivity;
 import com.geo.power.ui.activity.MessageNotificationActivity;
 import com.geo.power.ui.activity.MyFavoriteActivity;
-import com.geo.power.ui.activity.NoteListActivity;
 import com.geo.power.ui.activity.SuggestionActivity;
 import com.geo.widget.BadgeView;
 
@@ -67,10 +66,7 @@ public class PersonalCenterFragment extends BaseFragment {
         super.handlerClick(view);
         Intent intent = new Intent();
         switch (view.getId()) {
-            case R.id.personal_my_note:   //随想笔记
-                intent.setClass(mContext, NoteListActivity.class);
-                startActivity(intent);
-                break;
+
             case R.id.personal_yjfk:  //意见反馈
                 intent.setClass(mContext, SuggestionActivity.class);
                 startActivity(intent);

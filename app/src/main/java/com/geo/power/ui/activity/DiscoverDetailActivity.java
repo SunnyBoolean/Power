@@ -89,6 +89,13 @@ public class DiscoverDetailActivity extends BaseActivity {
         if (userinfo.getObjectId().equals(mPlanInfo.uid)) {
             mCommentContainer.setVisibility(View.GONE);
         }
+        mUserImgIm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext,UserProfileActivity.class);
+                startActivity(intent);
+            }
+        });
         //用户头像
         if (!TextUtils.isEmpty(mPlanInfo.author.uimg)) {
             DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
@@ -364,7 +371,13 @@ public class DiscoverDetailActivity extends BaseActivity {
             holder.contentTv.setText(info.commentContent);
             holder.createtimeTv.setText(info.commentTime);
             holder.usernameTv.setText(info.mUserInfo.getUsername());
-
+            holder.uImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext,UserProfileActivity.class);
+                    startActivity(intent);
+                }
+            });
             //设置用户头像
             DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                     .cacheInMemory(true)
@@ -453,7 +466,13 @@ public class DiscoverDetailActivity extends BaseActivity {
                     .cacheOnDisk(true)
                     .build();
             ImageLoader.getInstance().displayImage(info.uimg, holder.uImg, defaultOptions);
-
+            holder.uImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, UserProfileActivity.class);
+                    startActivity(intent);
+                }
+            });
             return convertView;
         }
 

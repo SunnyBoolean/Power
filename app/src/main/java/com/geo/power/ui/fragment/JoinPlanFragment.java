@@ -15,12 +15,15 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.geo.com.geo.power.Constants;
 import com.geo.com.geo.power.bean.PlanInfo;
 import com.geo.com.geo.power.bean.UserInfo;
 import com.geo.power.ui.activity.DiscoverDetailActivity;
 import com.geo.power.ui.activity.EditPlanActivity;
 import com.geo.power.ui.activity.MyPlanActivity;
 import com.geo.power.ui.activity.MyPlanDetailActivity;
+import com.geo.power.ui.activity.UserProfileActivity;
+import com.github.lazylibrary.util.SerializeUtils;
 import com.github.lazylibrary.util.ToastUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -131,7 +134,16 @@ public class JoinPlanFragment extends BaseFragment {
         mFooterView = View.inflate(mContext, R.layout.myplan_list_footer, null);
         mFooterView.setVisibility(View.GONE);
         initSwipeRefresh();
-        loadData(true);
+
+
+        //首先回去从缓存读取首页数据，如果缓存没有找到就去加载
+        List<PlanInfo> mInfos = (List<PlanInfo>) SerializeUtils.deserialization(mContext, Constants.CACHE_MYJOINPLAN_DATA_FILENAME);
+        if (mInfos != null) {
+            mPlanData.addAll(mInfos);
+            mPlanAdapter.notifyDataSetChanged();
+        } else {
+            loadData(true);
+        }
     }
 
     private void initSwipeRefresh() {
@@ -140,11 +152,6 @@ public class JoinPlanFragment extends BaseFragment {
                 R.color.material_indigo_900,
                 R.color.material_teal_900);
         swipeRefreshLayout.setSize(SwipeRefreshLayout.LARGE);
-//        swipeRefreshLayout.setProgressBackgroundColor(R.color.material_white);
-//        swipeRefreshLayout.setPadding(20, 20, 20, 20);
-//        swipeRefreshLayout.setProgressViewOffset(true, 100, 200);
-//        swipeRefreshLayout.setDistanceToTriggerSync(50);
-//        swipeRefreshLayout.setProgressViewEndTarget(true, 100);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -153,8 +160,6 @@ public class JoinPlanFragment extends BaseFragment {
                 loadData(true);
             }
         });
-        //一进来就开始刷新
-        swipeRefreshLayout.setRefreshing(true);
     }
 
     /**
@@ -163,6 +168,10 @@ public class JoinPlanFragment extends BaseFragment {
      * @param isrefresh true表示刷新，false表示加载更多
      */
     private void loadData(final boolean isrefresh) {
+        if(isrefresh){
+            //一进来就开始刷新
+            swipeRefreshLayout.setRefreshing(true);
+        }
         mMyPlanListView.addFooterView(mFooterView);
         BmobQuery<PlanInfo> query = new BmobQuery<PlanInfo>();
 //查询我的
@@ -196,6 +205,7 @@ public class JoinPlanFragment extends BaseFragment {
                     mMyPlanListView.removeFooterView(mFooterView);
                 }
                 mPlanData.addAll(object);
+                SerializeUtils.serialization(mContext, Constants.CACHE_MYJOINPLAN_DATA_FILENAME, object);
                 mPlanAdapter.notifyDataSetChanged();
             }
 
@@ -292,6 +302,14 @@ public class JoinPlanFragment extends BaseFragment {
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, EditPlanActivity.class);
                     intent.putExtra("plan_info", info);
+                    startActivity(intent);
+                }
+            });
+            holder.mUimg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, UserProfileActivity.class);
+                    intent.putExtra("user",info.author);
                     startActivity(intent);
                 }
             });
