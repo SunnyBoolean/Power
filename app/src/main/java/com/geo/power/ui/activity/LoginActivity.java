@@ -105,7 +105,6 @@ public class LoginActivity extends BaseActivity {
 
                 finish();
             }
-
             @Override
             public void onFailure(int i, String s) {
                 showToast("错误："+s+i);

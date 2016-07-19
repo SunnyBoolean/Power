@@ -91,7 +91,7 @@ public class MainActivity extends HomeBaseActivity {
         mSpinner = (Spinner) findViewById(R.id.spinner_labels);
        View header = mNavigationView.getHeaderView(0);
         mUserImage = (ImageView) header.findViewById(R.id.homemain_uimgs);
-        mUserName = (TextView) header.findViewById(R.id.homemain_unamesd);
+//        mUserName = (TextView) header.findViewById(R.id.homemain_unamesd);
         changedRadioButtonByClick(mHomeBtn);
         setSlideMenuWidth();
         initUser();
