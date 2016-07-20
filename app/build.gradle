@@ -11,7 +11,7 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
+       multiDexEnabled true
     }
     buildTypes {
         release {
@@ -27,6 +27,9 @@ android {
         packagingOptions {
             exclude 'assets/lineDashTexture.png'
         }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
 }
 
 ext{
@@ -68,13 +71,10 @@ dependencies {
     compile project(':lazylibrary')
     compile files('libs/Bmob_Push_V1.0.0beta_20160627.jar')
     compile files('libs/gson-2.3.1.jar')
+   compile 'com.android.support:multidex:1.0.0'
+      configurations {
+          all*.exclude group: 'com.android.support', module: 'support-v4'
+          all*.exclude group: 'com.android.support', module: 'support-annotations'
+      }
     compile project(':easeui')
-    compile 'com.android.support:multidex:1.0.0'
-    compile('com.anthonycr.grant:permissions:1.0') {
-        exclude module: 'support-v4'
-    }
-    configurations {
-        all*.exclude group: 'com.android.support', module: 'support-v4'
-        all*.exclude group: 'com.android.support', module: 'support-annotations'
-    }
 }

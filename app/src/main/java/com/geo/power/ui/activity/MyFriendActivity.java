@@ -9,6 +9,8 @@ import android.support.v4.view.ViewPager;
 
 import com.geo.power.ui.fragment.MesgConversionFragment;
 import com.geo.power.ui.fragment.MyFriendFragment;
+import com.hyphenate.easeui.ui.EaseContactListFragment;
+import com.hyphenate.easeui.ui.EaseConversationListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +24,16 @@ public class MyFriendActivity extends BaseActivity {
     private final String[] mTabTitle = {"消息", "好友"};
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
+    private EaseConversationListFragment conversationListFragment;
+    private EaseContactListFragment contactListFragment;
+    String msl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.myfriend_layout);
+
+
+
     }
 
     /**
@@ -37,7 +45,8 @@ public class MyFriendActivity extends BaseActivity {
         mViewPager = (ViewPager) findViewById(R.id.myfriend_list_viewpager);
         mTabLayout = (TabLayout) findViewById(R.id.myfriend_list_tablayout);
 
-
+        conversationListFragment = new EaseConversationListFragment();
+        contactListFragment = new EaseContactListFragment();
 
 
         //设置Tab的模式
@@ -46,8 +55,10 @@ public class MyFriendActivity extends BaseActivity {
         mTabLayout.addTab(mTabLayout.newTab().setText(mTabTitle[0]));
         mTabLayout.addTab(mTabLayout.newTab().setText(mTabTitle[1]));
         List<Fragment> list = new ArrayList<Fragment>();
-        list.add(MesgConversionFragment.getmInstance());
-        list.add(MyFriendFragment.getmInstance());
+//        list.add(MesgConversionFragment.getmInstance());
+//        list.add(MyFriendFragment.getmInstance());
+        list.add(conversationListFragment);
+        list.add(contactListFragment);
         FragmentManager fm = getSupportFragmentManager();
         PlanFragmentAdapter adapter = new PlanFragmentAdapter(fm, list, mTabTitle);
         mViewPager.setAdapter(adapter);

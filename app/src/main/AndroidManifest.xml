@@ -156,6 +156,8 @@
         <activity
             android:name="com.geo.power.ui.activity.UserProfileActivity"
             android:label="用户名片" />
+        <activity android:name="com.geo.power.ui.activity.MyFriendActivity"
+            android:label="好友"/>
         <!-- 选择图片-->
         <activity android:name="com.yongchun.library.view.ImageSelectorActivity"></activity>
         <activity android:name="com.yongchun.library.view.ImagePreviewActivity"></activity>

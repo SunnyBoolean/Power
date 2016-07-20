@@ -8,6 +8,8 @@ import android.content.Intent;
 import com.geo.com.geo.power.Constants;
 import com.geo.com.geo.power.CrashHandler;
 import com.geo.power.ui.service.CommonService;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMOptions;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -91,13 +93,13 @@ public class PowerApplication extends Application {
      * 初始化环信即使通讯
      */
     private void initHuanxin(){
-//        EMOptions options = new EMOptions();
-//// 默认添加好友时，是不需要验证的，改成需要验证
-//        options.setAcceptInvitationAlways(false);
-////初始化
-//        EMClient.getInstance().init(this, options);
-////在做打包混淆时，关闭debug模式，避免消耗不必要的资源
-//        EMClient.getInstance().setDebugMode(true);
+        EMOptions options = new EMOptions();
+// 默认添加好友时，是不需要验证的，改成需要验证
+        options.setAcceptInvitationAlways(false);
+//初始化
+        EMClient.getInstance().init(this, options);
+//在做打包混淆时，关闭debug模式，避免消耗不必要的资源
+        EMClient.getInstance().setDebugMode(true);
     }
 
 
