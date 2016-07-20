@@ -22,7 +22,7 @@ import ui.geo.com.power.R;
  */
 public class PersonalCenterFragment extends BaseFragment {
     private static PersonalCenterFragment mInstance;
-    private View mNoteBtn, mYjfkBtn, mMessageBtn, mDreamPingziBtn,mMyFavorite;
+    private View mMyFriendBtn, mYjfkBtn, mMessageBtn, mDreamPingziBtn,mMyFavorite;
 
     public static PersonalCenterFragment getInstance() {
         if (mInstance == null) {
@@ -35,7 +35,7 @@ public class PersonalCenterFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View content = View.inflate(mContext, R.layout.profile_setting, null);
-        mNoteBtn = content.findViewById(R.id.personal_my_note);
+        mMyFriendBtn = content.findViewById(R.id.personal_my_friend);
         mYjfkBtn = content.findViewById(R.id.personal_yjfk);
         mMessageBtn = content.findViewById(R.id.personal_xiaoxibutton);
         mDreamPingziBtn = content.findViewById(R.id.personal_dream_pingzi);
@@ -54,7 +54,7 @@ public class PersonalCenterFragment extends BaseFragment {
     }
 
     private void initListener() {
-        mNoteBtn.setOnClickListener(this);
+        mMyFriendBtn.setOnClickListener(this);
         mYjfkBtn.setOnClickListener(this);
         mMessageBtn.setOnClickListener(this);
         mDreamPingziBtn.setOnClickListener(this);
@@ -66,7 +66,8 @@ public class PersonalCenterFragment extends BaseFragment {
         super.handlerClick(view);
         Intent intent = new Intent();
         switch (view.getId()) {
-
+            case R.id.personal_my_friend:   //我的好友
+                break;
             case R.id.personal_yjfk:  //意见反馈
                 intent.setClass(mContext, SuggestionActivity.class);
                 startActivity(intent);

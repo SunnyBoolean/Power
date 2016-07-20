@@ -2,9 +2,7 @@ package com.geo.power.ui.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,12 +11,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.geo.com.geo.power.bean.MessageListInfo;
-import com.geo.refresh.PullToRefreshBase;
-import com.geo.refresh.PullToRefreshListView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import ui.geo.com.power.R;
@@ -28,7 +23,6 @@ import ui.geo.com.power.R;
  * 消息
  */
 public class MessageNotificationActivity extends BaseActivity {
-    private PullToRefreshListView mRefreshListView;
     private ListView mListView;
     private boolean mIsStart = true;
     private int mCurIndex = 0;
@@ -48,7 +42,7 @@ public class MessageNotificationActivity extends BaseActivity {
     @Override
     protected void initCompontent() {
         super.initCompontent();
-        mRefreshListView = (PullToRefreshListView) findViewById(R.id.messagenotif_listview);
+        mListView = (ListView) findViewById(R.id.messagenotif_listview);
         initData();
     }
 
@@ -76,36 +70,14 @@ public class MessageNotificationActivity extends BaseActivity {
     private void initData() {
 
         mAdapter = new MessageAdapter();
-        mListView = mRefreshListView.getRefreshableView();
         mListView.setAdapter(mAdapter);
         // 是否有更多数据，
         boolean hasMoreData = false;
-        // 刷新完毕
-        mRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-            // 下拉刷新
-            @Override
-            public void onPullDownToRefresh(
-                    PullToRefreshBase<ListView> refreshView) {
-                mIsStart = true;
-                initDataNet();
-                showToast("开始刷新");
-            }
-
-            @Override
-            public void onPullUpToRefresh(
-                    PullToRefreshBase<ListView> refreshView) {
-                // 上啦会加载更多
-                mIsStart = false;
-            }
-        });
-
         setLastUpdateTime();
-        mRefreshListView.doPullRefreshing(true, 100);
     }
 
     private void setLastUpdateTime() {
         String text = formatDateTime(System.currentTimeMillis());
-        mRefreshListView.setLastUpdatedLabel(text);
     }
 
     @Override
@@ -177,9 +149,6 @@ public class MessageNotificationActivity extends BaseActivity {
     }
 
     private void finishRefresh() {
-        mRefreshListView.onPullDownRefreshComplete();
-        mRefreshListView.onPullUpRefreshComplete();
-        mRefreshListView.setHasMoreData(false);
         setLastUpdateTime();
     }
 }

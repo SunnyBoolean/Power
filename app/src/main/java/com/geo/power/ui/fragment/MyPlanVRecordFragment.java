@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.geo.com.geo.power.bean.PlanHistoryInfo;
 import com.geo.com.geo.power.bean.PlanInfo;
 import com.geo.com.geo.power.bean.UserInfo;
-import com.geo.power.ui.activity.ImageShowActivity;
 import com.github.lazylibrary.util.DateUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -168,13 +167,6 @@ public class MyPlanVRecordFragment extends BaseFragment {
             }
             if (position % 3 != 0) {
                 holder.imgGridView.setAdapter(new GridAdapter());
-                holder.imgGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(mContext, ImageShowActivity.class);
-                        startActivity(intent);
-                    }
-                });
             }
             String time = info.getCreatedAt();
             Calendar cal = DateUtil.str2Calendar(time, "yyyy-MM-dd HH:mm:ss");

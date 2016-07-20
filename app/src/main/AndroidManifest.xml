@@ -6,16 +6,12 @@
     <uses-permission android:name="ANDROID.PERMISSION.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="ANDROID.PERMISSION.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="ANDROID.PERMISSION.CAMERA" />
-    <!--允许联网 -->
-    <uses-permission android:name="android.permission.INTERNET" />
     <!--获取GSM（2g）、WCDMA（联通3g）等网络状态的信息  -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!--获取wifi网络状态的信息 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!--保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!--获取sd卡写的权限，用于文件上传和下载-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!--允许读取手机状态 用于创建BmobInstallation-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 联网 -->
@@ -35,7 +31,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <application
         android:name="com.geo.power.ui.PowerApplication"
         android:allowBackup="true"
@@ -84,7 +83,6 @@
         <activity
             android:name="com.geo.power.ui.activity.AboutActivity"
             android:label="关于" />
-        <activity android:name="com.geo.power.ui.activity.ImageShowActivity" />
         <activity
             android:name="com.geo.power.ui.activity.SearchActivity"
             android:label="搜索" />
@@ -99,9 +97,6 @@
             android:label="长期计划"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity
-            android:name="com.geo.power.ui.activity.AddNoteActivity"
-            android:label="随想笔记"></activity>
-        <activity
             android:name="com.geo.power.ui.activity.AddWallpaperActivity"
             android:label="习惯壁纸"></activity>
         <activity
@@ -111,12 +106,7 @@
             android:name="com.geo.power.ui.activity.AddLongPlanLocationActivity"
             android:label="选择位置"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.geo.power.ui.activity.NoteListActivity"
-            android:label="笔记列表" />
-        <activity
-            android:name="com.geo.power.ui.activity.NoteDetailActivity"
-            android:label="笔记详情" />
+
         <activity
             android:name="com.geo.power.ui.activity.SuggestionActivity"
             android:label="意见反馈" />
@@ -178,6 +168,8 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
 
+        <!--////////以下是Bmob的推送服务 -->
+
         <service
             android:name="cn.bmob.push.lib.service.PushService"
             android:exported="true"
@@ -222,6 +214,27 @@
                 <action android:name="cn.bmob.push.action.NOTIFY" />
             </intent-filter>
         </receiver>
+
+
+        <!-- 以下是环信的即使通讯服务-->
+        <!-- 设置环信应用的AppKey -->
+        <meta-data android:name="EASEMOB_APPKEY"  android:value="geostar-lw#power" />
+        <!-- 声明SDK所需的service SDK核心功能-->
+        <service android:name="com.hyphenate.chat.EMChatService" android:exported="true"/>
+        <!-- 声明SDK所需的receiver -->
+        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <data android:scheme="package"/>
+            </intent-filter>
+            <!-- 可选filter -->
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+
+
 
         <service android:name="com.geo.power.ui.service.CommonService"></service>
     </application>

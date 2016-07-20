@@ -24,8 +24,6 @@ import android.widget.Toast;
 import com.geo.com.geo.power.bean.DreamInfo;
 import com.geo.com.geo.power.util.DensityUtil;
 import com.geo.com.geo.power.util.ScreenUtil;
-import com.geo.refresh.PullToRefreshBase;
-import com.geo.refresh.PullToRefreshListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +37,6 @@ import static android.view.View.SCROLL_AXIS_NONE;
  * 发现漂流瓶子
  */
 public class DiscoverDreamActivity extends BaseActivity {
-    private PullToRefreshListView mRefreshListView;
     private ListView mListView;
     private boolean mIsStart = true;
     private int mCurIndex = 0;
@@ -59,7 +56,7 @@ public class DiscoverDreamActivity extends BaseActivity {
     @Override
     protected void initCompontent() {
         super.initCompontent();
-        mRefreshListView = (PullToRefreshListView) findViewById(R.id.discoverdream_listview);
+        mListView = (ListView) findViewById(R.id.discoverdream_listview);
         initData();
     }
 
@@ -70,7 +67,6 @@ public class DiscoverDreamActivity extends BaseActivity {
             mDreamDatas.clear();
         }
         mAdapter = new DreamAdapter(mDreamDatas);
-        mListView = mRefreshListView.getRefreshableView();
         mListView.setDivider(null);
         mListView.setVerticalScrollBarEnabled(false);
         mListView.setHorizontalScrollBarEnabled(false);
@@ -78,27 +74,8 @@ public class DiscoverDreamActivity extends BaseActivity {
 
         // 是否有更多数据，
         boolean hasMoreData = false;
-        // 刷新完毕
-        mRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-            // 下拉刷新
-            @Override
-            public void onPullDownToRefresh(
-                    PullToRefreshBase<ListView> refreshView) {
-                mIsStart = true;
-                initDataNet();
-                showToast("开始刷新");
-            }
-
-            @Override
-            public void onPullUpToRefresh(
-                    PullToRefreshBase<ListView> refreshView) {
-                // 上啦会加载更多
-                mIsStart = false;
-            }
-        });
 
         setLastUpdateTime();
-        mRefreshListView.doPullRefreshing(true, 100);
 
     }
 
@@ -112,7 +89,6 @@ public class DiscoverDreamActivity extends BaseActivity {
 
     private void setLastUpdateTime() {
         String text = formatDateTime(System.currentTimeMillis());
-        mRefreshListView.setLastUpdatedLabel(text);
     }
 
     private class DreamAdapter extends BaseAdapter {
