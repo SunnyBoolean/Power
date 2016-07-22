@@ -37,6 +37,9 @@ import com.geo.power.ui.fragment.HomeDongtaiFragment;
 import com.geo.power.ui.fragment.HomeFragment;
 import com.geo.power.ui.fragment.PersonalCenterFragment;
 import com.geo.power.ui.service.CommonService;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rey.material.app.BottomSheetDialog;
@@ -71,9 +74,50 @@ public class MainActivity extends HomeBaseActivity {
         intent.setClass(this, CommonService.class);
         startService(intent);
 //        setContentView(R.layout.activity_main);
+        login();
+
+    }
+private void login(){
+    Intent intent = getIntent();
+    UserInfo us = UserInfo.getCurrentUser(mContext,UserInfo.class);
+    String users = us.getUsername();
+    String user = "";
+    String paswd = intent.getStringExtra("paswd");
+    if("泼墨".equals(users)){
+        user="abc";
+        paswd = "123";
+    }else{
+        user="def";
+        paswd="456";
 
     }
 
+    try {
+        EMClient.getInstance().createAccount(user, paswd);//同步方法
+
+    } catch (HyphenateException e) {
+        e.printStackTrace();
+    }
+
+
+    EMClient.getInstance().login(user, paswd, new EMCallBack() {//回调
+        @Override
+        public void onSuccess() {
+            EMClient.getInstance().groupManager().loadAllGroups();
+            EMClient.getInstance().chatManager().loadAllConversations();
+        }
+
+        @Override
+        public void onProgress(int progress, String status) {
+
+        }
+
+        @Override
+        public void onError(int code, String message) {
+        }
+
+    });
+}
     @Override
     protected void initCompontent() {
         PLog(P_TAG, "子类initCompontent()");

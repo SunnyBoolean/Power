@@ -14,7 +14,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -41,7 +43,7 @@ import ui.geo.com.power.R;
  * Created by Administrator on 2016/5/13.
  * 所有Activity的基类
  */
-public class BaseActivity extends AppCompatActivity implements View.OnClickListener, BaseFragment.TaskCallback {
+public class BaseActivity extends AppCompatActivity implements View.OnClickListener, BaseFragment.TaskCallback{
     public Toolbar mToolBar;
     public Context mContext;
     public Handler mHandler;
@@ -52,6 +54,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     public int mCommonColor = Color.parseColor("#004d40");
     public SimpleDateFormat mDateFormat = new SimpleDateFormat("MM-dd HH:mm");
     public SharedPreferences mSharedPreference;
+
     /**
      * 是否显示Toolbar
      */
@@ -61,6 +64,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PowerApplication.mActivis.add(this);
+
         PLog(P_TAG, "父类onCreate()");
         mContext = this;
         if (mToolBar != null) {
@@ -77,7 +81,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     final public void setContentView(int layoutResID) {
         //如果不需要添加Toolbar就直接调用父类方法完成布局填充
         if (!mIsAddToolbar) {
-            mContent = View.inflate(this,layoutResID,null);
+            mContent = View.inflate(this, layoutResID, null);
             super.setContentView(mContent);
             init();
             return;
@@ -91,7 +95,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         ViewGroup toolBarRoot = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.tool_bar, parentLinearLayout, true);
         //然后将内容界面添加到以Toolbar为根布局的界面
         View content = View.inflate(this, layoutResID, toolBarRoot);
-        mContent =  content;
+        mContent = content;
         mToolBar = (Toolbar) toolBarRoot.findViewById(R.id.toolbar);
         super.setContentView(content);
 
@@ -229,6 +233,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
     private class TaskHandler extends Handler {
         /**
          * Subclasses must implement this to receive messages.
@@ -275,8 +280,10 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
                 .show();
     }
 
+
     /**
      * 获取Dialog进度条
+     *
      * @return
      */
     final View getProcessView() {

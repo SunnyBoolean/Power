@@ -6,6 +6,7 @@
         <item>@color/color3</item>
         <item>@color/color4</item>
         <item>@color/color5</item>
+        <item>@color/material_red_900</item>
 
         <item>@color/color6</item>
         <item>@color/color7</item>
@@ -18,6 +19,14 @@
         <item>@color/color13</item>
         <item>@color/color14</item>
         <item>@color/color15</item>
+        <item>@color/material_white</item>
+        <item>@color/material_black</item>
+        <item>@color/material_cyan_900</item>
+        <item>@color/material_cyan_A400</item>
+        <item>@color/material_lightBlue_900</item>
+        <item>@color/material_blue_A400</item>
+        <item>@color/material_indigo_900</item>
+
 
     </array>
 </resources>

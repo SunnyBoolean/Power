@@ -26,7 +26,6 @@ public class MyFriendActivity extends BaseActivity {
     private ViewPager mViewPager;
     private EaseConversationListFragment conversationListFragment;
     private EaseContactListFragment contactListFragment;
-    String msl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,11 +41,9 @@ public class MyFriendActivity extends BaseActivity {
     @Override
     protected void initCompontent() {
         super.initCompontent();
+        initFragment();
         mViewPager = (ViewPager) findViewById(R.id.myfriend_list_viewpager);
         mTabLayout = (TabLayout) findViewById(R.id.myfriend_list_tablayout);
-
-        conversationListFragment = new EaseConversationListFragment();
-        contactListFragment = new EaseContactListFragment();
 
 
         //设置Tab的模式
@@ -63,6 +60,12 @@ public class MyFriendActivity extends BaseActivity {
         PlanFragmentAdapter adapter = new PlanFragmentAdapter(fm, list, mTabTitle);
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
+    }
+    private void initFragment(){
+        conversationListFragment = new EaseConversationListFragment();
+        contactListFragment = new EaseContactListFragment();
+
+
     }
     private class PlanFragmentAdapter extends FragmentPagerAdapter {
 

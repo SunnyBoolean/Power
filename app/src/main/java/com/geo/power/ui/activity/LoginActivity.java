@@ -11,6 +11,9 @@ import android.widget.TextView;
 import com.geo.com.geo.power.Constants;
 import com.geo.com.geo.power.bean.UserInfo;
 import com.github.lazylibrary.util.ToastUtils;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 import com.rey.material.widget.EditText;
 
 import cn.bmob.v3.listener.SaveListener;
@@ -98,7 +101,15 @@ public class LoginActivity extends BaseActivity {
         user.login(mContext, new SaveListener() {
             @Override
             public void onSuccess() {
+
                 Intent intent = new Intent(mContext,MainActivity.class);
+                if("泼墨".equals(mUserName)){
+                    mUserName = "liweisunny";
+                }else{
+                    mUserName = "pomosunny";
+                }
+                intent.putExtra("username",mUserName);
+                intent.putExtra("paswd",mPaswd);
                 startActivity(intent);
                 //登录成功,保存登录的值
                 mSharedPreference.edit().putBoolean(Constants.SP_KEY_ISLOGINEd,true).commit();

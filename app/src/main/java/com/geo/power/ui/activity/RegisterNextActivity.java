@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import com.geo.com.geo.power.Constants;
 import com.geo.com.geo.power.bean.UserInfo;
 import com.geo.com.geo.power.util.BitmapUtils;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 import com.rey.material.widget.EditText;
 import com.yongchun.library.view.ImageSelectorActivity;
 
@@ -46,6 +48,7 @@ public class RegisterNextActivity extends BaseActivity {
      * 昵称
      */
     private String mNick;
+    private String mPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +110,7 @@ public class RegisterNextActivity extends BaseActivity {
     }
 
     private void sigin() {
+        mPassword = mConfirmEt.getText().toString().trim();
         mNick = mNickEt.getText().toString().trim();
         if (!checkRegis()) {
             showToast("两次密码输入不一致");
@@ -123,8 +127,6 @@ public class RegisterNextActivity extends BaseActivity {
                     showToast("账号已存在");
                     return;
                 }
-
-
                 //上传头像
                 final BmobFile bmobFile = new BmobFile(new File(mUserImurl));
                 //首先上传图头像图片
@@ -137,12 +139,17 @@ public class RegisterNextActivity extends BaseActivity {
                         UserInfo bu = new UserInfo();
                         bu.setUsername(mNick);
                         bu.uimg = fullUrl;
-                        bu.setPassword("123");
+                        bu.setPassword(mPassword);
                         bu.setMobilePhoneNumber(mPhoneNumber);
 //注意：不能用save方法进行注册
                         bu.signUp(mContext, new SaveListener() {
                             @Override
                             public void onSuccess() {
+                                try {
+                                    EMClient.getInstance().createAccount(mNick, mPassword);//同步方法
+                                } catch (HyphenateException e) {
+                                    e.printStackTrace();
+                                }
                                 Intent intent = new Intent(mContext, MainActivity.class);
                                 startActivity(intent);
                                 //通过BmobUser.getCurrentUser(context)方法获取登录成功后的本地用户信息

@@ -10,13 +10,17 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +30,6 @@ import com.geo.com.geo.power.util.BitmapUtils;
 import com.geo.com.geo.power.util.DensityUtil;
 import com.geo.com.geo.power.util.ScreenUtil;
 import com.geo.widget.colorpicker.ColorPicker;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.rey.material.app.BottomSheetDialog;
 import com.rey.material.app.Dialog;
 import com.rey.material.app.DialogFragment;
@@ -45,10 +48,16 @@ import ui.geo.com.power.R;
  * Created by Administrator on 2016/6/3.
  * 增加习惯壁纸
  */
-public class AddWallpaperActivity extends BaseActivity {
+public class AddWallpaperActivity extends BaseActivity implements OnGestureListener {
     private LinearLayout mLineaLayoutContainer, mInputContentContainer;
     private BottomSheetDialog mBottomSheetDialog;
-    private Bitmap mBgBitmap;
+    private Bitmap mBgBitmap,mGeneralBitmap;
+    private Paint mPaint;
+    GestureDetector detector;
+    /**
+     * 绘制画布
+     */
+    private Canvas mBitmapCanvas;
     /**
      * 文本字体大小
      */
@@ -59,7 +68,7 @@ public class AddWallpaperActivity extends BaseActivity {
     private int mTextColor = Color.BLACK;
 
     private Slider mTextSizeSlider;
-
+    private GridView mColorGridView;
     /**
      * 输入的文本
      */
@@ -69,8 +78,8 @@ public class AddWallpaperActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addwallpaper);
+        detector = new GestureDetector(this, this);
     }
-
 
     /**
      * 初始化组件
@@ -84,6 +93,7 @@ public class AddWallpaperActivity extends BaseActivity {
         View addContent = findViewById(R.id.add_wallpaper_content_s);
         View textType = findViewById(R.id.add_wallpaper_content_texttype);
         View textColor = findViewById(R.id.add_wallpaper_content_textcolor);
+        mColorGridView = (GridView) findViewById(R.id.color_picker_gridview);
         mInputContentContainer = (LinearLayout) findViewById(R.id.add_wallpaper_container_content);
         textType.setOnClickListener(this);
         addContent.setOnClickListener(this);
@@ -105,6 +115,7 @@ public class AddWallpaperActivity extends BaseActivity {
                 break;
             case R.id.add_wallpaper_content_texttype:  //字体
                 showBottomSheetForTextSize();
+                break;
             case R.id.add_wallpaper_content_textcolor:  //字体颜色
                 setContentColor();
                 break;
@@ -117,12 +128,31 @@ public class AddWallpaperActivity extends BaseActivity {
             @Override
             public void onChooseColor(int position, int color) {
                 mTextColor = color;
+                changeTextStyle(true);
+                colorPicker.dismissDialog();
             }
         }).addListenerButton("newButton", new ColorPicker.OnButtonListener() {
             @Override
             public void onClick(View v, int position, int color) {
+                mTextColor = color;
+                changeTextStyle(true);
+                colorPicker.dismissDialog();
             }
         }).setRoundColorButton(true);
+        colorPicker.disableDefaultButtons(false);
+        colorPicker.show();
+    }
+
+    private void changeTextStyle(boolean isColor) {
+        int childs = mInputContentContainer.getChildCount();
+        for (int i = 0; i < childs; i++) {
+            TextView tv = (TextView) mInputContentContainer.getChildAt(i);
+            if (isColor) {
+                tv.setTextColor(mTextColor);
+            } else {
+                tv.setTextSize(mTextSize);
+            }
+        }
     }
 
     /**
@@ -142,6 +172,7 @@ public class AddWallpaperActivity extends BaseActivity {
 
         //如果对添加的文字不满意可以长按删除
         int childs = mInputContentContainer.getChildCount();
+        drawTextAtBitmap(mInputContent);
         for (int i = 0; i < childs; i++) {
             final TextView temp = (TextView) mInputContentContainer.getChildAt(i);
             //长按删除
@@ -231,6 +262,14 @@ public class AddWallpaperActivity extends BaseActivity {
         mTextSizeSlider = (Slider) content.findViewById(R.id.add_wallpaper_textsize_slider);
         mTextSizeSlider.setPrimaryColor(mCommonColor);
         mTextSizeSlider.setValueRange(3, 32, true);
+        mTextSizeSlider.setOnPositionChangeListener(new Slider.OnPositionChangeListener() {
+            @Override
+            public void onPositionChanged(Slider view, boolean fromUser, float oldPos, float newPos, int oldValue, int newValue) {
+                mTextSize = view.getValue();
+                changeTextStyle(false);
+
+            }
+        });
         com.rey.material.widget.Button cancer = (Button) content.findViewById(R.id.add_wallpaper_textsize_slder_cancel);
         cancer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,16 +291,23 @@ public class AddWallpaperActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-       if (resultCode == RESULT_OK && requestCode == ImageSelectorActivity.REQUEST_IMAGE) {
-           ArrayList<String> images = (ArrayList<String>) data.getSerializableExtra(ImageSelectorActivity.REQUEST_OUTPUT);
-          if(images!=null && images.size()>0){
-             String url = images.get(0);
-              mBgBitmap = BitmapUtils.getBitmap(AddWallpaperActivity.this,url);
-              Drawable drawable = new BitmapDrawable(mBgBitmap);
-              mInputContentContainer.setBackground(drawable);
-          }
+        if (resultCode == RESULT_OK && requestCode == ImageSelectorActivity.REQUEST_IMAGE) {
+            ArrayList<String> images = (ArrayList<String>) data.getSerializableExtra(ImageSelectorActivity.REQUEST_OUTPUT);
+            if (images != null && images.size() > 0) {
+                String url = images.get(0);
+                mBgBitmap = BitmapUtils.getBitmap(AddWallpaperActivity.this, url);
+                Drawable drawable = new BitmapDrawable(mBgBitmap);
+                mInputContentContainer.setBackground(drawable);
 
-       }
+                int x = mBgBitmap.getWidth();
+                int y = mBgBitmap.getHeight(); // 创建一个和原图同样大小的位图
+                mGeneralBitmap = Bitmap.createBitmap(x, y, Bitmap.Config.ARGB_8888);
+                mBitmapCanvas = new Canvas(mGeneralBitmap);
+                mPaint = new Paint(); // 在原始位置0，0插入原图
+                mBitmapCanvas.drawBitmap(mBgBitmap, 0, 0, mPaint);
+            }
+
+        }
     }
 
     @Override
@@ -293,37 +339,144 @@ public class AddWallpaperActivity extends BaseActivity {
         });
     }
 
-    private void createPaper() {
-        Canvas canvas = new Canvas(mBgBitmap);
-        Paint paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setColor(mTextColor);
-        paint.setTextSize(mTextSize);
-//        canvas.drawText(mInputContent);
+
+    private Bitmap drawTextAtBitmap(String text) {
+        mPaint.setColor(mTextColor);
+        mPaint.setTextSize(mTextSize); // 在原图指定位置写上字
+        mBitmapCanvas.drawText(text, 53, 30, mPaint);
+        mBitmapCanvas.save(Canvas.ALL_SAVE_FLAG);
+        // 存储
+        mBitmapCanvas.restore();
+        return mGeneralBitmap;
     }
 
     private void wallPaperDone() {
+
         //打开图像缓存
         try {
 //            View content = View.inflate(mContext, R.layout.activity_addwallpaper, null);
-            mInputContentContainer.setDrawingCacheEnabled(true);
-            int[] size = ScreenUtil.getScreenSize(mContext);
-            Bitmap bit = Bitmap.createBitmap(mInputContentContainer.getWidth(), mInputContentContainer.getHeight(),
-                    Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(bit);
-            mInputContentContainer.draw(canvas);
-            //将截图保存在SD卡根目录的test.png图像文件中
-            FileOutputStream fosa = new FileOutputStream("/sdcard/test.png");
-            //将Bitmap对象中的图像数据压缩成png格式的图像数据，并将这些数据保存在test.png文件中
-            bit.compress(Bitmap.CompressFormat.PNG, 100, fosa);
-            //关闭文件输出流
-            fosa.close();
+//            mInputContentContainer.setDrawingCacheEnabled(true);
+//            int[] size = ScreenUtil.getScreenSize(mContext);
+//            Bitmap bit = Bitmap.createBitmap(mInputContentContainer.getWidth(), mInputContentContainer.getHeight(),
+//                    Bitmap.Config.ARGB_8888);
+//            Canvas canvas = new Canvas(bit);
+//            mInputContentContainer.draw(canvas);
+//            //将截图保存在SD卡根目录的test.png图像文件中
+//            FileOutputStream fosa = new FileOutputStream("/sdcard/test.png");
+//            //将Bitmap对象中的图像数据压缩成png格式的图像数据，并将这些数据保存在test.png文件中
+//            bit.compress(Bitmap.CompressFormat.PNG, 100, fosa);
+//            //关闭文件输出流
+//            fosa.close();
 
             WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
-            wallpaperManager.setBitmap(bit);
+            wallpaperManager.setBitmap(mGeneralBitmap);
 //            setWallpaper(bitmap);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+
+    /**
+     * Notified when a tap occurs with the down {@link MotionEvent}
+     * that triggered it. This will be triggered immediately for
+     * every down event. All other events should be preceded by this.
+     *
+     * @param e The down motion event.
+     */
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    /**
+     * The user has performed a down {@link MotionEvent} and not performed
+     * a move or up yet. This event is commonly used to provide visual
+     * feedback to the user to let them know that their action has been
+     * recognized i.e. highlight an element.
+     *
+     * @param e The down motion event
+     */
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    /**
+     * Notified when a tap occurs with the up {@link MotionEvent}
+     * that triggered it.
+     *
+     * @param e The up motion event that completed the first tap
+     * @return true if the event is consumed, else false
+     */
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    /**
+     * Notified when a scroll occurs with the initial on down {@link MotionEvent} and the
+     * current move {@link MotionEvent}. The distance in x and y is also supplied for
+     * convenience.
+     *
+     * @param e1        The first down motion event that started the scrolling.
+     * @param e2        The move motion event that triggered the current onScroll.
+     * @param distanceX The distance along the X axis that has been scrolled since the last
+     *                  call to onScroll. This is NOT the distance between {@code e1}
+     *                  and {@code e2}.
+     * @param distanceY The distance along the Y axis that has been scrolled since the last
+     *                  call to onScroll. This is NOT the distance between {@code e1}
+     *                  and {@code e2}.
+     * @return true if the event is consumed, else false
+     */
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    /**
+     * Notified when a long press occurs with the initial on down {@link MotionEvent}
+     * that trigged it.
+     *
+     * @param e The initial on down motion event that started the longpress.
+     */
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    /**
+     * Notified of a fling event when it occurs with the initial on down {@link MotionEvent}
+     * and the matching up {@link MotionEvent}. The calculated velocity is supplied along
+     * the x and y axis in pixels per second.
+     *
+     * @param e1        The first down motion event that started the fling.
+     * @param e2        The move motion event that triggered the current onFling.
+     * @param velocityX The velocity of this fling measured in pixels per second
+     *                  along the x axis.
+     * @param velocityY The velocity of this fling measured in pixels per second
+     *                  along the y axis.
+     * @return true if the event is consumed, else false
+     */
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        float startY = e1.getRawY();
+        float endY = e2.getRawY();
+        float result = endY - startY;
+        if (result > 0) {
+            showSnackBar("向下滑动");
+            if (mToolBar != null) {
+                mToolBar.setVisibility(View.GONE);
+            }
+        } else {
+            showSnackBar("向上滑动");
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return detector.onTouchEvent(event);
+    }
+
 }

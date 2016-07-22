@@ -7,10 +7,14 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.geo.com.geo.power.bean.UserInfo;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -26,6 +30,7 @@ public class UserProfileActivity extends BaseActivity {
     private ImageView mUserImage;
     private TextView mSexTv, mNlzTv, mZyTv, mCjjhTv, mWcjhTv,mAgeTv;
     private boolean mIsSelfe = false;
+    private Button mAddfriendBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +59,7 @@ public class UserProfileActivity extends BaseActivity {
         mCjjhTv = (TextView) findViewById(R.id.user_profile_yjjh);
         mWcjhTv = (TextView) findViewById(R.id.user_profile_ywcjh);
         mAgeTv = (TextView) findViewById(R.id.user_profile_age);
+        mAddfriendBtn = (Button) findViewById(R.id.user_orifie_addfriend);
         setSupportActionBar(mToolBar);
         int color = Color.parseColor("#FFFFFF");
         mToolBar.setTitleTextColor(getResources().getColor(R.color.material_white));  //设置标题字体颜色
@@ -86,6 +92,32 @@ public class UserProfileActivity extends BaseActivity {
         //完成计划总数
         mWcjhTv.setText(mUserInfo.donePlanTotal+"");
         mAgeTv.setText(mUserInfo.age+"");
+
+    }
+
+    @Override
+    protected void initListener() {
+        super.initListener();
+        mAddfriendBtn.setOnClickListener(this);
+    }
+
+    /**
+     * 所有的单击事件在这里处理
+     *
+     * @param v
+     */
+    @Override
+    public void handlOnClickListener(View v) {
+        super.handlOnClickListener(v);
+        switch(v.getId()){
+            case R.id.user_orifie_addfriend: //加好友
+                try {
+                    EMClient.getInstance().contactManager().addContact("def", "加个好友呗");
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
 
     }
 }

@@ -89,7 +89,8 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="20dp"
         android:background="@color/material_cyan_500"
-        android:text="关注他/她"
+        android:id="@+id/user_orifie_addfriend"
+        android:text="加他好友"
         android:textColor="@color/material_white"
         android:textSize="@dimen/textSize_large" />
 
