@@ -20,4 +20,7 @@ public class DreamInfo extends BmobObject{
     public int isUnlock ;
     /** 是否仍向大海：0表示所有人可以看到，1是只有自己保存为私有*/
     public int isSea;
+    public double latitude;
+    public double longitude;
+    public String address;
 }
