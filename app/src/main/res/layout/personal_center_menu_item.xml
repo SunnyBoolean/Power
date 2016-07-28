@@ -12,12 +12,12 @@
     <TextView
         android:id="@+id/personal_my_friend"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@color/add_longplan_item_selec"
         android:clickable="true"
         android:drawableLeft="@drawable/personal_mynote"
         android:drawablePadding="@dimen/drawable_padding"
-        android:gravity="start"
+        android:gravity="start|center_vertical"
         android:padding="12dp"
         android:text="我的好友"
         android:textColor="@color/material_black" />
@@ -29,12 +29,12 @@
     <TextView
         android:id="@+id/personal_dream_pingzi"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@color/add_longplan_item_selec"
         android:clickable="true"
         android:drawableLeft="@drawable/dream_bottol"
         android:drawablePadding="@dimen/drawable_padding"
-        android:gravity="start"
+        android:gravity="start|center_vertical"
         android:padding="12dp"
         android:text="心愿瓶"
         android:textColor="@color/material_black" />
@@ -45,12 +45,12 @@
     <TextView
         android:id="@+id/personal_floow_aim"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@color/add_longplan_item_selec"
         android:clickable="true"
         android:drawableLeft="@drawable/personal_dianzan"
         android:drawablePadding="@dimen/drawable_padding"
-        android:gravity="start"
+        android:gravity="start|center_vertical"
         android:padding="12dp"
         android:text="我的收藏"
         android:textColor="@color/material_black" />
@@ -64,12 +64,12 @@
     <TextView
         android:id="@+id/personal_xiaoxibutton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@color/add_longplan_item_selec"
         android:clickable="true"
         android:drawableLeft="@drawable/personal_msg"
         android:drawablePadding="@dimen/drawable_padding"
-        android:gravity="start"
+        android:gravity="start|center_vertical"
         android:padding="12dp"
         android:text="系统消息"
         android:textColor="@color/material_black" />
@@ -83,12 +83,12 @@
     <TextView
         android:id="@+id/personal_yjfk"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@color/add_longplan_item_selec"
         android:clickable="true"
         android:drawableLeft="@drawable/personal_yjfk"
         android:drawablePadding="@dimen/drawable_padding"
-        android:gravity="start"
+        android:gravity="start|center_vertical"
         android:padding="12dp"
         android:text="意见反馈"
         android:textColor="@color/material_black" />
